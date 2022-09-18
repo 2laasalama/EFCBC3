@@ -16,6 +16,7 @@ class PickingType(models.Model):
 
     fixed_assets = fields.Boolean(compute='_compute_fixed_assets', store=True)
     return_operation = fields.Boolean(string='عملية إرجاع')
+    is_maintenance = fields.Boolean(string='أمر صيانة')
 
     @api.depends('default_location_src_id', 'default_location_dest_id', 'default_location_src_id.fixed_assets',
                  'default_location_dest_id.fixed_assets')

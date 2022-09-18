@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    is_maintenance = fields.Boolean(related='picking_type_id.is_maintenance',)
     maintenance_company_id = fields.Many2one('res.partner', string='شركة الصيانة')
     fixed_assets = fields.Boolean(related='picking_type_id.fixed_assets', readonly=True)
     return_operation = fields.Boolean(related='picking_type_id.return_operation', readonly=True)

@@ -38,7 +38,8 @@
                 </xpath>
 
                 <field name="origin" position="after">
-                    <field name="maintenance_company_id"/>
+                    <field name="is_maintenance" invisible="1"/>
+                    <field name="maintenance_company_id" attrs="{'invisible':[('is_maintenance','=',False)]}"/>
                     <field name="return_operation" invisible="1"/>
                     <field name="show_validate" invisible="1"/>
                     <field name="scrap_committee_approval" invisible="1"/>

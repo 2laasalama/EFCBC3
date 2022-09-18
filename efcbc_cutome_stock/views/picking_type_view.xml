@@ -8,7 +8,8 @@
             <field name="inherit_id" ref="stock.view_picking_type_form"/>
             <field name="arch" type="xml">
                 <field name="show_operations" position="before">
-                  <field name="return_operation" />
+                  <field name="return_operation"/>
+                  <field name="is_maintenance"/>
                 </field>
             </field>
         </record>
