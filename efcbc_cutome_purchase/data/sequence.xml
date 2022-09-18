@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_requisition.seq_purchase_tender" model="ir.sequence">
+        <field name="suffix">/%(year)s</field>
+        <field name="prefix"></field>
+    </record>
+
+    <record id="seq_purchase_requisition_ref" model="ir.sequence">
+        <field name="name">Tender Ref</field>
+        <field name="code">purchase.requisition.ref</field>
+        <field name="prefix">REF</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"></field>
+    </record>
+
+</odoo>

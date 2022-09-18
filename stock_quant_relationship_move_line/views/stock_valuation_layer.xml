@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+
+
+        <record id="view_inventory_valuation_search" model="ir.ui.view">
+            <field name="name">stock.valuation.layer</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.view_inventory_valuation_search"/>
+            <field name="arch" type="xml">
+                <filter name="group_by_product_id" position="after">
+                    <filter string='الجهة الطالبة' name="by_analytic_account_id"
+                            context="{'group_by': 'analytic_account_id'}"/>
+                    <filter string='الشخص/الشركة' name="by_partner_id"
+                            context="{'group_by': 'partner_id'}"/>
+                </filter>
+            </field>
+        </record>
+
+    </odoo>
+</openerp>

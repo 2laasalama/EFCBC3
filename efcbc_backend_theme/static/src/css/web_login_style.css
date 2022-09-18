@@ -1,0 +1,40 @@
+.container{
+    max-width: 100%;
+}
+.background{
+    height:100%;
+    display: block;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	-webkit-filter: blur(0px);
+	z-index: -1;
+}
+.body_login {
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    opacity:0.95;
+}
+#mcard{
+    margin-top: 7%;
+    padding: 3%;
+    max-width:350px
+}
+
+#bcard{
+    padding: 3%;
+    height: 100%;
+}
+
+.card-body{
+background-color:none;
+}

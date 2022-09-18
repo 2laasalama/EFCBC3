@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="delivery_order_report" model="ir.actions.report">
+        <field name="name">Delivery Order</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">efcbc_stock_report.delivery_order_report_template</field>
+        <field name="report_file">efcbc_stock_report.delivery_order_report_template</field>
+        <field name="print_report_name">'Delivery Order - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" eval="False"/>
+
+    </record>
+
+    <template id="delivery_order_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="efcbc_report_layout.internal_layout">
+                    <div class="page" style="direction: rtl;">
+                        <div class="row" style="text-align: right;">
+                            <div class="col-4"></div>
+                            <div class="col-4" style="text-align: center;">
+                                <h2>إذن صــرف مخـازن</h2>
+                            </div>
+                            <div class="col-4" style="margin-top: 10px;">
+                                <t t-esc="o.name"/>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <div class="row" style="text-align: right;">
+                            <div class="col-6">
+                                <div>
+                                    <span>التاريخ :</span>
+                                    <t t-esc="context_timestamp(o.scheduled_date).strftime('%Y-%m-%d')"/>
+                                </div>
+                                <div>
+                                    <span>
+                                        تسوية رقم:
+                                    </span>
+                                    <t t-esc="o.origin"/>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <span>
+                                        منصرف إلى:
+                                    </span>
+                                    <t t-esc="o.partner_id.name"/>
+                                </div>
+                                <div>
+                                    <span>
+                                        مركز تكلفة:
+                                    </span>
+                                    <t t-esc="o.analytic_account_id.name"/>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <hr style="border: 2px solid black;    margin-top: -2px;"/>
+                        </div>
+
+
+                        <table class="table table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center;width: 10%;">
+                                        <strong>الكمية</strong>
+                                    </th>
+                                    <th style="text-align: center;width: 20%;">
+                                        <strong>الوحدة</strong>
+                                    </th>
+                                    <th style="text-align: center;width: 15">
+                                        <strong>رقم الصنف</strong>
+                                    </th>
+                                    <th style="text-align: center; width: 35%;">
+                                        <strong>البيان</strong>
+                                    </th>
+                                    <th style="text-align: center; width: 10%;">
+                                        <strong>الرصيد</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_qty" t-value="0"/>
+                                <tr t-foreach="o.move_lines" t-as="line">
+                                    <t t-set="total_qty" t-value="total_qty+line.product_qty"/>
+                                    <td style="text-align: center;">
+                                        <span t-field="line.product_qty"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_uom.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_id.default_code"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_id.qty_available"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-right" colspan="3">
+                                        <span>إجمالى الكمية فقط</span>
+                                        <span t-esc="total_qty"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" style="text-align: right;">
+                            <div class="col-4">
+                                <div>
+                                    <strong>المستلم/</strong>
+                                </div>
+
+                                <div>
+                                    <strong>أعتماد</strong>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <span>
+                                    <strong>أمين المخازن/</strong>
+                                </span>
+                            </div>
+
+                            <div class="col-4">
+                                <span>
+                                    <strong>يعتمد,</strong>
+                                </span>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+
+        <record id="view_purchase_requisition_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+
+                <field name="vendor_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="schedule_date" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="date_end" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="ordering_date" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </field>
+
+                <field name="date_end" position="after">
+                    <field name="reference_number" invisible="0"/>
+                    <field name="deadline_status"/>
+                </field>
+
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_qty']" position="before">
+                    <field name="purchase_reason"/>
+                    <field name="qty_available"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='price_unit']" position="before">
+                    <field name="last_purchase_price"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='qty_ordered']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="الموردين" attrs="{'invisible':[('requisition_type','=','direct')]}">
+                        <field name="requisition_type" invisible="1"/>
+                        <field name="limited_partner_ids"
+                               attrs="{'invisible':[('requisition_type','!=','limited')]}" options="{'no_create': True}"
+                               nolabel="1"/>
+                        <field name="public_partner_ids"
+                               attrs="{'invisible':[('requisition_type','!=','public')]}"
+                               nolabel="1"/>
+
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="view_purchase_requisition_stock_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition_stock.view_purchase_requisition_form_inherit"/>
+            <field name="arch" type="xml">
+
+                <field name="picking_type_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+            </field>
+        </record>
+
+
+        <record id="purchase_requisition.menu_purchase_requisition_pro_mgt" model="ir.ui.menu">
+            <field name="name">Purchase Agreements/Purchase Requests</field>
+        </record>
+
+    </odoo>
+</openerp>

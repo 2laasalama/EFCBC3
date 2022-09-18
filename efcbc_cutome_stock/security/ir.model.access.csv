@@ -1,0 +1,6 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_product_brand,access_product_brand,model_product_brand,base.group_user,1,1,1,1
+access_product_model,access_product_model,model_product_model,base.group_user,1,1,1,1
+access_product_manufacture_company,access_product_manufacture_company,model_product_manufacture_company,base.group_user,1,1,1,1
+access_scrap_committee_approval,access_scrap_committee_approval,model_scrap_committee_approval,base.group_user,1,1,1,1
+access_scrap_committee_approval_line,access_scrap_committee_approval_line,model_scrap_committee_approval_line,base.group_user,1,1,1,1

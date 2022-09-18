@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_quant_relationship_move_line
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-08 15:33+0000\n"
+"PO-Revision-Date: 2022-09-08 15:33+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_quant_relationship_move_line
+#: model:ir.model.fields,field_description:stock_quant_relationship_move_line.field_stock_quant__analytic_account_ids
+#: model_terms:ir.ui.view,arch_db:stock_quant_relationship_move_line.view_stock_quant_search_inventory_editable
+msgid "Analytic Account"
+msgstr "الحساب التحليلى"
+
+#. module: stock_quant_relationship_move_line
+#: model:ir.model.fields,field_description:stock_quant_relationship_move_line.field_stock_quant__move_line_ids
+msgid "Move Lines"
+msgstr ""
+
+#. module: stock_quant_relationship_move_line
+#: code:addons/stock_quant_relationship_move_line/models/stock_move_line.py:0
+#, python-format
+msgid "No negative quantities allowed"
+msgstr ""
+
+#. module: stock_quant_relationship_move_line
+#: model:ir.model.fields,field_description:stock_quant_relationship_move_line.field_stock_quant__product_categ_id
+#: model_terms:ir.ui.view,arch_db:stock_quant_relationship_move_line.view_stock_quant_search_inventory_editable
+msgid "Product Category"
+msgstr "فئة الصنف"
+
+#. module: stock_quant_relationship_move_line
+#: model:ir.model,name:stock_quant_relationship_move_line.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "تحركات الصنف (بنود حركة المخزون)"
+
+#. module: stock_quant_relationship_move_line
+#: model:ir.model,name:stock_quant_relationship_move_line.model_stock_quant
+msgid "Quants"
+msgstr "سجلات الكميات "
+
+#. module: stock_quant_relationship_move_line
+#: model:ir.model.fields,help:stock_quant_relationship_move_line.field_stock_quant__product_categ_id
+msgid "Select category for the current product"
+msgstr "قم بتحديد فئة الصنف الحالي "
+
+#. module: stock_quant_relationship_move_line
+#: code:addons/stock_quant_relationship_move_line/models/stock_move_line.py:0
+#, python-format
+msgid ""
+"The quantity done for the product \"%s\" doesn't respect the rounding "
+"precision defined on the unit of measure \"%s\". Please change the quantity "
+"done or the rounding precision of your unit of measure."
+msgstr ""
+
+#. module: stock_quant_relationship_move_line
+#: code:addons/stock_quant_relationship_move_line/models/stock_move_line.py:0
+#, python-format
+msgid ""
+"You need to supply a Lot/Serial Number for product: \n"
+" - "
+msgstr ""

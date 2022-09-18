@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="use_multi_po_approval" invisible="1"/>
+                <field name="hide_button_confirm" invisible="1"/>
+                <field name="is_show_multi_approval_button" invisible="1"/>
+            </xpath>
+
+            <!--            <xpath expr="//button[@id='bid_confirm']" position="attributes">-->
+            <!--                 <attribute name="attrs">{'invisible': ['|',('id', '=', False),('state', '=', 'sent')]}</attribute>-->
+            <!--                <attribute name="states"></attribute>-->
+            <!--                 <attribute name="string">confirm sent</attribute>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|','|',('state', '!=', 'draft'),('id', '=',
+                    False),('hide_button_confirm', '=', True)]}
+                </attribute>
+                <attribute name="states"></attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='button_confirm']" position="after">
+                <button name="button_submit" type="object" string="Submit Order"
+                        attrs="{'invisible': ['|','|',('state', '!=', 'draft'),('id', '=', False),('hide_button_confirm', '=', False)]}"/>
+                <button name="button_approve_limit" type="object" string="Approve" class="oe_highlight"
+                        attrs="{'invisible':['|',('is_show_multi_approval_button','!=',True),('state','!=','submit')]}"/>
+                <button name="button_reject_limit" type="object" string="Reject"
+                        attrs="{'invisible':['|',('is_show_multi_approval_button','!=',True),('state','!=','submit')]}"/>
+            </xpath>
+
+            <field name="state" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', '=', 'submit')]}</attribute>
+            </field>
+
+            <field name="state" position="after">
+                <field name="current_approval_level_line_id"
+                       widget="statusbar"
+                       attrs="{'invisible': [('state', '!=', 'submit')]}"/>
+
+            </field>
+
+            <field name="order_line" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', ('done','cancel','submit'))]}</attribute>
+            </field>
+
+            <notebook position="inside">
+                <page string="Approval Levels" attrs="{'invisible': [('state', '!=', 'submit')]}">
+                    <field name="dynamic_approval_level_line_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="group_ids" widget="many2many_tags"/>
+                            <field name="from_amount"/>
+                            <field name="to_amount"/>
+                            <field name="to_unlimited"/>
+                            <field name="is_approved"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+
+        </field>
+    </record>
+
+</odoo>

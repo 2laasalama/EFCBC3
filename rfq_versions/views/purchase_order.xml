@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="purchase_order_tree" model="ir.ui.view">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                  <field name="partner_id" position="after">
+                    <field name="version"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[hasclass('oe_button_box')]" position="after">
+                    <widget name="web_ribbon" title="Version 1" attrs="{'invisible':[('version','!=',1)]}"/>
+                    <widget name="web_ribbon" title="Version 2" attrs="{'invisible':[('version','!=',2)]}"/>
+                    <widget name="web_ribbon" title="Version 3" attrs="{'invisible':[('version','!=',3)]}"/>
+                    <widget name="web_ribbon" title="Version 4" attrs="{'invisible':[('version','!=',4)]}"/>
+                    <widget name="web_ribbon" title="Version 5" attrs="{'invisible':[('version','!=',5)]}"/>
+                    <widget name="web_ribbon" title="Version 6" attrs="{'invisible':[('version','!=',6)]}"/>
+                    <widget name="web_ribbon" title="Version 7" attrs="{'invisible':[('version','!=',7)]}"/>
+                    <widget name="web_ribbon" title="Version 8" attrs="{'invisible':[('version','!=',8)]}"/>
+                    <widget name="web_ribbon" title="Version 9" attrs="{'invisible':[('version','!=',9)]}"/>
+                    <widget name="web_ribbon" title="Version 10" attrs="{'invisible':[('version','!=',10)]}"/>
+                    <widget name="web_ribbon" title="Version 11" attrs="{'invisible':[('version','!=',11)]}"/>
+                    <widget name="web_ribbon" title="Version 12" attrs="{'invisible':[('version','!=',12)]}"/>
+                    <widget name="web_ribbon" title="Version 13" attrs="{'invisible':[('version','!=',13)]}"/>
+                    <widget name="web_ribbon" title="Version 14" attrs="{'invisible':[('version','!=',14)]}"/>
+                    <widget name="web_ribbon" title="Version 15" attrs="{'invisible':[('version','!=',15)]}"/>
+                    <widget name="web_ribbon" title="Version 16" attrs="{'invisible':[('version','!=',16)]}"/>
+                    <widget name="web_ribbon" title="Version 17" attrs="{'invisible':[('version','!=',17)]}"/>
+                    <widget name="web_ribbon" title="Version 18" attrs="{'invisible':[('version','!=',18)]}"/>
+                    <widget name="web_ribbon" title="Version 19" attrs="{'invisible':[('version','!=',19)]}"/>
+                    <widget name="web_ribbon" title="Version 20" attrs="{'invisible':[('version','!=',20)]}"/>
+                </xpath>
+
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button type="object" name="create_version"
+                            class="oe_stat_button" icon="fa-book" string="نسخة جديدة"
+                            attrs="{'invisible':['|',('parent_id','!=',False),('state','in',['purchase','done','cancel'])]}"/>
+                    <button type="object" name="open_version_list"
+                            class="oe_stat_button" icon="fa-list"
+                            attrs="{'invisible':['|',('parent_id','!=',False),('state','in',['purchase','done','cancel'])]}">
+                        <field name="version_count" widget="statinfo" string="النسخ"
+                               help="النسخ"/>
+                    </button>
+                </xpath>
+
+                <field name="date_order" position="before">
+                    <field name="version" attrs="{'invisible':[('version','&lt;',21)]}"/>
+                    <field name="parent_id" attrs="{'invisible':[('parent_id','=',False)]}"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

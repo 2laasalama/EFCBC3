@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="purchase_committee_approval">
+            <field name="name">Purchase Committee approval</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="purchase_committee_user_group" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="purchase_committee_approval"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="purchase_committee_manager_group" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="purchase_committee_approval"/>
+            <field name="implied_ids" eval="[(4, ref('purchase_committee_user_group'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="rfq_unpacking_manager_group" model="res.groups">
+            <field name="name">RFQ Unpacking committee Manager</field>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+
+    </data>
+</odoo>

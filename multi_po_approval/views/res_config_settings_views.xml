@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_purchase" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.purchase</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='purchase_setting_container']" position="after">
+                <h2>Purchase Order Approval</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="use_multi_po_approval"/>
+
+                        </div>
+
+                        <div class="o_setting_right_pane">
+                            <label for="use_multi_po_approval"/>
+                            <div class="text-muted">
+                                Define approval levels.
+                            </div>
+                            <label for="approval_id"
+                                   attrs="{'invisible': [('use_multi_po_approval', '=', False)],'required': [('use_multi_po_approval', '=', True)]}"/>
+                            <field name="approval_id" attrs="{'invisible': [('use_multi_po_approval', '=', False)]}"/>
+                        </div>
+
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

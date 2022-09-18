@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_committee_approval,access_purchase_committee_approval,model_purchase_committee_approval,base.group_user,1,1,1,1
+access_purchase_committee_approval_line,access_purchase_committee_approval_line,model_purchase_committee_approval_line,base.group_user,1,1,1,1
+access_rfq_unpacking_approval,access_rfq_unpacking_approval,model_rfq_unpacking_approval,base.group_user,1,1,1,1
+access_rfq_unpacking_approval_line,access_rfq_unpacking_approval_line,model_rfq_unpacking_approval_line,base.group_user,1,1,1,1

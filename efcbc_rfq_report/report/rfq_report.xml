@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rfq_report" model="ir.actions.report">
+        <field name="name">طلب عرض سعر</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">efcbc_rfq_report.rfq_report_template</field>
+        <field name="report_file">efcbc_rfq_report.rfq_report_template</field>
+        <field name="print_report_name">'طلب عرض سعر - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="rfq_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="efcbc_report_layout.external_layout">
+                    <div class="page" style="direction: rtl;">
+                        <div style="text-align: center;padding: 15px;">
+                            <h2>طلب عرض سعر</h2>
+                        </div>
+                        <div style="line-height: 27px;text-align: right;">
+                            <div>
+                                <span>
+                                    السـادة شركة/
+                                </span>
+                                <t t-esc="o.partner_id.name"/>
+                            </div>
+                            <div>
+                                <span>
+                                    برجاء التوجيه باللازم بإعطائنا عرض سعر للأصناف الموضحة أدناه مع مراعاه ان تكون
+                                </span>
+                                <t t-esc="o.notes"/>
+                            </div>
+                        </div>
+                        <table class="table table-condensed table-bordered"
+                               style="border-collapse: collapse;border-style: hidden; box-shadow: 0 0 0 2px #e2e2e2;margin-top: 10px;">
+                            <thead>
+
+                                <tr style="background-color: #eaeaea;">
+                                    <th class="text-center" style="width:5%;">
+                                        <strong>م</strong>
+                                    </th>
+                                    <th class="text-center" style="width:40%;">
+                                        <strong>أسم الصنف</strong>
+                                    </th>
+                                    <th class="text-center" style="width:40%;">
+                                        <strong>المواصفات</strong>
+                                    </th>
+                                    <th class="text-center" style="width:15%;">
+                                        <strong>الكمية المطلوبة</strong>
+                                    </th>
+                                    <th class="text-center" style="width:25%;">
+                                        <strong>الملاحظات</strong>
+                                    </th>
+                                    <th class="text-center" style="width:10%;">
+                                        <strong>سعر الوحده</strong>
+                                    </th>
+                                    <th class="text-center" style="width:10%;">
+                                        <strong>الاجمالى</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sequence" t-value="0"/>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <t t-set="sequence" t-value="sequence+1"/>
+                                    <td class="text-center">
+                                        <span t-esc="sequence"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.display_name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_qty"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.price_unit"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.price_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="line-height: 27px;text-align: right;">
+                            <div>
+                                <span>
+                                    نرجو من سيادتكم التكرم بموافقتنا بأسعاركم عن الأصناف الموضحة بعالية فى موعد أقضاه :-
+                                </span>
+                                <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
+                            </div>
+                            <ul style="margin-right: 50px;">
+                                <li>
+                                    <div style="margin-right: 0px;">
+                                        <span>
+                                            يتم الأرسال على
+                                        </span>
+                                        <t t-esc="o.requisition_id.phone"/>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div style="margin-right: 0px;">
+                                        <span>
+                                            على الميل
+                                        </span>
+                                        <t t-esc="o.requisition_id.email"/>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div style="margin-right: 0px;">
+                                        <span>
+                                            يتم موافتنا بصورة من البطاقة الضريبية / السجل التجارى / القيمة المضافة .
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div style="text-align: center">
+                                وتفضـلوا بقبـول فائـق الاحتـرام ,,,
+                            </div>
+                        </div>
+
+                        <div style="line-height: 27px;">
+                            <div class="row" style="text-align: right;">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div style="text-align: center;" class="col-4">
+                                    <span>
+                                        الامانة التنفيذية
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align: right;">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div style="text-align: center;" class="col-4">
+                                    <span>
+                                        للمشتريات والمخازن
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align: right;">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <span>
+                                        محاسب /
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row" style="text-align: right;">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div style="text-align: center;" class="col-4">
+                                    <span>(</span>
+                                    <t t-esc="o.executive_secretariat.name"/>
+                                    <span>)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

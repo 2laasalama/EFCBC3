@@ -1,0 +1,181 @@
+# This file contains the translation of the following modules:
+# 	* efcbc_rfq_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-24 10:59+0000\n"
+"PO-Revision-Date: 2022-08-24 10:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: efcbc_rfq_report
+#: model:ir.actions.report,print_report_name:efcbc_rfq_report.rfq_report
+msgid "'طلب عرض سعر - %s' % (object.name).replace('/', '')"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                            على الميل\n"
+"                                        </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                            يتم الأرسال على\n"
+"                                        </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                            يتم موافتنا بصورة من البطاقة الضريبية / السجل التجارى / القيمة المضافة .\n"
+"                                        </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                        الامانة التنفيذية\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                        للمشتريات والمخازن\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                        محاسب /\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                    السـادة شركة/\n"
+"                                </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                    برجاء التوجيه باللازم بإعطائنا عرض سعر للأصناف الموضحة أدناه مع مراعاه ان تكون\n"
+"                                </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"<span>\n"
+"                                    نرجو من سيادتكم التكرم بموافقتنا بأسعاركم عن الأصناف الموضحة بعالية فى موعد أقضاه :-\n"
+"                                </span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<span>(</span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<span>)</span>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<strong>أسم الصنف</strong>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<strong>السعر</strong>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<strong>الكمية المطلوبة</strong>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<strong>الملاحضات</strong>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<strong>المواصفات</strong>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "<strong>م</strong>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model:ir.model.fields,field_description:efcbc_rfq_report.field_purchase_requisition__email
+msgid "Email"
+msgstr "بريد الكتروني التواصل"
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"Page:\n"
+"                                    <span class=\"page\"/>\n"
+"                                    /\n"
+"                                    <span class=\"topage\"/>"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model:ir.model.fields,field_description:efcbc_rfq_report.field_purchase_requisition__phone
+msgid "Phone"
+msgstr "هاتف التواصل"
+
+#. module: efcbc_rfq_report
+#: model:ir.model,name:efcbc_rfq_report.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "طلب الشراء"
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"تليفون: 24727259/58/57/56 فاكس: 24727260 بريد إلكترونى: info@tasheed.org"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model:ir.actions.report,name:efcbc_rfq_report.rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "طلب عرض سعر"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid ""
+"مدينة نصر - المنطقة التاسعة - شارع الفنان عماد حمدي موازي شارع مصطفي النحاس -\n"
+"                                        صندوق بريد 60 الحي العاشر"
+msgstr ""
+
+#. module: efcbc_rfq_report
+#: model_terms:ir.ui.view,arch_db:efcbc_rfq_report.rfq_report_template
+msgid "وتفضـلوا بقبـول فائـق الاحتـرام ,,,"
+msgstr ""

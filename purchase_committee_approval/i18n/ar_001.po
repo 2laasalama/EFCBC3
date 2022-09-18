@@ -1,0 +1,172 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* purchase_committee_approval
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-11 14:01+0000\n"
+"PO-Revision-Date: 2022-08-11 14:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__accept
+msgid "Accept"
+msgstr "موافق"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__approval_id
+msgid "Approval"
+msgstr "موافقة"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__line_ids
+msgid "Approval Lines"
+msgstr "الموافقات"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields.selection,name:purchase_committee_approval.selection__purchase_committee_approval__committee_decision__approve
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_committee_approval_view_form
+msgid "Approve"
+msgstr "موافقة"
+
+#. module: purchase_committee_approval
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_committee_approval_view_form
+msgid "Approved"
+msgstr "موافق علية"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__can_edit
+msgid "Can Edit"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_committee_approval_view_form
+msgid "Close"
+msgstr "غلق"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_order__committee_approval_id
+msgid "Committee Approval"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__committee_decision
+msgid "Committee Decision"
+msgstr "موافقة اللجنة"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__create_uid
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__create_date
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__display_name
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__id
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__id
+msgid "ID"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval____last_update
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__write_uid
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__write_date
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:res.groups,name:purchase_committee_approval.purchase_committee_manager_group
+msgid "Manager"
+msgstr "مدير"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__name
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__name
+msgid "Name"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval__purchase_id
+msgid "Purchase"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.actions.act_window,name:purchase_committee_approval.purchase_committee_approval_action
+#: model:ir.model,name:purchase_committee_approval.model_purchase_committee_approval
+#: model:ir.module.category,name:purchase_committee_approval.purchase_committee_approval
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_order_form
+msgid "Purchase Committee approval"
+msgstr "موافقة لجنة الاستلام"
+
+#. module: purchase_committee_approval
+#: code:addons/purchase_committee_approval/models/purchase_order.py:0
+#, python-format
+msgid "Purchase Committee approval For %s"
+msgstr "موافقة لجنة الاستلام ل "
+
+#. module: purchase_committee_approval
+#: model:ir.model,name:purchase_committee_approval.model_purchase_committee_approval_line
+msgid "Purchase Committee approval Line"
+msgstr ""
+
+#. module: purchase_committee_approval
+#: model:ir.model,name:purchase_committee_approval.model_purchase_order
+msgid "Purchase Order"
+msgstr "أمر توريد"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields.selection,name:purchase_committee_approval.selection__purchase_committee_approval__committee_decision__refuse
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_committee_approval_view_form
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: purchase_committee_approval
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_committee_approval_view_form
+msgid "Refused"
+msgstr "تم الرفض"
+
+#. module: purchase_committee_approval
+#: model_terms:ir.ui.view,arch_db:purchase_committee_approval.purchase_committee_approval_view_form
+msgid "Save"
+msgstr "حفظ"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_committee_approval_line__user_id
+#: model:res.groups,name:purchase_committee_approval.purchase_committee_user_group
+msgid "User"
+msgstr "مستخدم"
+
+#. module: purchase_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_order__require_committee_approval
+#: model:ir.model.fields,field_description:purchase_committee_approval.field_purchase_requisition__require_committee_approval
+msgid "Require Committee Approval"
+msgstr "طلب موافقة اللجنة"

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- <report string="Token" id="action_report_token" model="token.token" report_type="qweb-pdf" name="queue_management.report_token" file="queue_management.report_token" print_report_name="'Token - %s' % (object.token_ref)" /> -->
+
+        <record id="action_report_token" model="ir.actions.report">
+            <field name="name">Token</field>
+            <field name="model">token.token</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">queue_management.report_token</field>
+            <field name="report_file">queue_management.report_token</field>
+            <field name="print_report_name">'Token - %s' % (object.token_ref)</field>
+        </record>
+
+    </data>
+</odoo>

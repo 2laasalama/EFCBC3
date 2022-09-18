@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="unpacking_rfq_view_form" model="ir.ui.view">
+            <field name="name">unpacking.rfq.view.form</field>
+            <field name="model">unpacking.rfq</field>
+            <field name="arch" type="xml">
+                <form>
+                    <grop>
+                        <field name="requisition_id" invisible="1"/>
+                        <field name="line_ids"  nolabel="1">
+                            <tree create="0" delete="0" multi_edit="1">
+                                <field name="product_id" invisible="1"/>
+                                <field name="product_name"/>
+                                <field name="partner_id"/>
+                                <field name="price_unit"/>
+                                <field name="product_qty"/>
+                                <field name="price_subtotal"/>
+                                <field name="price_total"/>
+                                <field name="date_order"/>
+                                <field name="accept" readonly="0" widget="boolean_toggle"/>
+                            </tree>
+                        </field>
+                    </grop>
+                    <footer>
+                        <button string="حفظ" special="save" class="btn btn-primary" close="1"/>
+                        <button string="غلق" special="cancel" class="btn-secondary" close="1"/>
+                        <button string="التفريغ" type="object" name="action_print" icon="fa-print"
+                                class="btn btn-primary"/>
+                        <button string="مذكرة العرض" type="object" name="print_unpacking_report" icon="fa-print"
+                                class="btn btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

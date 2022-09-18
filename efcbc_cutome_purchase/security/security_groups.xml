@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="chairman_board_directors_group" model="res.groups">
+            <field name="name">رئيس مجلس الادارة</field>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="office_staff_group" model="res.groups">
+            <field name="name">هيئة المكتب</field>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="board_directors_group" model="res.groups">
+            <field name="name">مجلس الادارة</field>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+
+        <record id="bid_opening_employees_action" model="ir.actions.act_window">
+            <field name="name">لجنة فتح المظاريف</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="domain">[('committee_type','=','bid_opening')]</field>
+            <field name="context">{'default_committee_type': 'bid_opening'}</field>
+        </record>
+
+        <record id="technical_employees_action" model="ir.actions.act_window">
+            <field name="name">اللجنة الفنية</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="domain">[('committee_type','=','technical')]</field>
+            <field name="context">{'default_committee_type': 'technical'}</field>
+        </record>
+
+        <record id="financial_employees_action" model="ir.actions.act_window">
+            <field name="name">اللجنة المالية</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="domain">[('committee_type','=','financial')]</field>
+            <field name="context">{'default_committee_type': 'financial'}</field>
+        </record>
+
+         <record id="decision_employees_action" model="ir.actions.act_window">
+            <field name="name">لجنة البت</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="domain">[('committee_type','=','decision')]</field>
+            <field name="context">{'default_committee_type': 'decision'}</field>
+        </record>
+
+
+        <menuitem id="committee_members_main" name="أعضاء اللجن" parent="purchase.menu_purchase_root" sequence="99"/>
+        <menuitem action="bid_opening_employees_action" id="bid_opening_menuitem" parent="committee_members_main"/>
+        <menuitem action="technical_employees_action" id="technical_menuitem" parent="committee_members_main"/>
+        <menuitem action="financial_employees_action" id="financial_menuitem" parent="committee_members_main"/>
+        <menuitem action="decision_employees_action" id="decision_menuitem" parent="committee_members_main"/>
+
+
+    </odoo>
+</openerp>

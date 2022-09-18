@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* rfq_workflow
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-22 09:36+0000\n"
+"PO-Revision-Date: 2022-08-22 09:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: rfq_workflow
+#: model:mail.template,body_html:rfq_workflow.mail_template_rfq_workflow
+msgid ""
+"<div>\n"
+"                Hello There,<br/>\n"
+"                RFQ with Number <b t-out=\"object.name\"/> need Your Approval.<br/>\n"
+"                You may take follow-up with him.<br/>\n"
+"                <a class=\"btn btn-primary\" role=\"button\" t-attf-href=\"/web?#id={{object.id}}&amp;model=purchase.order\">View Details</a><br/>\n"
+"                Thank You...<br/>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__cancel
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__general_secretary
+#: model:res.groups,name:rfq_workflow.rfq_general_secretary_group
+msgid "General Secretary"
+msgstr "الامين العام"
+
+#. module: rfq_workflow
+#: model_terms:ir.ui.view,arch_db:rfq_workflow.purchase_order_form
+msgid "General Secretary Approve"
+msgstr "موافقه الامين العام"
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__done
+msgid "Locked"
+msgstr "مقفل"
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__manager_director
+#: model:res.groups,name:rfq_workflow.rfq_manager_director_group
+msgid "Manager Director"
+msgstr "مدير الاداره"
+
+#. module: rfq_workflow
+#: model_terms:ir.ui.view,arch_db:rfq_workflow.purchase_order_form
+msgid "Manager Director Approve"
+msgstr "موافقه مدير الاداره "
+
+#. module: rfq_workflow
+#: model:mail.template,subject:rfq_workflow.mail_template_rfq_workflow
+msgid "Need Approval"
+msgstr "يحتاج موافقة"
+
+#. module: rfq_workflow
+#: model:ir.model,name:rfq_workflow.model_purchase_order
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__purchase
+msgid "Purchase Order"
+msgstr "أمر توريد"
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__draft
+msgid "RFQ"
+msgstr "طلب عرض سعر"
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__sent
+msgid "RFQ Sent"
+msgstr "تم إرسال طلب عرض السعر"
+
+#. module: rfq_workflow
+#: model:ir.module.category,name:rfq_workflow.rfq_workflow
+msgid "RFQ WorkFlow"
+msgstr ""
+
+#. module: rfq_workflow
+#: model:mail.template,name:rfq_workflow.mail_template_rfq_workflow
+msgid "RFQ WorkFlow: Approval Notifications"
+msgstr ""
+
+#. module: rfq_workflow
+#: model:ir.model.fields,field_description:rfq_workflow.field_purchase_order__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: rfq_workflow
+#: model:ir.model.fields.selection,name:rfq_workflow.selection__purchase_order__state__to_approve
+msgid "To Approve"
+msgstr "للموافقة "

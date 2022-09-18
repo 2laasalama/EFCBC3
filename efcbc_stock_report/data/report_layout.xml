@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_efcbc" model="report.paperformat">
+            <field name="name">E-Invoice Paperformat</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="dpi">80</field>
+        </record>
+
+
+        <template id="internal_layout">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+
+<!--            <div class="header" style="height:5px">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-4">-->
+<!--                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>-->
+<!--                    </div>-->
+<!--                    <div class="col-4 text-center">-->
+
+<!--                    </div>-->
+<!--                    <div class="col-4 text-center">-->
+<!--                        <ul class="list-inline">-->
+<!--                            <li class="list-inline-item">-->
+<!--                                <span class="page"/>-->
+<!--                            </li>-->
+<!--                            <li class="list-inline-item">/</li>-->
+<!--                            <li class="list-inline-item">-->
+<!--                                <span class="topage"/>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                        <div>-->
+<!--                            <span t-esc="company.name"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-out="0"/>
+            </div>
+        </template>
+
+    </data>
+</odoo>

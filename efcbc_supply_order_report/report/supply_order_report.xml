@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="supply_order_report" model="ir.actions.report">
+        <field name="name">أمر توريد</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">efcbc_supply_order_report.supply_order_report_template</field>
+        <field name="report_file">efcbc_supply_order_report.supply_order_report_template</field>
+        <field name="print_report_name">'أمر توريد - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="supply_order_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="efcbc_report_layout.external_layout">
+                    <div class="page" style="direction: rtl;font-family: arial">
+                        <!--                        <div style="text-align: center;">-->
+                        <!--                            <img style="max-width: 850px;"-->
+                        <!--                                 src="/efcbc_supply_order_report/static/src/img/header.png"/>-->
+                        <!--                        </div>-->
+                        <div style="text-align: center;padding: 15px;">
+                            <h2 t-if="not o.total_supply_amount &lt; 1">أمـــر تـــوريـــد</h2>
+                            <h2 t-if="not o.total_supply_amount &gt; 1">أمـــر أسـنـاد</h2>
+                        </div>
+                        <div style="line-height: 27px;text-align: right;">
+                            <div>
+                                <span>
+                                    السـادة /
+                                </span>
+                                <t t-esc="o.partner_id.name"/>
+                            </div>
+                            <div>
+                                <span>بالإشارة إلى العرض المقدم منكم بتاريخ</span>
+                                <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
+                            </div>
+                            <div>
+                                <span>برجاء التوجيه باللازم بتوريد الأصناف الأتية طبقاََ للعروض وللشروط المقدمة وهى
+                                    كالتالى :-
+                                </span>
+                            </div>
+                        </div>
+                        <table class="table table-condensed table-bordered"
+                               style="border-collapse: collapse;border-style: hidden; box-shadow: 0 0 0 2px #e2e2e2;margin-top: 10px;">
+                            <thead>
+
+                                <tr style="background-color: #eaeaea;">
+                                    <th class="text-center" style="width:5%;">
+                                        <strong>م</strong>
+                                    </th>
+                                    <th class="text-center" style="width:30%;">
+                                        <strong>الصنف</strong>
+                                    </th>
+                                    <th class="text-center" style="width:20%;">
+                                        <strong>الوصف</strong>
+                                    </th>
+                                    <th class="text-center" style="width:10%;">
+                                        <strong>الكمية</strong>
+                                    </th>
+                                    <th class="text-center" style="width:15%;">
+                                        <strong>الضمان</strong>
+                                    </th>
+                                    <th class="text-center" style="width:10%;">
+                                        <strong>سعر الوحدة</strong>
+                                    </th>
+                                    <th class="text-center" style="width:10%;">
+                                        <strong>الاجمالى</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total" t-value="0"/>
+                                <t t-set="sequence" t-value="0"/>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <t t-set="sequence" t-value="sequence+1"/>
+                                    <td class="text-center">
+                                        <span t-esc="sequence"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_id.display_name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.product_qty"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.warranty_id.name"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.price_unit"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.price_total"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="text-right">
+                                        <span>الأجمالى /</span>
+                                        <t t-esc="o.get_amount_total_in_text()"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="o.amount_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="line-height: 27px;text-align: right;">
+                            <div>
+                                نرجو سرعة التوريد طبقاََ للعرض المقدم:-
+                            </div>
+                            <ul style="margin-right: 50px;">
+                                <li>
+                                    <div class="row" style="margin-right: 0px;">
+                                        <div class="col-6">
+                                            <span>
+                                                التسليم /
+                                            </span>
+                                            <t t-esc="o.supply_order_delivery.name"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <span>
+                                                التوريد /
+                                            </span>
+                                            <t t-esc="o.supply_date"/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="row" style="margin-right: 0px;">
+                                        <div class="col-6">
+                                            <span>طريقة الدفع /</span>
+                                            <t t-esc="o.payment_mode.name"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <t t-esc="o.notes"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div style="text-align: center">
+                                وتفضـلوا بقبـول فائـق الاحتـرام ,,,
+                            </div>
+                        </div>
+
+                        <div style="line-height: 27px;">
+                            <div class="row" style="text-align: right;">
+                                <div style="text-align: center;" class="col-4">
+                                    <span>
+                                        الامانة التنفيذية
+                                    </span>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+
+                            </div>
+                            <div class="row" style="text-align: right;">
+                                <div style="text-align: center;" class="col-4">
+                                    <span>
+                                        للمشتريات والمخازن
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align: right;">
+                                <div style="text-align: center;" class="col-4">
+                                    <img t-attf-src="/web/image/res.company/{{ o.company_id.id }}/executive_secretariat_image"
+                                         style="width: 100px; height: 100px; object-fit: contain;"
+                                         alt="Product image"></img>
+                                </div>
+                                <div class="col-4"></div>
+                                <div style="text-align: center;" class="col-4">
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <h4>
+                                        السيد الامين العام للاتحاد
+                                    </h4>
+                                </div>
+                            </div>
+
+
+                            <div class="row" style="text-align: right;">
+                                <div style="text-align: center;" class="col-4">
+                                    <span>
+                                        محاسب/
+                                    </span>
+                                    <t t-esc="o.executive_secretariat.name"/>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+
+                            </div>
+
+                            <div class="row" style="text-align: right;">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div style="text-align: center;" class="col-4">
+                                    <br></br>
+                                    <br></br>
+                                    <strong>
+                                        محاسب/
+                                    </strong>
+                                    <strong>
+                                        <t t-esc="o.general_secretary.name"/>
+                                    </strong>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

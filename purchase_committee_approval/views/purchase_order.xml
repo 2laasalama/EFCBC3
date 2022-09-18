@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                    <attribute name="name">action_confirm</attribute>
+                </xpath>
+
+                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                    <attribute name="name">action_confirm</attribute>
+                </xpath>
+
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button type="object" name="open_committee_approval" class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="Purchase Committee approval"
+                            attrs="{'invisible':[('require_committee_approval','!=',True)]}"/>
+
+                    <button type="object" name="open_rfq_unpacking_approval" class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="لجنة تفريغ عروض الاسعار"
+                            attrs="{'invisible':[('require_rfq_unpacking','!=',True)]}"/>
+
+                </xpath>
+
+                <field name="date_order" position="before">
+                    <field name="require_committee_approval" invisible="1"/>
+                    <field name="committee_approval_id" invisible="1"/>
+                    <field name="require_rfq_unpacking" invisible="1"/>
+                    <field name="start_workflow" invisible="1"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="rfq_workflow_inherit_purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="rfq_workflow.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//button[@name='manager_director_approve']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('start_workflow', '=', False)]}
+                    </attribute>
+                    <attribute name="states">
+                    </attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

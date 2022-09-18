@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+        <record id="purchase.action_report_purchase_order" model="ir.actions.report">
+            <field name="binding_model_id" eval="False"/>
+        </record>
+
+        <record id="purchase.report_purchase_quotation" model="ir.actions.report">
+            <field name="binding_model_id" eval="False"/>
+        </record>
+
+        <record id="purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='reminder']" position="after">
+                    <field name="analytic_account_id" force_save="1"
+                           attrs="{'readonly': [('requisition_id', '!=', False)]}"/>
+                </xpath>
+
+                <field name="fiscal_position_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <field name="partner_id" position="before">
+                    <field name="sub_sequence" readonly="1"/>
+                </field>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                    <field name="price_total" string="الاجمالى شامل الضريبه" widget="monetary"/>
+                </xpath>
+
+                <field name="notes" position="after">
+                    <field name="total_supply_amount"/>
+                    <field name="total_works_amount"/>
+                </field>
+
+                <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                    <div class="row">
+                        <div class=" col-6 oe_title">
+                            <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">طلب عرض سعر</span>
+                            <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">امر توريد</span>
+                            <h1>
+                                <field name="priority" widget="priority" class="mr-3"/>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3">
+                                    <field name="show_committees" invisible="1"/>
+                                    <field name="requisition_type" invisible="1"/>
+                                    <label attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           for="bid_opening_committee"/>
+                                    <field attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           name="bid_opening_committee" widget="state_selection" class="mr-3"/>
+                                </div>
+                                <div class="col-3">
+                                    <label attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           for="technical_committee"/>
+                                    <field attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           name="technical_committee" widget="state_selection" class="mr-3"/>
+                                </div>
+                                <div class="col-3">
+                                    <label attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           for="financial_committee"/>
+                                    <field attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           name="financial_committee" widget="state_selection" class="mr-3"/>
+                                </div>
+                                <div class="col-3">
+                                    <label attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           for="decision_committee"/>
+                                    <field attrs="{'invisible': [('show_committees', '=', False)]}"
+                                           name="decision_committee" widget="state_selection" class="mr-3"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </xpath>
+
+
+            </field>
+        </record>
+        <record id="purchase_order_tree" model="ir.ui.view">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="sub_sequence"/>
+                </field>
+            </field>
+        </record>
+
+
+    </odoo>
+</openerp>

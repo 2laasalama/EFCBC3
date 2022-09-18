@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="web_company_logo.CompanyMenu" owl="1">
+        <div class="o_company_menu" >
+
+                <img class="rounded-circle o_company_avatar" t-att-src="source" alt="Company"/>
+
+        </div>
+    </t>
+
+</templates>

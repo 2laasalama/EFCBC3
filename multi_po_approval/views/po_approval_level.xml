@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_po_approval_level_line_tree" model="ir.ui.view">
+        <field name="name">po.approval.level.line.tree</field>
+        <field name="model">po.approval.level.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="group_id"/>
+                <field name="supply_amount"
+                       attrs="{'required': [('to_unlimited', '=', False)],'readonly': [('to_unlimited', '=', True)]}"/>
+                <field name="works_amount"
+                       attrs="{'required': [('to_unlimited', '=', False)],'readonly': [('to_unlimited', '=', True)]}"/>
+                <field name="to_unlimited"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_po_approval_level_form" model="ir.ui.view">
+        <field name="name">po.approval.level.form</field>
+        <field name="model">po.approval.level</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Approval Level #1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <notebook>
+                            <page string="المناقصة العامة">
+                                <field name="public_tender_rules" nolabel="1"/>
+                            </page>
+                            <page string="المناقصة المحدودة">
+                                <field name="limited_tender_rules" nolabel="1"/>
+                            </page>
+                            <page string="الاتفاق المباشر">
+                                <field name="direct_order_rules" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_po_approval_level_action" model="ir.actions.act_window">
+        <field name="name">Approval Level</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">po.approval.level</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

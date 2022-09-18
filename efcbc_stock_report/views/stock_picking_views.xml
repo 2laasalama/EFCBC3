@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='do_print_picking']" position="after">
+                <button name="print_delivery_order_report" type="object" string="إذن صرف مخازن" icon="fa-print"
+                        attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+
+                <button name="print_receipt_order_report" type="object" string="إذن توريد مخازن" icon="fa-print"
+                        attrs="{'invisible': ['|','|',('maintenance_company_id', '!=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>
+
+                 <button name="print_receipt_order_report" type="object" string="إذن تسليم صيانة" icon="fa-print"
+                        attrs="{'invisible': ['|','|',('maintenance_company_id', '=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>
+
+                <button name="print_check_receipt_report" type="object" string="محضر فحص و إستلام" icon="fa-print"
+                        attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'done')]}"/>
+
+
+                <button name="print_return_order_report" type="object" string="إذن مرتجع" icon="fa-print"
+                        attrs="{'invisible': [('return_operation', '=', False)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

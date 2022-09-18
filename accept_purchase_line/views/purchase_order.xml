@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='order_line']/tree" position="inside">
+                    <field name="accept"/>
+                </xpath>
+
+                <page name="products" position="after">
+                    <page string="الاصناف غير المقبولة"  attrs="{'invisible': [('rejected_line_ids', '=', False)]}">
+                        <field name="rejected_line_ids" readonly="1">
+                            <tree editable="0">
+                                <field name="display_type" invisible="1"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="product_type" invisible="1"/>
+                                <field name="product_uom_category_id" invisible="1"/>
+                                <field name="invoice_lines" invisible="1"/>
+                                <field name="sequence" widget="handle"/>
+                                <field
+                                        name="product_id"
+                                        attrs="{
+                                            'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))],
+                                            'required': [('display_type', '=', False)],
+                                        }"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"
+                                        force_save="1"
+                                        domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                                <field name="name" widget="section_and_note_text"/>
+                                <field name="date_planned" optional="hide"
+                                       attrs="{'required': [('display_type', '=', False)]}" force_save="1"/>
+                                <field name="account_analytic_id" optional="hide"
+                                       context="{'default_partner_id':parent.partner_id}"
+                                       groups="analytic.group_analytic_accounting"
+                                       domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                                <field name="analytic_tag_ids" optional="hide" groups="analytic.group_analytic_tags"
+                                       widget="many2many_tags" options="{'color_field': 'color'}"
+                                       domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                                <field name="product_qty"/>
+                                <field name="qty_received_manual" invisible="1"/>
+                                <field name="qty_received_method" invisible="1"/>
+                                <field name="qty_received" string="Received"
+                                       attrs="{'column_invisible': [('parent.state', 'not in', ('purchase', 'done'))], 'readonly': [('qty_received_method', '!=', 'manual')]}"
+                                       optional="show"/>
+                                <field name="qty_invoiced" string="Billed"
+                                       attrs="{'column_invisible': [('parent.state', 'not in', ('purchase', 'done'))]}"
+                                       optional="show"/>
+                                <field name="product_uom" string="UoM" groups="uom.group_uom"
+                                       attrs="{
+                                            'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))],
+                                            'required': [('display_type', '=', False)]
+                                        }"
+                                       force_save="1" optional="show"/>
+                                <field name="product_packaging_qty"
+                                       attrs="{'invisible': ['|', ('product_id', '=', False), ('product_packaging_id', '=', False)]}"
+                                       groups="product.group_stock_packaging" optional="show"/>
+                                <field name="product_packaging_id" attrs="{'invisible': [('product_id', '=', False)]}"
+                                       context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}"
+                                       groups="product.group_stock_packaging" optional="show"/>
+                                <field name="price_unit" attrs="{'readonly': [('qty_invoiced', '!=', 0)]}"/>
+                                <field name="taxes_id" widget="many2many_tags"
+                                       domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                                       context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                                       options="{'no_create': True}" optional="show"/>
+                                <field name="price_subtotal" widget="monetary"/>
+                                <field name="price_total" widget="monetary"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+
+
+            </field>
+        </record>
+
+    </data>
+</openerp>

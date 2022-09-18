@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_purchase_requisition_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group" position="inside">
+                    <group string="لجنه الاستلام">
+                        <field name="require_committee_approval" string="يتطلب موافقة اللجنة"
+                               attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])]}"/>
+                        <field name="purchase_committee_member_ids" widget="many2many_tags"
+                               attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])],'required': [('require_rfq_unpacking', '=',True)]}"/>
+
+                    </group>
+                    <group string="لجنه تفريغ عروض الاسعار">
+                        <field name="require_rfq_unpacking" string="يتطلب موافقة اللجنة"
+                               attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])]}"/>
+                        <field name="committee_member_ids" widget="many2many_tags"
+                               attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])],'required': [('require_rfq_unpacking', '=',True)]}"/>
+
+                    </group>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

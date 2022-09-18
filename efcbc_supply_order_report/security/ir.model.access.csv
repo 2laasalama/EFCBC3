@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_warranty_warranty,access_warranty_warranty,model_warranty_warranty,base.group_user,1,1,1,1
+access_payment_mode,access_payment_mode,model_payment_mode,base.group_user,1,1,1,1
+access_supply_order_delivery,access_supply_order_delivery,model_supply_order_delivery,base.group_user,1,1,1,1

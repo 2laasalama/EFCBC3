@@ -1,0 +1,263 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* efcbc_supply_order_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-10 08:53+0000\n"
+"PO-Revision-Date: 2022-08-10 08:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: efcbc_supply_order_report
+#: model:ir.actions.report,print_report_name:efcbc_supply_order_report.supply_order_report
+msgid "'أمر توريد - %s' % (object.name).replace('/', '')"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                                التوريد /\n"
+"                                            </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                        الامانة التنفيذية\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                        الامين العام\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                        للمشتريات والمخازن\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                        محاسب /\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                        محاسب/\n"
+"                                    </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>\n"
+"                                    السـادة /\n"
+"                                </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<span>بالإشارة إلى العرض المقدم منكم بتاريخ</span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"<span>برجاء التوجيه باللازم بتوريد الأصناف الأتية طبقاََ للعروض وللشروط المقدمة وهى\n"
+"                                    كالتالى :-\n"
+"                                </span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<span>طريقة الدفع /</span>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<strong>أسم الصنف</strong>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<strong>الاجمالى</strong>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<strong>الضمان</strong>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<strong>الكمية</strong>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<strong>سعر الوحدة</strong>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "<strong>م</strong>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__create_uid
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__create_uid
+msgid "Created by"
+msgstr "أنشاء بواسطة"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__create_date
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__create_date
+msgid "Created on"
+msgstr "أنشاء فى "
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__display_name
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__display_name
+msgid "Display Name"
+msgstr "الاسم"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_purchase_order__executive_secretariat
+msgid "Executive Secretariat for Purchasing and Stores"
+msgstr "الامانة التنفيذية للمشتريات والمخازن"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_purchase_order__general_secretary
+msgid "General Secretary"
+msgstr "الامين العام"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__id
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__id
+msgid "ID"
+msgstr "معرف"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode____last_update
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__write_uid
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__write_date
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_payment_mode__name
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_warranty_warranty__name
+msgid "Name"
+msgstr "الاسم"
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"Page:\n"
+"                                    <span class=\"page\"/>\n"
+"                                    /\n"
+"                                    <span class=\"topage\"/>"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model:ir.model,name:efcbc_supply_order_report.model_payment_mode
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_purchase_order__payment_mode
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_purchase_requisition__payment_mode
+msgid "Payment Mode"
+msgstr "طريقة الدفع"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model,name:efcbc_supply_order_report.model_purchase_order
+msgid "Purchase Order"
+msgstr "أمر توريد"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model,name:efcbc_supply_order_report.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "بند أمر التوريد"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model,name:efcbc_supply_order_report.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "طلب الشراء"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_purchase_order__supply_date
+msgid "Supply Date"
+msgstr "تاريخ التوريد"
+
+#. module: efcbc_supply_order_report
+#: model:ir.model,name:efcbc_supply_order_report.model_warranty_warranty
+#: model:ir.model.fields,field_description:efcbc_supply_order_report.field_purchase_order_line__warranty_id
+msgid "Warranty"
+msgstr "الضمان"
+
+#. module: efcbc_supply_order_report
+#: model:ir.actions.report,name:efcbc_supply_order_report.supply_order_report
+msgid "أمر توريد"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "أمـــر تـــوريـــد"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "التسليم / مقر الإتحاد بمدينة نصر"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"تليفون: 24727259/58/57/56 فاكس: 24727260 بريد إلكترونى: info@tasheed.org"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid ""
+"مدينة نصر - المنطقة التاسعة - شارع الفنان عماد حمدي موازي شارع مصطفي النحاس -\n"
+"                                        صندوق بريد 60 الحي العاشر"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "نرجو سرعة التوريد طبقاََ للعرض المقدم:-"
+msgstr ""
+
+#. module: efcbc_supply_order_report
+#: model_terms:ir.ui.view,arch_db:efcbc_supply_order_report.supply_order_report_template
+msgid "وتفضـلوا بقبـول فائـق الاحتـرام ,,,"
+msgstr ""

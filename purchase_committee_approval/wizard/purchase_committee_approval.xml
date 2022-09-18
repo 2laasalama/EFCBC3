@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="purchase_committee_approval_view_form" model="ir.ui.view">
+            <field name="name">purchase.committee.approval.view.form</field>
+            <field name="model">purchase.committee.approval</field>
+            <field name="arch" type="xml">
+                <form>
+                    <widget name="web_ribbon" title="Approved"
+                            attrs="{'invisible':[('committee_decision','!=','approve')]}"/>
+                    <widget name="web_ribbon" title="Refused" bg_color="bg-danger"
+                            attrs="{'invisible':[('committee_decision','!=','refuse')]}"/>
+                    <grop>
+                        <field name="purchase_id" invisible="1"/>
+                        <field name="committee_decision" invisible="1"/>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="top" create="0" delete="0">
+<!--                                <field name="user_id"/>-->
+                                <field name="employee_id"/>
+                                <field name="accept" widget="boolean_toggle"
+                                       attrs="{'readonly': [('can_edit', '=', False)]}"/>
+                                <field name="can_edit" invisible="1"/>
+                            </tree>
+                        </field>
+                    </grop>
+                    <footer>
+                        <button string="Save" special="save" class="btn btn-primary" close="1"/>
+                        <button string="Close" special="cancel" class="btn-secondary" close="1"/>
+                        <button string="Approve" type="object" name="action_approve"
+                                groups="purchase_committee_approval.purchase_committee_manager_group"
+                                class="btn btn-primary"/>
+                        <button string="Refuse" type="object" name="action_refuse"
+                                groups="purchase_committee_approval.purchase_committee_manager_group"
+                                class="btn btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

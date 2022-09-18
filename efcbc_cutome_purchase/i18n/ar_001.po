@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* efcbc_cutome_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-08-10 09:33+0000\n"
+"PO-Revision-Date: 2022-08-10 09:33+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: efcbc_cutome_purchase
+#: model:ir.model.fields,field_description:efcbc_cutome_purchase.field_purchase_requisition__name
+msgid "Purchase Request Number"
+msgstr "رقم طلب الشراء"
+
+#. module: efcbc_cutome_purchase
+#: model:ir.model,name:efcbc_cutome_purchase.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "طلب الشراء"
+
+#. module: purchase_requisition
+#: model:ir.ui.menu,name:purchase_requisition.menu_purchase_requisition_pro_mgt
+msgid "Purchase Agreements/Purchase Requests"
+msgstr "اتفاقيات الشراء / طلب الشراء"
+
+
+#. module: purchase
+#: model:ir.actions.act_window,name:purchase.purchase_form_action
+#: model:ir.ui.menu,name:purchase.menu_purchase_form_action
+#: model_terms:ir.ui.view,arch_db:purchase.account_analytic_account_view_form_purchase
+#: model_terms:ir.ui.view,arch_db:purchase.portal_my_home_menu_purchase
+#: model_terms:ir.ui.view,arch_db:purchase.portal_my_home_purchase
+#: model_terms:ir.ui.view,arch_db:purchase.portal_my_purchase_orders
+#: model_terms:ir.ui.view,arch_db:purchase.view_purchase_bill_union_filter
+#: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_filter
+#: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_search
+msgid "Purchase Orders"
+msgstr "أوامر التوريد"
+
+#. module: efcbc_cutome_purchase
+#: model:ir.model.fields,field_description:efcbc_cutome_purchase.field_purchase_requisition__deadline_status
+msgid "Deadline Status"
+msgstr "الموعد النهائي للاتفاقية"
+
+#. module: efcbc_cutome_purchase
+#: model:ir.model.fields.selection,name:efcbc_cutome_purchase.selection__purchase_requisition__deadline_status__not_urgent
+msgid "Not Urgent"
+msgstr "غير عاجل"
+
+#. module: efcbc_cutome_purchase
+#: model:ir.model.fields.selection,name:efcbc_cutome_purchase.selection__purchase_requisition__deadline_status__urgent
+msgid "Urgent"
+msgstr "عاجل"

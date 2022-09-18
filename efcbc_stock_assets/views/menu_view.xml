@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_picking_tree_all" model="ir.actions.act_window">
+            <field name="name">Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,form,calendar</field>
+            <field name="domain">[('picking_type_id.fixed_assets','=',True)]</field>
+            <field name="context">{'contact_display': 'partner_address', 'default_company_id': allowed_company_ids[0]}
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="stock_move_action" model="ir.actions.act_window">
+            <field name="name">حركات الاصول</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_id" ref="stock.view_move_tree"/>
+            <field name="domain">[('product_id.is_asset','=',True)]</field>
+            <field name="context">{'search_default_done': 1, 'search_default_groupby_location_id': 1}</field>
+        </record>
+
+        <record id="assets_product_template_action_product" model="ir.actions.act_window">
+            <field name="name">الاصول</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_asset','=',True)]</field>
+            <field name="context">{"default_is_asset": 1}</field>
+        </record>
+
+        <record id="stock_report_dashboard_action" model="ir.actions.act_window">
+            <field name="name">تحليل المستودع</field>
+            <field name="res_model">stock.report</field>
+            <field name="view_mode">dashboard</field>
+            <field name="view_id" ref="stock_enterprise.stock_report_dashboard_view"/>
+            <field name="search_view_id" ref="stock_enterprise.stock_report_search_view"/>
+            <field name="domain" eval="[('picking_type_code', '!=', False),('product_id.is_asset','=',True)]"/>
+            <field name="context">{
+                'search_default_done': 1,
+                'search_default_filter_date_done': 1}
+            </field> <!-- Use context keys for cohort view -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No data yet!
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="dashboard_open_quants"> <!-- Used in dashboard -->
+            <field name="name">الكمية في اليد</field>
+            <field name="context">{'search_default_internal_loc': 1, 'search_default_productgroup':1,
+                'search_default_locationgroup':1}
+            </field>
+            <field name="res_model">stock.quant</field>
+            <field name="domain">[('product_id.is_asset','=',True)]</field>
+        </record>
+
+        <record id="report_stock_quantity_action" model="ir.actions.act_window">
+            <field name="name">المخزون المتوقع</field>
+            <field name="res_model">report.stock.quantity</field>
+            <field name="view_mode">grid,graph</field>
+            <field name="domain">[('product_id.is_asset','=',True)]</field>
+            <field name="context">{
+                'search_default_filter_forecast': 1,
+                'graph_groupbys': ['date:day', 'state', 'product_id'],
+                }
+            </field>
+        </record>
+
+        <record id="stock_valuation_layer_action" model="ir.actions.act_window">
+            <field name="name">تقييم المخزون</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.valuation.layer</field>
+            <field name="view_mode">tree,form,pivot</field>
+            <field name="domain">[('product_id.type', '=', 'product'),('product_id.is_asset', '=', 'product')]</field>
+            <field name="context">{'search_default_group_by_product_id': 1}</field>
+        </record>
+
+        <record id="stock_move_line_action" model="ir.actions.act_window">
+            <field name="name">حركات الصنف</field>
+            <field name="res_model">stock.move.line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,kanban,pivot,form</field>
+            <field name="context">{'search_default_filter_last_12_months': 1, 'search_default_done': 1,
+                'search_default_groupby_product_id': 1, 'create': 0}
+            </field>
+            <field name="domain">[('product_id.is_asset','=',True)]</field>
+        </record>
+
+        <record model="ir.actions.server" id="action_view_inventory_tree"> <!-- Menu + python -->
+            <field name="name">Inventory</field>
+            <field name="model_id" ref="stock.model_stock_quant"/>
+            <field name="state">code</field>
+            <field name="groups_id" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <field name="code">
+                action = model.action_view_inventory_assets()
+            </field>
+        </record>
+
+        <menuitem id="menu_assets_mgmt" name="الاصول" parent="fixed_assets_picking" sequence="1"/>
+
+        <menuitem id="menu_stock_move" parent="menu_assets_mgmt" sequence="1" action="stock_move_action"/>
+
+        <menuitem id="menu_assets_product" parent="menu_assets_mgmt" sequence="1"
+                  action="assets_product_template_action_product"/>
+
+        <menuitem id="menu_stock_warehouse_mgmt" name="العمليات" parent="fixed_assets_picking" sequence="2"/>
+
+        <menuitem action="stock.action_procurement_compute" id="menu_procurement_compute"
+                  parent="menu_stock_warehouse_mgmt"
+                  name="تشغيل المجدوِل"
+                  sequence="135"/>
+
+        <menuitem id="menu_action_inventory_tree" name="تعديلات المخزون" parent="menu_stock_warehouse_mgmt"
+                  sequence="30" action="action_view_inventory_tree"/>
+
+        <menuitem id="all_picking" name="الشحنات" parent="menu_stock_warehouse_mgmt" sequence="5"
+                  action="action_picking_tree_all" groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+        <menuitem
+                id="menu_stock_scrap"
+                name="الكهنه"
+                parent="menu_stock_warehouse_mgmt"
+                action="stock.action_stock_scrap"
+                sequence="99"/>
+
+        <menuitem
+                id="menu_reordering_rules_replenish"
+                action="stock.action_replenishment"
+                name="تجديد المخزون" parent="menu_stock_warehouse_mgmt" sequence="10"
+                groups="stock.group_stock_manager"/>
+
+        <menuitem id="menu_stock_inventory_control" name="الاصناف" parent="fixed_assets_picking" sequence="4"/>
+
+        <menuitem id="menu_assets_product" parent="menu_stock_inventory_control" sequence="1"
+                  action="assets_product_template_action_product"/>
+
+
+        <!--        <menuitem id="menu_product_variant_config_stock" name="Products" action="stock.product_template_action_product"-->
+        <!--                  parent="menu_stock_inventory_control" sequence="1"/>-->
+
+        <!--        <menuitem id="product_product_menu" name="Product Variants" action="stock.stock_product_normal_action"-->
+        <!--                  parent="menu_stock_inventory_control" sequence="2" groups="product.group_product_variant"/>-->
+
+        <!--        <menuitem action="stock.action_production_lot_form" id="menu_action_production_lot_form"-->
+        <!--                  parent="menu_stock_inventory_control" groups="stock.group_production_lot"-->
+        <!--                  sequence="101"/>-->
+
+        <!--        <menuitem id="menu_package" name="Packages" parent="menu_stock_inventory_control"-->
+        <!--                  action="stock.action_package_view"-->
+        <!--                  groups="stock.group_tracking_lot" sequence="102"/>-->
+
+        <menuitem id="menu_warehouse_report" name="التقارير" sequence="99" parent="fixed_assets_picking"
+                  groups="stock.group_stock_manager"/>
+
+        <menuitem id="menu_forecast_inventory" name="المخزون المتوقع" parent="menu_warehouse_report"
+                  sequence="101" action="report_stock_quantity_action"/>
+
+        <menuitem
+                action="stock_move_line_action"
+                id="stock_move_line_menu"
+                parent="menu_warehouse_report" sequence="150"/>
+
+        <menuitem action="stock_move_action" id="stock_move_menu" parent="menu_warehouse_report" sequence="140"
+                  groups="base.group_no_one"/>
+
+
+        <menuitem id="menu_valuation_report" name="تقرير المخزون"
+                  parent="menu_warehouse_report" sequence="100"
+                  action="dashboard_open_quants"/>
+
+        <menuitem id="menu_valuation" name="تقييم المخزون" parent="menu_warehouse_report" sequence="110"
+                  action="stock_valuation_layer_action"/>
+
+
+        <menuitem
+                id="stock_dashboard_menuitem"
+                name="تحليل المستودع"
+                parent="menu_warehouse_report"
+                action="stock_report_dashboard_action"/>
+
+
+    </data>
+</odoo>

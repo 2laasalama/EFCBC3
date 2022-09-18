@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                    <attribute name="states">general_secretary</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_rfq_send']" position="attributes">
+                    <attribute name="states">draft,general_secretary,manager_director</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="states">draft,general_secretary,manager_director,to approve,sent,purchase</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='print_quotation']" position="attributes">
+                    <attribute name="states">draft,general_secretary,manager_director</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='button_cancel']" position="before">
+
+                    <button name="manager_director_approve" type="object" states="draft"
+                            groups="rfq_workflow.rfq_manager_director_group"
+                            string="Manager Director Approve"/>
+
+                    <button name="general_secretary_approve" type="object" states="manager_director"
+                            groups="rfq_workflow.rfq_general_secretary_group"
+                            string="General Secretary Approve"/>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
