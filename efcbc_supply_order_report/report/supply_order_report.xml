@@ -21,8 +21,8 @@
                         <!--                                 src="/efcbc_supply_order_report/static/src/img/header.png"/>-->
                         <!--                        </div>-->
                         <div style="text-align: center;padding: 15px;">
-                            <h2 t-if="not o.total_supply_amount &lt; 1">أمـــر تـــوريـــد</h2>
-                            <h2 t-if="not o.total_supply_amount &gt; 1">أمـــر أسـنـاد</h2>
+                            <h2 t-if="o.order_type == 'supply'">أمـــر تـــوريـــد</h2>
+                            <h2 t-if="o.order_type == 'works'">أمـــر أسـنـاد</h2>
                         </div>
                         <div style="line-height: 27px;text-align: right;">
                             <div>

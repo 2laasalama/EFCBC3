@@ -33,6 +33,7 @@
                 </xpath>
 
                 <field name="notes" position="after">
+                    <field name="order_type" invisible="1"/>
                     <field name="total_supply_amount"/>
                     <field name="total_works_amount"/>
                 </field>

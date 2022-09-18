@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <field name="detailed_type" position="before">
-                    <field name="main_type"/>
+                    <field name="main_type" required="1"/>
                 </field>
             </field>
         </record>

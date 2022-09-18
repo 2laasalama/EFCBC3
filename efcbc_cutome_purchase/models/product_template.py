@@ -9,7 +9,9 @@ class ProductTemplate(models.Model):
 
     main_type = fields.Selection(
         string='النوع',
-        selection=[('supply', 'توريدات'),
-                   ('work', 'أعمال')])
+        selection=[('supply', 'توريد'),
+                   ('work', 'أعمال')],
+        default='supply'
+    )
 
     # is_asset = fields.Boolean()

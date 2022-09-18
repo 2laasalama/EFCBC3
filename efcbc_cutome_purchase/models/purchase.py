@@ -17,6 +17,7 @@ class PurchaseOrder(models.Model):
     sub_sequence = fields.Char('التسلسل الفرعى')
     total_supply_amount = fields.Float(compute='_compute_total_lines')
     total_works_amount = fields.Float(compute='_compute_total_lines')
+    order_type = fields.Selection([('supply', 'Supply Order'), ('works', 'Works Order')], compute='_compute_order_type')
     analytic_account_id = fields.Many2one('account.analytic.account', string='الجهة الطالبة')
     bid_opening_committee = fields.Selection(SELECTION_LIST, string='لجنة فتح المظاريف', copy=False)
     technical_committee = fields.Selection(SELECTION_LIST, string='لجنة فنية', copy=False)
@@ -27,6 +28,16 @@ class PurchaseOrder(models.Model):
                                                    ('direct', 'أمر مباشر')], related='requisition_id.requisition_type')
 
     show_committees = fields.Boolean(compute='_compute_show_committee')
+
+    @api.depends('total_supply_amount', 'total_works_amount')
+    def _compute_order_type(self):
+        for rec in self:
+            if rec.total_supply_amount == 0 and rec.total_works_amount == 0:
+                rec.order_type = 'supply'
+            elif rec.total_supply_amount > 0:
+                rec.order_type = 'supply'
+            else:
+                rec.order_type = 'works'
 
     @api.depends('state', 'requisition_type')
     def _compute_show_committee(self):
