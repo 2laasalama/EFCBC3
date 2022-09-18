@@ -6,27 +6,16 @@ from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare, float_round
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-
+from odoo.addons.purchase.models.purchase import PurchaseOrder as Purchase
 
 class PurchaseOrderInherit(models.Model):
     _inherit = 'purchase.order'
 
-    is_multiwarehouse = fields.Boolean(string='Multi Wahouse', compute='_compute_multiwarehouse')
-
-    def _compute_multiwarehouse(self):
-        for rec in self:
-            rec.is_multiwarehouse = rec.company_id.allow_purchase_warehouse
-
-    # def button_approve(self, force=False):
-    #     print(">>>>>>>> is_multiwarehouse",self.is_multiwarehouse)
-    #     if self.is_multiwarehouse:
-    #         result = super(PurchaseOrderInherit, self).button_approve(force=force)
-    #         self.create_picking()
-    #     else:
-    #         result = super(PurchaseOrderInherit, self).button_approve(force=force)
-    #     return result
+    is_multiwarehouse = fields.Boolean(string='Multi Wahouse',states=Purchase.READONLY_STATES,)
 
     def _create_picking(self):
+        if not self.is_multiwarehouse:
+            return super(PurchaseOrderInherit, self)._create_picking()
         ok = []
         StockPicking = self.env['stock.picking']
         for order in self.filtered(lambda po: po.state in ('purchase', 'done')):

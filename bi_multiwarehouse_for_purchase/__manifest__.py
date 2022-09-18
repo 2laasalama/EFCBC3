@@ -13,7 +13,7 @@
     "currency": 'EUR',
     'depends': ['base','efcbc_cutome_stock','purchase_stock'],
     'data': [
-        'views/purchase_config_settings_views.xml',
+        # 'views/purchase_config_settings_views.xml',
         'views/product_template_inherit.xml',
         'views/product_product_inherit.xml',
         'views/purchase_order_views.xml',
