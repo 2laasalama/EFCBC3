@@ -26,10 +26,12 @@ class StockTransfer(models.Model):
                 state = 'approved'
             if rec.is_internal_transfer:
                 state = 'generate_transfer'
-            source_picking = rec.sudo().picking_ids.filtered(lambda l: l.state != 'cancel' and (l.picking_type_id.id == rec.picking_type_id.id))#or (l.location_dest_id == rec.transit_location_id)
+            source_picking = rec.sudo().picking_ids.filtered(lambda l: l.state != 'cancel' and (
+                    l.picking_type_id.id == rec.picking_type_id.id))  # or (l.location_dest_id == rec.transit_location_id)
             if rec.picking_ids and source_picking and source_picking[0].state == 'done':
                 state = 'deliver_transit'
-            dest_picking = rec.sudo().picking_ids.filtered(lambda l: l.state != 'cancel' and (l.location_dest_id.id == rec.location_dest_id.id))
+            dest_picking = rec.sudo().picking_ids.filtered(
+                lambda l: l.state != 'cancel' and (l.location_dest_id.id == rec.location_dest_id.id))
             if rec.picking_ids and dest_picking and dest_picking[0].state == 'done':
                 state = 'deliver_dest'
             if rec.is_cancel:
@@ -37,44 +39,47 @@ class StockTransfer(models.Model):
             rec.state = state
 
     name = fields.Char(string='Reference', default=lambda self: _('New'), copy=False,
-     index=True, readonly=True)
-    is_check_availability = fields.Boolean(string="Check Available", 
-        default=False, copy=False)
+                       index=True, readonly=True)
+    is_check_availability = fields.Boolean(string="Check Available",
+                                           default=False, copy=False)
     is_internal_transfer = fields.Boolean(string="is internal transfer", default=False, copy=False)
     is_confirm = fields.Boolean(string="Is Confirmed", default=False, copy=False)
     is_cancel = fields.Boolean(string="Is Cancelled", default=False, copy=False)
-    picking_count = fields.Integer(compute='_compute_picking_count', 
-        string='Picking Count')
+    picking_count = fields.Integer(compute='_compute_picking_count',
+                                   string='Picking Count')
     partner_id = fields.Many2one('res.partner', string='Partner', tracking=True)
-    location_id = fields.Many2one('stock.location', string="Source Location", 
-        required=True, tracking=True)
-    location_dest_id = fields.Many2one('stock.location', string="Destination Location", 
-        required=True, tracking=True)
-    transit_location_id = fields.Many2one('stock.location', string="Transit Location", 
-        required=True, tracking=True)
-    picking_type_id = fields.Many2one('stock.picking.type', string='Operation Type', 
-        required=True, tracking=True)
-    company_id = fields.Many2one('res.company', string='Company', 
-        default=lambda self: self.env.user.company_id, index=True, 
-        required=True, tracking=True)
-    state = fields.Selection([('pending', 'Pending'), 
-        ('confirm', 'Waiting Approval'), 
-        ('approved', 'Approved'), 
-        ('cancel', 'Cancelled'), 
-        ('generate_transfer', 'Transfer Generated'), 
-        ('deliver_transit', 'Delivered to Trnasit Location'), 
-        ('deliver_dest', 'Delivered to Destination Location')],
-        string="Status", compute="check_status", copy=False)
+    location_id = fields.Many2one('stock.location', string="Source Location",
+                                  required=True, tracking=True)
+    location_dest_id = fields.Many2one('stock.location', string="Destination Location",
+                                       required=True, tracking=True)
+    in_warehouse_id = fields.Many2one('stock.warehouse', related='location_dest_id.warehouse_id', store=True)
+    out_warehouse_id = fields.Many2one('stock.warehouse', related='location_id.warehouse_id', store=True)
+    transit_location_id = fields.Many2one('stock.location', string="Transit Location",
+                                          required=True, tracking=True)
+    picking_type_id = fields.Many2one('stock.picking.type', string='Operation Type', tracking=True)
+    in_type_id = fields.Many2one('stock.picking.type', string='IN Type', required=True, tracking=True)
+    out_type_id = fields.Many2one('stock.picking.type', string='OUT Type', required=True, tracking=True)
+    company_id = fields.Many2one('res.company', string='Company',
+                                 default=lambda self: self.env.user.company_id, index=True,
+                                 required=True, tracking=True)
+    state = fields.Selection([('pending', 'Pending'),
+                              ('confirm', 'Waiting Approval'),
+                              ('approved', 'Approved'),
+                              ('cancel', 'Cancelled'),
+                              ('generate_transfer', 'Transfer Generated'),
+                              ('deliver_transit', 'Delivered to Trnasit Location'),
+                              ('deliver_dest', 'Delivered to Destination Location')],
+                             string="Status", compute="check_status", copy=False)
     note = fields.Text(string='Notes')
-    transfer_lines = fields.One2many('stock.transfer.line', 'transfer_id', 
-        string="Lines")
-    picking_ids = fields.One2many('stock.picking', 'transfer_id', 
-        string="Pickings")
+    transfer_lines = fields.One2many('stock.transfer.line', 'transfer_id',
+                                     string="Lines")
+    picking_ids = fields.One2many('stock.picking', 'transfer_id',
+                                  string="Pickings")
     approval_required = fields.Boolean(string="Approval required")
-    is_approved = fields.Boolean(string="Approved", default=False, 
-        help="Transfer Is Approved.", copy=False)
+    is_approved = fields.Boolean(string="Approved", default=False,
+                                 help="Transfer Is Approved.", copy=False)
     user_id = fields.Many2one("res.users", string="Responsible", tracking=True,
-        default=lambda self: self.env.user, help="User responsible for this transfer.")
+                              default=lambda self: self.env.user, help="User responsible for this transfer.")
 
     _sql_constraints = [
         ('name_uniq', 'unique(name, company_id)', 'Reference must be unique per company!'),
@@ -83,7 +88,8 @@ class StockTransfer(models.Model):
     @api.model
     def default_get(self, fields):
         res = super(StockTransfer, self).default_get(fields)
-        default_approval_required = self.env['ir.config_parameter'].sudo().get_param('transfer_approval_required', False)
+        default_approval_required = self.env['ir.config_parameter'].sudo().get_param('transfer_approval_required',
+                                                                                     False)
         res['approval_required'] = default_approval_required
         return res
 
@@ -113,32 +119,45 @@ class StockTransfer(models.Model):
             self.location_id = self.picking_type_id.default_location_src_id.id
             self.location_dest_id = self.picking_type_id.default_location_dest_id.id
 
+    @api.onchange('location_id')
+    def onchange_location_id(self):
+        if self.location_id:
+            self.out_type_id = self.location_id.warehouse_id.out_type_id.id
+
+    @api.onchange('location_dest_id')
+    def onchange_location_dest_id(self):
+        if self.location_dest_id:
+            self.in_type_id = self.location_dest_id.warehouse_id.in_type_id.id
+
     @api.onchange('company_id')
     def onchange_company_id(self):
         self.picking_type_id = False
         self.location_id = False
         self.location_dest_id = False
         self.transit_location_id = False
+        self.in_type_id = False
+        self.out_type_id = False
 
     def create_picking(self, location_id, location_dest_id, picking_type_id=False, procurement_id=False):
         pickingobj = self.env['stock.picking']
         Move = self.env['stock.move']
-        if self.picking_type_id:
-            picking_vals = {
-                'origin': self.name,
-                'partner_id': self.partner_id.id,
-                'date_done': fields.Datetime.now(),
-                'picking_type_id': picking_type_id.id,
-                'company_id': self.company_id.id,
-                'move_type': 'direct',
-                'note': self.note or "",
-                'location_id': location_id.id,
-                'location_dest_id': location_dest_id.id,
-                'transfer_id': self.id,
-                'group_id': procurement_id.id,
-            }
-            picking_id = pickingobj.create(picking_vals.copy())
-        for line in self.transfer_lines.filtered(lambda l: l.product_id.type in ['product', 'consu'] and not float_is_zero(l.product_uom_qty, precision_rounding=l.product_id.uom_id.rounding)):
+        picking_vals = {
+            'origin': self.name,
+            'partner_id': self.partner_id.id,
+            'date_done': fields.Datetime.now(),
+            'picking_type_id': picking_type_id.id,
+            'company_id': self.company_id.id,
+            'move_type': 'direct',
+            'note': self.note or "",
+            'location_id': location_id.id,
+            'location_dest_id': location_dest_id.id,
+            'transfer_id': self.id,
+            'group_id': procurement_id.id,
+        }
+        picking_id = pickingobj.create(picking_vals.copy())
+        for line in self.transfer_lines.filtered(
+                lambda l: l.product_id.type in ['product', 'consu'] and not float_is_zero(l.product_uom_qty,
+                                                                                          precision_rounding=l.product_id.uom_id.rounding)):
             Move.create({
                 'name': line.name,
                 'product_uom': line.product_uom.id,
@@ -156,19 +175,19 @@ class StockTransfer(models.Model):
     def generate_transfer(self):
         if not self.transfer_lines:
             raise UserError(_('Please create operations.'))
-        picking_type_id = self.picking_type_id
+
         procurement_id = self.env['procurement.group'].create({
-                'partner_id': self.partner_id.id,
-                'name': self.name,
-            })
-        source_picking_id = self.sudo().create_picking(self.location_id, self.transit_location_id, picking_type_id=picking_type_id, procurement_id=procurement_id)
+            'partner_id': self.partner_id.id,
+            'name': self.name,
+        })
+        source_picking_id = self.sudo().create_picking(self.location_id, self.transit_location_id,
+                                                       picking_type_id=self.out_type_id, procurement_id=procurement_id)
         if source_picking_id:
             source_picking_id.action_confirm()
             source_picking_id.action_assign()
-        warehouse = self.location_dest_id.sudo().warehouse_id
-        if warehouse:
-            picking_type_id = warehouse.int_type_id
-        dest_picking_id = self.sudo().create_picking(self.transit_location_id, self.location_dest_id, picking_type_id=picking_type_id, procurement_id=procurement_id)
+
+        dest_picking_id = self.sudo().create_picking(self.transit_location_id, self.location_dest_id,
+                                                     picking_type_id=self.in_type_id, procurement_id=procurement_id)
         self.is_internal_transfer = True
 
     def action_view_pickings(self):
@@ -198,25 +217,30 @@ class StockTransfer(models.Model):
     def action_check_availability(self):
         stock_quant_obj = self.env['stock.quant']
         for product_qty in self.transfer_lines:
-            product_quant = stock_quant_obj._get_available_quantity(product_id=product_qty.product_id, location_id=self.location_id, lot_id=None, package_id=None, owner_id=None, strict=None, allow_negative=None)
-            measure_uom_qty = product_qty.product_id.uom_id._compute_quantity(product_quant, product_qty.product_uom, round=False)
+            product_quant = stock_quant_obj._get_available_quantity(product_id=product_qty.product_id,
+                                                                    location_id=self.location_id, lot_id=None,
+                                                                    package_id=None, owner_id=None, strict=None,
+                                                                    allow_negative=None)
+            measure_uom_qty = product_qty.product_id.uom_id._compute_quantity(product_quant, product_qty.product_uom,
+                                                                              round=False)
             product_qty.write({'available_qty': measure_uom_qty})
             if product_qty.available_qty >= product_qty.product_uom_qty:
-                product_qty.write({"is_available": True})    
+                product_qty.write({"is_available": True})
             else:
-                product_qty.write({"is_available": False})            
-        self.write({'is_check_availability':True})
+                product_qty.write({"is_available": False})
+        self.write({'is_check_availability': True})
+
 
 class StockTransferLine(models.Model):
     _name = "stock.transfer.line"
     _description = "Stock Transfer Lines"
 
     name = fields.Char(string='Description', index=True, required=True)
-    product_id = fields.Many2one('product.product', string="Product", 
-        domain="[('type', 'in', ['product', 'consu'])]")
+    product_id = fields.Many2one('product.product', string="Product",
+                                 domain="[('type', 'in', ['product', 'consu'])]")
     transfer_id = fields.Many2one('stock.transfer', string="Transfer")
-    product_uom_qty = fields.Float(string="Initial Demand", required=True, 
-        default=1.0)
+    product_uom_qty = fields.Float(string="Initial Demand", required=True,
+                                   default=1.0)
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure', required=True)
     available_qty = fields.Integer(string='Available Quality')
     is_available = fields.Boolean(string="Is Available", default=False, copy=False)
@@ -227,11 +251,16 @@ class StockTransferLine(models.Model):
 
     @api.constrains('product_uom')
     def _check_uom(self):
-        transfer_error = self.filtered(lambda transfer: transfer.product_id.uom_id.category_id != transfer.product_uom.category_id)
+        transfer_error = self.filtered(
+            lambda transfer: transfer.product_id.uom_id.category_id != transfer.product_uom.category_id)
         if transfer_error:
-            user_warning = _('You cannot perform the transfer because the unit of measure has a different category as the product unit of measure.')
+            user_warning = _(
+                'You cannot perform the transfer because the unit of measure has a different category as the product unit of measure.')
             for transfer in transfer_error:
-                user_warning += _('\n\n%s --> Product UoM is %s (%s) - Transfer UoM is %s (%s)') % (transfer.product_id.display_name, transfer.product_id.uom_id.name, transfer.product_id.uom_id.category_id.name, transfer.product_uom.name, transfer.product_uom.category_id.name)
+                user_warning += _('\n\n%s --> Product UoM is %s (%s) - Transfer UoM is %s (%s)') % (
+                    transfer.product_id.display_name, transfer.product_id.uom_id.name,
+                    transfer.product_id.uom_id.category_id.name, transfer.product_uom.name,
+                    transfer.product_uom.category_id.name)
             user_warning += _('\n\nBlocking: %s') % ' ,'.join(transfer_error.mapped('name'))
             raise UserError(user_warning)
 
