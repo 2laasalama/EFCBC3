@@ -14,10 +14,8 @@ class PurchaseOrderLineInherit(models.Model):
     warehouses_id = fields.Many2one('stock.warehouse', string="Warehouse")
     is_warehouse = fields.Boolean()
 
-
-    @api.onchange('product_id', 'company_id')
+    @api.onchange('product_id')
     def set_required_warehouse(self):
-        self.is_warehouse = self.company_id.allow_purchase_warehouse
         if self.product_id:
             self.warehouses_id = self.product_id.purchase_warehouse_id.id
 

@@ -11,7 +11,7 @@
     'website': "https://www.browseinfo.in",
     "price": 25,
     "currency": 'EUR',
-    'depends': ['base','efcbc_cutome_stock','purchase_stock'],
+    'depends': ['base', 'efcbc_cutome_stock', 'purchase_stock', 'purchase_requisition'],
     'data': [
         # 'views/purchase_config_settings_views.xml',
         'views/product_template_inherit.xml',
@@ -20,7 +20,7 @@
     ],
     "auto_install": False,
     "installable": True,
-    "live_test_url":'https://youtu.be/hzPjov3kjzk',
-    "images":['static/description/Banner.png'],
-    'license': 'OPL-1' ,
+    "live_test_url": 'https://youtu.be/hzPjov3kjzk',
+    "images": ['static/description/Banner.png'],
+    'license': 'OPL-1',
 }
