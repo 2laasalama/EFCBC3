@@ -12,7 +12,7 @@
                     <button name="print_supply_order_report" type="object" string="أمر توريد" icon="fa-print"
                             class="btn-primary"
                             attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '=', 'works')]}"/>
-                    <button name="print_supply_order_report" type="object" string="أمر أسناد" icon="fa-print"
+                    <button name="print_work_assignment_order_report" type="object" string="أمر أسناد" icon="fa-print"
                             class="btn-primary"
                             attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '=', 'supply')]}"/>
                 </xpath>
@@ -21,12 +21,22 @@
                     <field name="warranty_id"/>
                 </xpath>
 
-                <field name="fiscal_position_id" position="after">
-                    <field name="payment_mode"/>
-                    <field name="executive_secretariat"/>
-                    <field name="general_secretary"/>
-                    <field name="supply_order_delivery"/>
-                </field>
+                <xpath expr="//field[@name='fiscal_position_id']/.." position="after">
+                    <group string="أمر توريد">
+                        <field name="payment_mode"/>
+                        <field name="executive_secretariat"/>
+                        <field name="general_secretary"/>
+                        <field name="supply_order_delivery"/>
+                    </group>
+                    <group string="أمر اسناد">
+                        <field name="committe_recommendation_date"/>
+                        <field name="committe_certified_date"/>
+                        <field name="implementation_period"/>
+                        <field name="location_receipt_date"/>
+                        <field name="down_payment"/>
+                        <field name="final_insurance_value"/>
+                    </group>
+                </xpath>
 
             </field>
         </record>
