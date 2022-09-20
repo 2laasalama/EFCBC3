@@ -3,7 +3,7 @@
     <record id="purchase_requisition_report" model="ir.actions.report">
         <field name="name">طلب شراء</field>
         <field name="model">purchase.requisition</field>
-        <field name="report_type">qweb-pdf</field>
+        <field name="report_type">qweb-html</field>
         <field name="report_name">efcbc_purchase_requisition_report.purchase_requisition_report_template</field>
         <field name="report_file">efcbc_purchase_requisition_report.purchase_requisition_report_template</field>
         <field name="print_report_name">'طلب شراء - %s' % (object.name).replace('/', '')</field>
@@ -25,7 +25,7 @@
                                 <strong>طلب الشراء</strong>
                             </h2>
                         </div>
-                        <table class="table table-borderless rtl text-right">
+                        <table class="table table-borderless text-right">
 
 
                             <tbody class="info-titles">
@@ -62,7 +62,7 @@
                             </tbody>
                         </table>
 
-                        <table class="table table-bordered rtl po-table"
+                        <table class="table table-bordered po-table"
                                style="margin-top: -15px;">
                             <thead>
                                 <tr>
