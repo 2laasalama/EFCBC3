@@ -13,3 +13,5 @@ class StockMove(models.Model):
         super(StockMove, self).action_set_quantities_to_reservation()
         for line in self.move_ids_without_package:
             line.check_accept_purchase_qty()
+        for line in self.move_line_ids_without_package:
+            line.check_accept_purchase_qty()
