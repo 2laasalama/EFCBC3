@@ -50,6 +50,7 @@ class PurchaseOrder(models.Model):
             })
             self.committee_approval_id = approval.id
         approval.check_committee_users()
+        approval.check_quantity_approval()
         return {
             'name': _("موافقة لجنة الاستلام رقم  %s", self.display_name),
             'type': 'ir.actions.act_window',
@@ -80,3 +81,10 @@ class PurchaseOrder(models.Model):
             'res_id': approval.id,
             'view_id': self.env.ref('purchase_committee_approval.rfq_unpacking_approval_view_form').id,
         }
+
+class PurchaseOrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+
+    accept_qty = fields.Float(string='الكمية المقبولة')
+
+

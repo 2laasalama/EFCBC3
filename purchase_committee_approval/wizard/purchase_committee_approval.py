@@ -11,6 +11,7 @@ class purchaseCommitteeapproval(models.Model):
     committee_decision = fields.Selection(selection=[('approve', 'Approve'), ('refuse', 'Refuse')])
 
     line_ids = fields.One2many('purchase.committee.approval.line', 'approval_id', "Approval Lines")
+    quantity_line_ids = fields.One2many('purchase.quantity.approval.line', 'approval_id', "Quantity Lines")
 
     def action_approve(self):
         if self.purchase_id.state == 'purchase':
@@ -21,15 +22,14 @@ class purchaseCommitteeapproval(models.Model):
     def action_refuse(self):
         self.committee_decision = 'refuse'
 
-    # def check_committee_users(self):
-    #     users = self.env.ref('purchase_committee_approval.purchase_committee_user_group').users
-    #     for user in users:
-    #         if not self.line_ids.filtered(lambda l: l.user_id == user):
-    #             self.env['purchase.committee.approval.line'].create({
-    #                 'user_id': user.id,
-    #                 'employee_id': user.employee_id.id if user.employee_id else False,
-    #                 'approval_id': self.id
-    #             })
+    def check_quantity_approval(self):
+        if self.purchase_id:
+            for line in self.purchase_id.order_line:
+                if not self.quantity_line_ids.filtered(lambda l: l.order_line_id == line):
+                    self.env['purchase.quantity.approval.line'].create({
+                        'order_line_id': line.id,
+                        'approval_id': self.id
+                    })
 
     def check_committee_users(self):
         if self.purchase_id.requisition_id:
@@ -58,3 +58,16 @@ class purchaseCommitteeapprovalLine(models.Model):
             rec.can_edit = False
             if self.env.user.has_group('purchase.group_purchase_manager'):
                 rec.can_edit = True
+
+
+class purchaseQuantityapprovalLine(models.Model):
+    _name = 'purchase.quantity.approval.line'
+    _description = 'Purchase Quantity approval Line'
+
+    approval_id = fields.Many2one('purchase.committee.approval')
+    order_line_id = fields.Many2one('purchase.order.line')
+    product_id = fields.Many2one('product.product', related='order_line_id.product_id', string='الصنف', readonly=True)
+    product_qty = fields.Float(string='الكمية المطلوبه', related='order_line_id.product_qty', readonly=True)
+    price_unit = fields.Float(string='سعر الوحدة', related='order_line_id.price_unit', readonly=True)
+    accept = fields.Boolean(related='order_line_id.accept', string='موافقه', readonly=True)
+    accept_qty = fields.Float(string='الكمية المقبولة', related='order_line_id.accept_qty', readonly=False)

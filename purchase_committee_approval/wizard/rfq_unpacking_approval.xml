@@ -24,14 +24,14 @@
                         </field>
                     </grop>
                     <footer>
-                        <button string="حفظ" special="save" class="btn btn-primary" close="1"/>
-                        <button string="غلق" special="cancel" class="btn-secondary" close="1"/>
                         <button string="موافقة" type="object" name="action_approve"
                                 groups="purchase_committee_approval.rfq_unpacking_manager_group"
                                 class="btn btn-primary"/>
                         <button string="رفض" type="object" name="action_refuse"
                                 groups="purchase_committee_approval.rfq_unpacking_manager_group"
                                 class="btn btn-primary"/>
+                        <button string="حفظ" special="save" class="btn btn-primary" close="1"/>
+                        <button string="غلق" special="cancel" class="btn-secondary" close="1"/>
                     </footer>
                 </form>
             </field>

@@ -15,6 +15,7 @@
         'security/security.xml',
         'views/purchase_order.xml',
         'views/purchase_requisition_views.xml',
+        'views/stock_view.xml',
         'wizard/purchase_committee_approval.xml',
         'wizard/rfq_unpacking_approval.xml',
     ],
