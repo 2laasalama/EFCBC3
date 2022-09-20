@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 from odoo.exceptions import Warning
+from odoo.exceptions import ValidationError
 
 
 class UnpackingRFQ(models.Model):
@@ -54,6 +55,14 @@ class UnpackingRFQ(models.Model):
         values = self.get_report_data(self.requisition_id.purchase_ids)
         self.line_ids = False
         self.env['unpacking.rfq.line'].create(values)
+
+    @api.constrains('line_ids', 'line_ids.accept')
+    def check_duplicate_approve(self):
+        for rec in self:
+            accept_lines = rec.line_ids.filtered(lambda l: l.accept)
+            for line in accept_lines:
+                if line.accept and accept_lines.filtered(lambda l: l.product_id == line.product_id and l.id != line.id):
+                    raise ValidationError("You Can't Accept on product from more than one vendor.")
 
 
 class UnpackingRFQLine(models.Model):
