@@ -7,6 +7,13 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//header" position="inside">
+                    <button name="print_check_receipt_report"
+                            attrs="{'invisible': ['|',('state','not in', ('purchase','done')), ('incoming_picking_count', '=', 0)]}"
+                            string="محضر فحص و إستلام" icon="fa-print"
+                            type="object"/>
+                </xpath>
+
                 <xpath expr="//button[@id='draft_confirm']" position="attributes">
                     <attribute name="name">action_confirm</attribute>
                 </xpath>

@@ -8,7 +8,7 @@
     'license': 'OPL-1',
     'category': 'Purchase',
     'version': '0.2',
-    'depends': ['purchase_stock','hr','rfq_workflow'],
+    'depends': ['purchase_stock', 'hr', 'rfq_workflow', 'efcbc_report_layout'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -18,6 +18,7 @@
         'views/stock_view.xml',
         'wizard/purchase_committee_approval.xml',
         'wizard/rfq_unpacking_approval.xml',
+        'report/check_receipt_report.xml',
     ],
 
 }

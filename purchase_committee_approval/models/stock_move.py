@@ -20,3 +20,4 @@ class StockMove(models.Model):
                     raise ValidationError(
                         "{} : Sorry you can not accept quantity more than {}.".format(rec.product_id.name,
                                                                                       rec.accept_purchase_qty))
+

@@ -14,6 +14,9 @@ class PurchaseOrder(models.Model):
     rfq_unpacking_id = fields.Many2one('rfq.unpacking.approval', copy=False)
     start_workflow = fields.Boolean(compute='_compute_start_workflow', copy=False)
 
+    def print_check_receipt_report(self):
+        return self.env.ref('purchase_committee_approval.check_receipt_report').report_action(self.id)
+
     @api.depends('requisition_id')
     def _compute_require_committee_approval(self):
         for rec in self:
@@ -82,9 +85,16 @@ class PurchaseOrder(models.Model):
             'view_id': self.env.ref('purchase_committee_approval.rfq_unpacking_approval_view_form').id,
         }
 
+
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     accept_qty = fields.Float(string='الكمية المقبولة')
+    rejected_qty = fields.Float(compute='_compute_rejected_qty')
+    rejected_qty_rate = fields.Float(compute='_compute_rejected_qty')
 
-
+    @api.depends('accept_qty', 'product_qty')
+    def _compute_rejected_qty(self):
+        for rec in self:
+            rec.rejected_qty = rec.product_qty - rec.accept_qty
+            rec.rejected_qty_rate = (rec.rejected_qty / rec.product_qty) * 100

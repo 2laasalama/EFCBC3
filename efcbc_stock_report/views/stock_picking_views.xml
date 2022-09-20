@@ -16,8 +16,8 @@
                  <button name="print_receipt_order_report" type="object" string="إذن تسليم صيانة" icon="fa-print"
                         attrs="{'invisible': ['|','|',('maintenance_company_id', '=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>
 
-                <button name="print_check_receipt_report" type="object" string="محضر فحص و إستلام" icon="fa-print"
-                        attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'done')]}"/>
+<!--                <button name="print_check_receipt_report" type="object" string="محضر فحص و إستلام" icon="fa-print"-->
+<!--                        attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'done')]}"/>-->
 
 
                 <button name="print_return_order_report" type="object" string="إذن مرتجع" icon="fa-print"

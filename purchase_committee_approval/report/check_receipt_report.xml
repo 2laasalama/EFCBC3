@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="check_receipt_report" model="ir.actions.report">
+        <field name="name">محضر فحص و إستلام</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">purchase_committee_approval.check_receipt_report_template</field>
+        <field name="report_file">purchase_committee_approval.check_receipt_report_template</field>
+        <field name="print_report_name">'محضر فحص و إستلام - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" eval="False"/>
+    </record>
+
+    <template id="check_receipt_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="efcbc_report_layout.internal_layout">
+                    <div class="page" style="direction: rtl;">
+                        <div class="row" style="text-align: right;">
+                            <div class="col-4"></div>
+                            <div class="col-4" style="text-align: center;">
+                                <h2>محضر فحص و إستلام</h2>
+                            </div>
+                        </div>
+                        <br/>
+                        <div style="text-align: right;line-height: 32px;">
+                            <div>
+                                <span>التاريخ :</span>
+                                <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
+                            </div>
+                            <div>
+                                <span>
+                                    اسم المورد/
+                                </span>
+                                <t t-esc="o.partner_id.name"/>
+                            </div>
+                            <div>
+                                <span>
+                                    رقم طلب الشراء/
+                                </span>
+                                <t t-esc="o.name"/>
+                            </div>
+                        </div>
+                        <table class="table table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="text-align: center;width: 5%;">
+                                        <strong>م</strong>
+                                    </th>
+                                    <th rowspan="2" style="text-align: center; width: 35%;">
+                                        <strong>اسم الصنف</strong>
+                                    </th>
+
+                                    <th rowspan="2" style="text-align: center;width: 10%;">
+                                        <strong>الوحدة</strong>
+                                    </th>
+                                    <th rowspan="2" style="text-align: center;width: 10%;">
+                                        <strong>الكمية</strong>
+                                    </th>
+                                    <th colspan="3" style="text-align: center;width: 15">
+                                        <strong>نتيجة الفحص</strong>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: center;width: 10%;">
+                                        <strong>مقبولة</strong>
+                                    </th>
+                                    <th style="text-align: center;width: 10%;">
+                                        <strong>مرفوضة</strong>
+                                    </th>
+                                    <th style="text-align: center;width: 10%;">
+                                        <strong>نسبة المعيب</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sequence" t-value="0"/>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <t t-set="sequence" t-value="sequence+1"/>
+                                    <td class="text-center">
+                                        <span t-esc="sequence"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_uom.name"/>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <span t-field="line.product_qty"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.accept_qty"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.rejected_qty"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.rejected_qty_rate"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="text-align: right;line-height: 32px;">
+                            <div>
+                                <span>بعد الفحص والمعاينة الفعلية والأستلام نري قبول /عدم قبول .....................
+                                </span>
+                            </div>
+                            <div t-if="len(o.picking_ids.filtered(lambda picking: picking.state != 'cancel'))==1">
+                                <span>
+                                    استلمت الأصناف المقبولة بعالية وأعداد إذن أضافة رقم (
+                                </span>
+                                <t t-esc="o.picking_ids.filtered(lambda picking: picking.state != 'cancel').name"/>
+                                <span>
+                                    ) بتاريخ
+                                </span>
+                                <t t-esc="context_timestamp(o.picking_ids.filtered(lambda picking: picking.state != 'cancel').scheduled_date).strftime('%Y-%m-%d')"/>
+                                <span>
+                                    واضيفت بعهتدى
+                                </span>
+                            </div>
+                            <div t-if="len(o.picking_ids.filtered(lambda picking: picking.state != 'cancel'))>1">
+                                <div>
+                                    استلمت الأصناف المقبولة بعالية وأعداد إذون الاضافة الاتية:
+                                </div>
+                                <t t-foreach="o.picking_ids.filtered(lambda picking: picking.state != 'cancel')"
+                                   t-as="picking">
+                                    <div>
+                                        <span> - (
+                                        </span>
+                                        <t t-esc="picking.name"/>
+                                        <span>
+                                            ) بتاريخ
+                                        </span>
+                                        <t t-esc="context_timestamp(picking.scheduled_date).strftime('%Y-%m-%d')"/>
+                                    </div>
+                                </t>
+                                <div>
+                                    واضيفت بعهتدى
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+                            <div class="col-4" style="text-align: center">
+                                <span>
+                                    أمين المخازن
+                                </span>
+                                <div>....................</div>
+                            </div>
+                        </div>
+                        <div style="text-align: right;line-height: 32px;">
+                            <div>
+                                أسباب عدم القبول:-
+                            </div>
+                            <div>
+                                1-
+                            </div>
+                            <div>
+                                2-
+                            </div>
+                            <div>
+                                3-
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: right;">
+                            <div class="col-4" style="text-align: center">
+                                <span>
+                                    رئيس اللجنة
+                                </span>
+                            </div>
+                            <div class="col-4"></div>
+                            <div class="col-4" style="text-align: center;margin-top: 20px">
+                                <div>
+                                    <strong>أعتماد</strong>
+                                </div>
+                                <div>
+                                    <strong>الامين العام</strong>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -2,3 +2,4 @@
 from . import purchase_order
 from . import purchase_requisition
 from . import stock_move
+from . import stock_picking
