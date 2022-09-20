@@ -12,16 +12,54 @@ class UnpackingRFQ(models.Model):
     line_ids = fields.One2many('unpacking.rfq.line', 'unpacking_id')
 
     def get_partners(self):
-        return self.line_ids.mapped('partner_id')
+        partners = []
+        for index, partner in enumerate(self.line_ids.mapped('partner_id')):
+            partners.append({'sequence': index + 1,
+                             'id': partner.id,
+                             'name': partner.name,
+                             })
+        return partners
+
+    def get_partner_sequence(self, partner_id):
+        for partner in self.get_partners():
+            if partner_id == partner['id']:
+                return partner['sequence']
+
+    def get_amount_totals(self):
+        totals = []
+        for partner in self.get_partners():
+            amount_total = sum(
+                x.price_total for x in self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'] and x.accept))
+            if amount_total > 0:
+                amount_total_txt = self.requisition_id.currency_id.with_context(lang='ar_001').amount_to_text(
+                    amount_total)
+                totals.append({
+                    'sequence': partner['sequence'],
+                    'partner_name': partner['name'],
+                    'amount_total': amount_total,
+                    'amount_total_txt': amount_total_txt,
+                })
+        return sorted(totals, key=lambda d: d['amount_total'])
+
+    def get_total_purchases(self):
+        orders = []
+
+        for order in self.requisition_id.purchase_ids.sorted('amount_total'):
+            sequence = self.get_partner_sequence(order.partner_id.id)
+            amount_total_txt = order.currency_id.with_context(lang='ar_001').amount_to_text(order.amount_total)
+            orders.append({
+                'order_id': order,
+                'sequence': sequence,
+                'amount_total': order.amount_total,
+                'amount_total_txt': amount_total_txt,
+            })
+        return orders
 
     def get_products(self):
         return self.line_ids.mapped('product_id')
 
     def get_product_lines(self, product_id):
         return self.line_ids.filtered(lambda x: x.product_id.id == product_id)
-
-    def get_amount_totals(self, partner_id):
-        return sum(x.price_total for x in self.line_ids.filtered(lambda x: x.partner_id.id == partner_id))
 
     def get_report_data(self, records):
         res = []

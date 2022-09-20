@@ -6,10 +6,10 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="efcbc_report_layout.internal_layout">
-                    <div class="page" style="direction: rtl;">
+                    <div class="page" style="direction: rtl;text-align: right;font-size: 20px;line-height: 40px;">
                         <div style="text-align: center;">
                             <h3>مذكرة للعرض</h3>
-                            <h3>على السيد المحاسب الامين العام</h3>
+                            <h3>على السيد المحاسب / الامين العام</h3>
                         </div>
                         <br/>
                         <div style="text-align: right;">
@@ -17,101 +17,117 @@
                             <strong>
                                 <t t-esc="o.requisition_id.name"/>
                             </strong>
-                            <span>بتاريخ</span>
+                            <span>والصادر بتاريخ</span>
                             <strong>
                                 <t t-esc="context_timestamp(o.requisition_id.ordering_date).strftime('%Y-%m-%d')"/>
                             </strong>
-                            <span>بخصوص شراء الاصناف الاتية .</span>
+                            <span>وذلك لتوريد وتنفيذ الأصناف الأتية :</span>
 
                         </div>
 
+                        <div>
+                            <t t-set="sequence" t-value="0"/>
+                            <t t-foreach="o.get_products()" t-as="product">
+                                <div>
+                                    <t t-set="sequence" t-value="sequence+1"/>
+                                    <t t-esc="sequence"/>
+                                    <span>-</span>
+                                    <span>
+                                        <t t-esc="product.name"/>
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
+                        <div style="margin-top: 20px">فقد تم جلب عروض من الشركات الأتيه :</div>
 
-                        <table class="table table-condensed table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-right">
-                                        <strong>المورد</strong>
-                                    </th>
-                                    <t t-foreach="o.get_partners()" t-as="partner">
-                                        <th colspan="3" class="text-center">
-                                            <span t-field="partner.name"/>
-                                        </th>
-                                    </t>
-                                </tr>
-                                <tr>
-                                    <th class="text-right">
-                                        <strong>الصنف</strong>
-                                    </th>
-                                    <t t-foreach="o.get_partners()" t-as="partner">
-                                        <th style="text-align: center;width: 5%;">
-                                            <strong>السعر</strong>
-                                        </th>
-                                        <th style="text-align: center;width: 5%;">
-                                            <strong>الكمية</strong>
-                                        </th>
-                                        <th style="text-align: center;width: 5%;">
-                                            <strong>الاجمالى</strong>
-                                        </th>
-                                    </t>
-                                </tr>
-                            </thead>
+                        <div>
+                            <t t-foreach="o.get_partners()" t-as="partner">
+                                <div>
+                                    <t t-esc="partner['sequence']"/>
+                                    <span>-</span>
+                                    <span>
+                                        <t t-esc="partner['name']"/>
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
 
-                            <tbody>
-                                <tr t-foreach="o.get_products()" t-as="product">
-                                    <td class="text-right">
-                                        <span t-field="product.name"/>
-                                    </td>
-                                    <t t-foreach="o.get_product_lines(product.id)" t-as="line">
-                                        <td class="text-center">
-                                            <span t-field="line.price_unit"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-field="line.product_qty"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-field="line.price_total"/>
-                                        </td>
-                                    </t>
+                        <div>
+                            وكانت الاسعار الوارده من الشركات المتقدمه للأصناف المطلوبه كما بكشف التفريغ المرفق والمقبوله
+                            فنيا بترتيب قيمه العرض الاقل سعرا من بين العرض المقدمه كما يلي :
+                        </div>
 
-                                </tr>
-                                <tr>
-                                    <td class="text-right">
-                                        <strong>الاجمالى</strong>
-                                    </td>
-                                    <t t-foreach="o.get_partners()" t-as="partner">
-                                        <td colspan="3" class="text-center">
-                                            <strong>
-                                                <t t-esc="o.get_amount_totals(partner.id)"/>
-                                            </strong>
-                                        </td>
-                                    </t>
+                        <div>
+                            <t t-foreach="o.get_amount_totals()" t-as="order">
+                                <div>
+                                    <t t-esc="order['sequence']"/>
+                                    <span>- كانت قيمه العرض المقدم بقيمه اجماليه للاصناف المقبوله فنيا(</span>
+                                    <span>
+                                        <t t-esc="order['amount_total']"/>
+                                    </span>
+                                    <span>
+                                        )
+                                    </span>
+                                    <span>
+                                        <t t-esc="order['amount_total_txt']"/>
+                                    </span>
+                                    <span>
+                                        فقط
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
 
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div>
+                            والامر معروض علي سيادتكم للتفضل بالموافقه علي الشراء من الشركات الاتية :
+                        </div>
 
+                        <div>
+                            <t t-foreach="o.get_amount_totals()" t-as="order">
+                                <div>
 
-                        <div style="text-align: center;">
-                            برجاء التكرم بالموافقة على شراء الاصناف الوراد ذكرها فى الجدول .
+                                    <span>- شركة(</span>
+                                    <span>
+                                        <t t-esc="order['partner_name']"/>
+                                    </span>
+                                    <span>
+                                        ) صاحبة العرض رقم
+                                    </span>
+                                    <span>
+                                        <t t-esc="order['sequence']"/>
+                                    </span>
+                                    <span>
+                                        بقيمة اجمالية(
+                                    </span>
+                                    <span>
+                                        <t t-esc="order['amount_total']"/>
+                                    </span>
+                                    <span>
+                                        )
+                                    </span>
+                                    <span>
+                                        <t t-esc="order['amount_total_txt']"/>
+                                    </span>
+                                    <span>
+                                        فقط
+                                    </span>
+                                </div>
+                            </t>
                         </div>
                         <div style="text-align: center;">
-                            مع فائق الاحترام
+                            وتفضلوا بقبول فائق الاحترام
                         </div>
                         <div class="row" style="text-align: right;">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+
                             <div style="text-align: center;" class="col-4">
-                                <span>
-                                    رئيس الامانة التنفيذية للمشتريات والمخازن
-                                </span>
-                            </div>
-                            <div class="col-4">
-
-                            </div>
-
-                            <div style="text-align: center;margin-top: 10px" class="col-4">
-                                <br></br>
+                                <h4>
+                                    <strong>رئيس امانه المشتريات</strong>
+                                </h4>
                                 <br></br>
                                 <h4>
-                                    <strong>السيد الامين العام للاتحاد</strong>
+                                    <strong>محاسب /</strong>
                                 </h4>
                             </div>
 
