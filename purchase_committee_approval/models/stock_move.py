@@ -9,7 +9,7 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     accept_purchase_qty = fields.Float(string='الكمية المقبولة من لجنة الاستلام', related='purchase_line_id.accept_qty',
-                                       readonly=False)
+                                       readonly=True)
 
     @api.constrains('accept_purchase_qty', 'quantity_done', 'purchase_line_id')
     @api.onchange('accept_purchase_qty', 'quantity_done', 'purchase_line_id')
@@ -20,4 +20,3 @@ class StockMove(models.Model):
                     raise ValidationError(
                         "{} : Sorry you can not accept quantity more than {}.".format(rec.product_id.name,
                                                                                       rec.accept_purchase_qty))
-

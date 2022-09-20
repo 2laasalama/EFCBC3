@@ -11,7 +11,7 @@
 
 
                 <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']" position="before">
-                    <field name="accept_purchase_qty"/>
+                    <field name="accept_purchase_qty" readonly="1"/>
                 </xpath>
 
 
