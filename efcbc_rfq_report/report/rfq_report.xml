@@ -22,6 +22,12 @@
                         <div style="line-height: 27px;text-align: right;">
                             <div>
                                 <span>
+                                    التاريخ /
+                                </span>
+                                <t t-esc="context_timestamp(o.create_date).strftime('%Y-%m-%d')"/>
+                            </div>
+                            <div>
+                                <span>
                                     السـادة شركة/
                                 </span>
                                 <t t-esc="o.partner_id.name"/>
@@ -34,7 +40,7 @@
                             </div>
                         </div>
                         <table class="table table-condensed table-bordered"
-                               style="border-collapse: collapse;border-style: hidden; box-shadow: 0 0 0 2px #e2e2e2;margin-top: 10px;">
+                               style="border-collapse: collapse;border-style: hidden; box-shadow: 0 0 0 2px #e2e2e2;">
                             <thead>
 
                                 <tr style="background-color: #eaeaea;">
