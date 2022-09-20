@@ -102,6 +102,11 @@ class UnpackingRFQ(models.Model):
                 if line.accept and accept_lines.filtered(lambda l: l.product_id == line.product_id and l.id != line.id):
                     raise ValidationError("You Can't Accept on product from more than one vendor.")
 
+    def write(self, vals):
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",vals)
+        # self.check_duplicate_approve()
+        return super(UnpackingRFQ, self).write(vals)
+
 
 class UnpackingRFQLine(models.Model):
     _name = 'unpacking.rfq.line'
