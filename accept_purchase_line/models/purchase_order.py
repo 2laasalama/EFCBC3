@@ -10,15 +10,15 @@ class PurchaseOrder(models.Model):
 
     rejected_line_ids = fields.One2many('purchase.order.line', 'rejected_order_id', 'Rejected Lines')
 
-    def button_confirm(self):
-        for line in self.order_line.filtered(lambda l: not l.accept):
-            line.rejected_order_id = line.order_id.id
-            line.order_id = False
-
-
-        if not self.order_line:
-            raise ValidationError("You Can't Confirm this RFQ, Three is no any accepted line.")
-        return super(PurchaseOrder, self).button_confirm()
+    @api.constrains('state')
+    def check_rejected_line_ids(self):
+        for rec in self:
+            if rec.state == 'purchase':
+                if not self.order_line:
+                    raise ValidationError("You Can't Confirm this RFQ, Three is no any accepted line.")
+                for line in self.order_line.filtered(lambda l: not l.accept):
+                    line.rejected_order_id = line.order_id.id
+                    line.order_id = False
 
     def button_draft(self):
         for rec in self:
@@ -31,7 +31,7 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    accept = fields.Boolean(default=True,string='موافق')
+    accept = fields.Boolean(default=True, string='موافق')
     active = fields.Boolean(default=True)
     rejected_order_id = fields.Many2one('purchase.order')
     order_id = fields.Many2one(required=False)

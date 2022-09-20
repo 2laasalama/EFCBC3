@@ -9,11 +9,11 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='order_line']/tree" position="inside">
-                    <field name="accept"/>
+                    <field name="accept" widget="boolean_toggle"/>
                 </xpath>
 
                 <page name="products" position="after">
-                    <page string="الاصناف غير المقبولة"  attrs="{'invisible': [('rejected_line_ids', '=', False)]}">
+                    <page string="الاصناف غير المقبولة" attrs="{'invisible': [('rejected_line_ids', '=', False)]}">
                         <field name="rejected_line_ids" readonly="1">
                             <tree editable="0">
                                 <field name="display_type" invisible="1"/>
