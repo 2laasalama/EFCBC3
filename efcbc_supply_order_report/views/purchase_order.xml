@@ -11,10 +11,15 @@
                 <xpath expr="//header" position="inside">
                     <button name="print_supply_order_report" type="object" string="أمر توريد" icon="fa-print"
                             class="btn-primary"
-                            attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '=', 'works')]}"/>
+                            attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '!=', 'supply')]}"/>
+
                     <button name="print_work_assignment_order_report" type="object" string="أمر أسناد" icon="fa-print"
                             class="btn-primary"
-                            attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '=', 'supply')]}"/>
+                            attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '!=', 'works')]}"/>
+
+                    <button name="print_supply_work_order_report" type="object" string="أمر أسناد وتوريد" icon="fa-print"
+                            class="btn-primary"
+                            attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '!=', 'both')]}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">

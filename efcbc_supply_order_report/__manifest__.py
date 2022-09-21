@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'report/supply_order_report.xml',
         'report/work_assignment_order_report.xml',
+        'report/supply_work_order_report.xml',
         'views/purchase_order.xml',
         'views/purchase_requisition_views.xml',
         'views/res_config.xml',

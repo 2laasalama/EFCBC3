@@ -43,6 +43,9 @@ class PurchaseOrder(models.Model):
     def print_work_assignment_order_report(self):
         return self.env.ref('efcbc_supply_order_report.work_assignment_order_report').report_action(self.id)
 
+    def print_supply_work_order_report(self):
+        return self.env.ref('efcbc_supply_order_report.supply_work_order_report').report_action(self.id)
+
     def get_amount_total_in_text(self):
         return num2words(self.amount_total, lang='ar') + '  جنيه فقط لا غير '
 

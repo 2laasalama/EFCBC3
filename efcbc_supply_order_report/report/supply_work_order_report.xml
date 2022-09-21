@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="work_assignment_order_report" model="ir.actions.report">
-        <field name="name">أمر أسناد</field>
+    <record id="supply_work_order_report" model="ir.actions.report">
+        <field name="name">أمر أسناد وتوريد</field>
         <field name="model">purchase.order</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">efcbc_supply_order_report.work_assignment_order_report_template</field>
-        <field name="report_file">efcbc_supply_order_report.work_assignment_order_report_template</field>
-        <field name="print_report_name">'أمر أسـنـاد - %s' % (object.name).replace('/', '')</field>
+        <field name="report_name">efcbc_supply_order_report.supply_work_order_report_template</field>
+        <field name="report_file">efcbc_supply_order_report.supply_work_order_report_template</field>
+        <field name="print_report_name">'أمر أسناد و توريد - %s' % (object.name).replace('/', '')</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">report</field>
     </record>
 
-    <template id="work_assignment_order_report_template">
+    <template id="supply_work_order_report_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="efcbc_report_layout.external_layout">
-                    <div class="page" style="direction: rtl;text-align: right;font-size: 20px;line-height: 40px;">
+                    <div class="page" style="direction: rtl;text-align: right;font-size: 20px;line-height: 42px;">
                         <div style="text-align: center;padding: 15px;">
-                            <h2 t-if="o.order_type == 'works'">أمـــر أسـنـاد</h2>
+                            <h2 t-if="o.order_type == 'works'">أمـــر أسـنـاد و تـوريـد</h2>
                         </div>
                         <div style="text-align: right;">
                             <div>
@@ -48,6 +48,43 @@
                             <div>
                                 <span>
                                     نتشرف بإسناد الاعمال المشار اليها بعاليه الي شركتكم الموقره بقيمه اجماليه (
+                                </span>
+                                <t t-esc="o.total_works_amount"/>
+                                <span>)
+                                </span>
+                                <t t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(o.total_works_amount)"/>
+                                <span>
+                                    فقط
+                                </span>
+                            </div>
+
+                            <div>
+                                <span>
+                                    وكذلك توريد الاصناف الاتية :
+                                </span>
+                                <t t-foreach="o.order_line.filtered(lambda l: l.product_id.main_type == 'supply')"
+                                   t-as="line">
+                                    <span>عدد</span>
+                                    <t t-esc="line.product_qty"/>
+                                    <span> من الصنف</span>
+                                    <t t-esc="o.product_id.name"/>
+                                    <span> بقيمة إجمالية (</span>
+                                    <t t-esc="line.price_total"/>
+                                    <span>)
+                                    </span>
+                                    <t t-esc="o.currency_id.with_context(lang='ar_001').amount_to_text(line.price_total)"/>
+                                    <span>
+                                        فقط
+                                    </span>
+                                    <br></br>
+
+
+                                </t>
+                            </div>
+
+                              <div>
+                                <span>
+                                    ليصبح اجمالى قمية امرالإسناد والتوريد (
                                 </span>
                                 <t t-esc="o.amount_total"/>
                                 <span>)
