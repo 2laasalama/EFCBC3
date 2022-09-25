@@ -25,12 +25,16 @@ class UnpackingRFQ(models.Model):
             if partner_id == partner['id']:
                 return partner['sequence']
 
-    def get_amount_totals(self):
+    def get_amount_totals(self, accept=False):
         totals = []
         for partner in self.get_partners():
-            amount_total = sum(
-                x.price_total for x in self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'] and x.accept))
-            if amount_total > 0:
+            accept_lines = self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'] and x.accept)
+            if accept:
+                line_ids = self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'] and x.accept)
+            else:
+                line_ids = self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'])
+            amount_total = sum(x.price_total for x in line_ids)
+            if accept_lines:
                 amount_total_txt = self.requisition_id.currency_id.with_context(lang='ar_001').amount_to_text(
                     amount_total)
                 totals.append({

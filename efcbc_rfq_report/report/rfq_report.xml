@@ -24,7 +24,7 @@
                                 <span>
                                     التاريخ /
                                 </span>
-                                <t t-esc="context_timestamp(o.create_date).strftime('%Y-%m-%d')"/>
+                                <t t-esc="o.last_update_date"/>
                             </div>
                             <div>
                                 <span>

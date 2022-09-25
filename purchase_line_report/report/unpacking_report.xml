@@ -51,7 +51,7 @@
                                 </div>
                             </t>
                         </div>
-
+                        <br></br>
                         <div>
                             وكانت الاسعار الوارده من الشركات المتقدمه للأصناف المطلوبه كما بكشف التفريغ المرفق والمقبوله
                             فنيا بترتيب قيمه العرض الاقل سعرا من بين العرض المقدمه كما يلي :
@@ -61,7 +61,14 @@
                             <t t-foreach="o.get_amount_totals()" t-as="order">
                                 <div>
                                     <t t-esc="order['sequence']"/>
-                                    <span>- كانت قيمه العرض المقدم بقيمه اجماليه للاصناف المقبوله فنيا(</span>
+                                    <span>- كانت قيمه العرض المقدم من شركة
+                                    </span>
+                                    <span>
+                                        <t t-esc="order['partner_name']"/>
+                                    </span>
+                                    <span>
+                                        بقيمه اجماليه للاصناف المقبوله فنيا(
+                                    </span>
                                     <span>
                                         <t t-esc="order['amount_total']"/>
                                     </span>
@@ -77,13 +84,12 @@
                                 </div>
                             </t>
                         </div>
-
+                        <br></br>
                         <div>
                             والامر معروض علي سيادتكم للتفضل بالموافقه علي الشراء من الشركات الاتية :
                         </div>
-
                         <div>
-                            <t t-foreach="o.get_amount_totals()" t-as="order">
+                            <t t-foreach="o.get_amount_totals(accept=True)" t-as="order">
                                 <div>
 
                                     <span>- شركة(</span>
