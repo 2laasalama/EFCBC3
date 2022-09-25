@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 class PurchaseOrderLineInherit(models.Model):
     _inherit = 'purchase.order.line'
 
-    warehouses_id = fields.Many2one('stock.warehouse', string="Warehouse")
+    warehouses_id = fields.Many2one('stock.warehouse', string="المستودع")
     is_warehouse = fields.Boolean()
 
     @api.onchange('product_id')

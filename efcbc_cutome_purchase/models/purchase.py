@@ -15,8 +15,8 @@ class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     sub_sequence = fields.Char('التسلسل الفرعى')
-    total_supply_amount = fields.Float(compute='_compute_total_lines')
-    total_works_amount = fields.Float(compute='_compute_total_lines')
+    total_supply_amount = fields.Float(compute='_compute_total_lines',string='إجمالي بنود التوريد')
+    total_works_amount = fields.Float(compute='_compute_total_lines',string='اجمالي بنود الاعمال')
     order_type = fields.Selection([('supply', 'Supply Order'), ('works', 'Works Order'), ('both', 'Both')],
                                   compute='_compute_order_type')
     analytic_account_id = fields.Many2one('account.analytic.account', string='الجهة الطالبة')

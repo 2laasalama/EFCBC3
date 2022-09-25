@@ -12,7 +12,7 @@ from odoo.addons.purchase.models.purchase import PurchaseOrder as Purchase
 class PurchaseOrderInherit(models.Model):
     _inherit = 'purchase.order'
 
-    is_multiwarehouse = fields.Boolean(string='Multi Wahouse', states=Purchase.READONLY_STATES, )
+    is_multiwarehouse = fields.Boolean(string='مستودعات متعدده', states=Purchase.READONLY_STATES, )
 
     def _onchange_requisition_id(self):
         super(PurchaseOrderInherit, self)._onchange_requisition_id()

@@ -17,7 +17,8 @@
                             class="btn-primary"
                             attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '!=', 'works')]}"/>
 
-                    <button name="print_supply_work_order_report" type="object" string="أمر أسناد وتوريد" icon="fa-print"
+                    <button name="print_supply_work_order_report" type="object" string="أمر أسناد وتوريد"
+                            icon="fa-print"
                             class="btn-primary"
                             attrs="{'invisible': ['|',('state', '!=', 'purchase'),('order_type', '!=', 'both')]}"/>
                 </xpath>
@@ -38,8 +39,8 @@
                         <field name="committe_certified_date"/>
                         <field name="implementation_period"/>
                         <field name="location_receipt_date"/>
-                        <field name="down_payment"/>
-                        <field name="final_insurance_value"/>
+                        <field name="down_payment_rate"/>
+                        <field name="final_insurance_value_rate"/>
                     </group>
                 </xpath>
 

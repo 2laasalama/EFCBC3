@@ -22,20 +22,21 @@ class PurchaseOrder(models.Model):
     committe_certified_date = fields.Date(string='تاريخ اعتماد السلطة المختصه')
     implementation_period = fields.Integer(string='مدة التنفيذ بالشهر')
     location_receipt_date = fields.Date(string='تاريخ استلام الموقع ')
-    down_payment = fields.Monetary('الدفعة المقدمة')
-    down_payment_rate = fields.Float('نسبة الدفعة المقدمة', compute='_compute_down_payment_rate')
-    final_insurance_value = fields.Monetary('قيمة التامين النهائى')
-    final_insurance_value_rate = fields.Float(compute='_compute_final_insurance_value_rate')
+    down_payment = fields.Monetary(string='الدفعة المقدمة', compute='_compute_down_payment')
+    down_payment_rate = fields.Float(string='نسبة الدفعة المقدمة')
+    final_insurance_value = fields.Monetary(string='قيمة التامين النهائى',
+                                            compute='_compute_final_insurance_value')
+    final_insurance_value_rate = fields.Float(string='نسبة التامين النهائى')
 
-    @api.depends('final_insurance_value', 'amount_total')
-    def _compute_final_insurance_value_rate(self):
+    @api.depends('final_insurance_value_rate', 'amount_total')
+    def _compute_final_insurance_value(self):
         for rec in self:
-            rec.final_insurance_value_rate = (rec.final_insurance_value / rec.amount_total) * 100
+            rec.final_insurance_value = (rec.final_insurance_value_rate / 100) * rec.amount_total
 
-    @api.depends('down_payment', 'amount_total')
-    def _compute_down_payment_rate(self):
+    @api.depends('down_payment_rate', 'amount_total')
+    def _compute_down_payment(self):
         for rec in self:
-            rec.down_payment_rate = (rec.down_payment / rec.amount_total) * 100
+            rec.down_payment = (rec.down_payment_rate / 100) * rec.amount_total
 
     def print_supply_order_report(self):
         return self.env.ref('efcbc_supply_order_report.supply_order_report').report_action(self.id)
