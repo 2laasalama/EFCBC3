@@ -5,7 +5,7 @@
     'summary': """Custom Report for EFCBC""",
     'category': 'Purchase',
     'version': '0.1',
-    'depends': ['efcbc_supply_order_report', 'efcbc_report_layout'],
+    'depends': ['efcbc_cutome_purchase', 'efcbc_report_layout'],
     'data': [
         'report/rfq_report.xml',
         'views/purchase_requisition_views.xml',

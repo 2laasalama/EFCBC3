@@ -38,11 +38,20 @@
                     <field name="total_works_amount"/>
                 </field>
 
+                <field name="payment_term_id" position="after">
+                    <field name="last_update_date"/>
+                </field>
+
+
                 <xpath expr="//div[hasclass('oe_title')]" position="replace">
                     <div class="row">
                         <div class=" col-6 oe_title">
-                            <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">طلب عرض سعر</span>
-                            <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">امر توريد</span>
+                            <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">طلب
+                                عرض سعر
+                            </span>
+                            <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">امر
+                                توريد
+                            </span>
                             <h1>
                                 <field name="priority" widget="priority" class="mr-3"/>
                                 <field name="name" readonly="1"/>

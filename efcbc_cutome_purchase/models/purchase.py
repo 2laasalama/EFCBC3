@@ -29,6 +29,8 @@ class PurchaseOrder(models.Model):
                                                    ('direct', 'أمر مباشر')], related='requisition_id.requisition_type')
 
     show_committees = fields.Boolean(compute='_compute_show_committee')
+    last_update_date = fields.Date('تاريخ أخر حفظ')
+
 
     @api.depends('total_supply_amount', 'total_works_amount')
     def _compute_order_type(self):

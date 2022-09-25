@@ -27,19 +27,27 @@ class PartnerXlsx(models.AbstractModel):
         txt = workbook.add_format({'font_size': '10px', 'border': 1, 'align': 'center', })
         txt_highlight = workbook.add_format(
             {'font_size': '10px', 'border': 1, 'align': 'center', 'bg_color': '#ebeced', })
+        title_style = workbook.add_format(
+            {'font_size': '12px', 'border': 1, 'align': 'center', })
 
-        sheet.write(0, 0, "الصنف", heading)
-        sheet.write(0, 1, "المورد", heading)
-        sheet.write(0, 2, "سعر الوحدة", heading)
-        sheet.write(0, 3, "الكمية", heading)
-        sheet.write(0, 4, "الاجمالى", heading)
-        sheet.write(0, 5, "تاريخ الاستلام", heading)
-        sheet.write(0, 6, "الحالة", heading)
+        row = 0
+        requisition_num = records[0].unpacking_id.requisition_id.name if records else ''
+        title = "كشف تفريغ عروض اسعار طلب شراء" + " " + requisition_num
+        sheet.merge_range(row, 1, row, 5, title, title_style)
+
+        row += 1
+        sheet.write(row, 0, "الصنف", heading)
+        sheet.write(row, 1, "المورد", heading)
+        sheet.write(row, 2, "سعر الوحدة", heading)
+        sheet.write(row, 3, "الكمية", heading)
+        sheet.write(row, 4, "الاجمالى", heading)
+        sheet.write(row, 5, "تاريخ الاستلام", heading)
+        sheet.write(row, 6, "الحالة", heading)
         col = 7
         for partner in self.get_partners(records):
-            sheet.write(0, col, partner.name, heading)
+            sheet.write(row, col, partner.name, heading)
             col += 1
-        row = 1
+        row += 1
         for rec in records:
             status = 'تم الموافقة' if rec.accept else 'مرفوض'
             date_order = fields.Date.to_string(rec.date_order)
@@ -54,9 +62,9 @@ class PartnerXlsx(models.AbstractModel):
             col = 7
             for partner in self.get_partners(records):
                 if partner == rec.partner_id and rec.accept:
-                    sheet.write(row, col, rec.price_total, txt)
+                    sheet.write(row, col, rec.price_total, style)
                 else:
-                    sheet.write(row, col, "", txt)
+                    sheet.write(row, col, "", style)
                 col += 1
             row += 1
 
