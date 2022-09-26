@@ -48,7 +48,7 @@ class PurchaseOrder(models.Model):
         return self.env.ref('efcbc_supply_order_report.supply_work_order_report').report_action(self.id)
 
     def get_amount_total_in_text(self):
-        return num2words(self.amount_total, lang='ar') + '  جنيه فقط لا غير '
+        return self.currency_id.with_context(lang='ar_001').amount_to_text(self.amount_total) + ' فقط لا غير '
 
     @api.depends('picking_ids')
     def _compute_supply_date(self):
