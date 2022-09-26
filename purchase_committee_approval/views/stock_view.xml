@@ -9,9 +9,15 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="is_purchase_order" invisible="1"/>
+                </xpath>
 
-                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']" position="before">
-                    <field name="accept_purchase_qty" readonly="1"/>
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+                       position="before">
+                    <field name="accept_purchase_qty"
+                           attrs="{'column_invisible': [('parent.is_purchase_order', '=', False)]}"
+                           readonly="1"/>
                 </xpath>
 
 
