@@ -13,10 +13,10 @@ class StockPicking(models.Model):
 
     report_name = fields.Char(related='picking_type_id.report_name')
     report_signature = fields.Char(related='picking_type_id.report_signature')
-    report_id = fields.Many2one('ir.actions.report', related='picking_type_id.report_id')
+    has_report = fields.Boolean('ir.actions.report', related='picking_type_id.has_report')
 
     def print_stock_order_report(self):
-        return self.report_id.report_action(self.id)
+        return self.env.ref('efcbc_stock_report.general_order_report').report_action(self.id)
 
     def print_delivery_order_report(self):
         return self.env.ref('efcbc_stock_report.delivery_order_report').report_action(self.id)

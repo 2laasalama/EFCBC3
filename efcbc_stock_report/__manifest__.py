@@ -13,6 +13,7 @@
         'report/delivery_order_report.xml',
         'report/maintenance_order_report.xml',
         'report/inventory_adjustments_report.xml',
+        'report/general_order_report.xml',
         'views/stock_picking_views.xml',
         'views/stock_picking_type.xml',
     ]

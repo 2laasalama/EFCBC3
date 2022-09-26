@@ -11,9 +11,19 @@
 
                 <xpath expr="//field[@name='default_location_src_id']/.." position="after">
                     <group string="Reports">
-                        <field name="report_id"/>
-                        <field name="report_name"/>
-                        <field name="report_signature"/>
+                        <field name="has_report"/>
+                        <field name="report_name" placeholder="أذن توريد مخازن"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
+                        <field name="origin_report" placeholder="رقم أذن التوريد"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
+                        <field name="maintenance_company_report" placeholder="شركة الصيانة"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
+                        <field name="partner_name" placeholder="مستلم من"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
+                        <field name="analytic_account_name" placeholder="الجهة الطالبة"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
+                        <field name="report_signature" placeholder="حسابات المخازن"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
                     </group>
                 </xpath>
             </field>

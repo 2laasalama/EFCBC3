@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="delivery_order_report" model="ir.actions.report">
-        <field name="name">اذن صرف</field>
+    <record id="general_order_report" model="ir.actions.report">
+        <field name="name">اذن مخازن</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">efcbc_stock_report.delivery_order_report_template</field>
-        <field name="report_file">efcbc_stock_report.delivery_order_report_template</field>
-        <field name="print_report_name">'اذن صرف - %s' % (object.name).replace('/', '')</field>
+        <field name="report_name">efcbc_stock_report.general_order_report_template</field>
+        <field name="report_file">efcbc_stock_report.general_order_report_template</field>
+        <field name="print_report_name">'%s - %s' % (object.report_name or '', object.name)</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">report</field>
         <field name="is_stock_report" eval="True"/>
     </record>
 
-    <template id="delivery_order_report_template">
+    <template id="general_order_report_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="efcbc_report_layout.internal_layout">
@@ -25,10 +25,12 @@
                                 </h2>
                             </div>
                             <div class="col-4" style="margin-top: 10px;">
-                                <t t-esc="o.name"/>
+                                <span t-if="o.state != 'done'">
+                                    New
+                                </span>
+                                <t t-if="o.state == 'done'" t-esc="o.name"/>
                             </div>
                         </div>
-
                         <br/>
                         <div class="row" style="text-align: right;">
                             <div class="col-6">
@@ -36,24 +38,26 @@
                                     <span>التاريخ :</span>
                                     <t t-esc="context_timestamp(o.scheduled_date).strftime('%Y-%m-%d')"/>
                                 </div>
-                                <div>
-                                    <span>
-                                        تسوية رقم:
-                                    </span>
+                                <div t-if="o.picking_type_id.origin_report">
+                                    <t t-esc="o.picking_type_id.origin_report"/>
+                                    <span>:</span>
                                     <t t-esc="o.origin"/>
+                                </div>
+                                <div t-if="o.picking_type_id.maintenance_company_report">
+                                    <t t-esc="o.picking_type_id.maintenance_company_report"/>
+                                    <span>:</span>
+                                    <t t-esc="o.maintenance_company_id.name"/>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div>
-                                    <span>
-                                        منصرف إلى:
-                                    </span>
+                                <div t-if="o.picking_type_id.partner_name">
+                                    <t t-esc="o.picking_type_id.partner_name"/>
+                                    <span>:</span>
                                     <t t-esc="o.partner_id.name"/>
                                 </div>
-                                <div>
-                                    <span>
-                                        مركز تكلفة:
-                                    </span>
+                                <div t-if="o.picking_type_id.analytic_account_name">
+                                    <t t-esc="o.picking_type_id.analytic_account_name"/>
+                                    <span>:</span>
                                     <t t-esc="o.analytic_account_id.name"/>
                                 </div>
 
@@ -105,8 +109,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td class="text-right" colspan="3">
+                                    <td class="text-right" colspan="5">
                                         <span>إجمالى الكمية فقط</span>
                                         <span t-esc="total_qty"/>
                                     </td>
@@ -115,23 +118,18 @@
                         </table>
                         <div class="row" style="text-align: right;">
                             <div class="col-4">
-                                <div>
-                                    <strong>المستلم/</strong>
-                                </div>
-
-                                <div>
-                                    <strong>أعتماد</strong>
-                                </div>
+                                <span>
+                                    <strong>أمين المخازن/</strong>
+                                </span>
                             </div>
                             <div class="col-4">
                                 <strong>
                                     <span t-esc="o.report_signature"/>
                                 </strong>
                             </div>
-
                             <div class="col-4">
                                 <span>
-                                    <strong>يعتمد,</strong>
+                                    <strong>أعتماد</strong>
                                 </span>
                             </div>
 
