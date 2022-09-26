@@ -15,6 +15,7 @@
         'views/picking_type_view.xml',
         'views/stock_quant.xml',
         'views/stock_location.xml',
+        'views/stock_warehouse.xml',
         'wizard/scrap_committee_approval.xml',
     ],
 
