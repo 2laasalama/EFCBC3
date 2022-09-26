@@ -10,6 +10,7 @@
 from odoo import api, fields, models, _
 
 import logging
+
 _logger = logging.getLogger(__name__)
 
 
@@ -17,6 +18,7 @@ class DepartmentDepartment(models.Model):
     _name = 'department.department'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Department"
-    _order = 'name desc'
+    _order = 'ref'
 
     name = fields.Char("Department")
+    ref = fields.Integer()

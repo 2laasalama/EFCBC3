@@ -36,7 +36,7 @@
 					</div>
 					<group>
 						<group>
-							<field name="token_seq" options="{'no_create' : True}"/>
+<!--							<field name="token_seq"  options="{'no_create' : True}"/>-->
 						</group>
 					</group>
 					<h2>Hardware Proxy</h2>
@@ -68,7 +68,7 @@
 		<field name="arch" type="xml">
 			<tree string="Token Interface Configuration">
 				<field name="name" />
-				<field name="token_seq"/>
+<!--				<field name="token_seq"/>-->
 			</tree>
 		</field>
 	</record>

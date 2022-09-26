@@ -33,7 +33,6 @@ class TokenInterface(models.Model):
     token_seq = fields.Many2one(
         'token.sequence',
         default=_get_default_sequence,
-        required=True,
         string="Sequence Ref #",
         help="Token ref for this token interface will generate as per selected sequence"
     )

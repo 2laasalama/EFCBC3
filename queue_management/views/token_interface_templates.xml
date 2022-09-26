@@ -93,7 +93,7 @@
                     </t>
                     <t t-if="mode=='print'">
                         <div>
-                            <span class="wk_time" t-field="tokenObj.date" t-options='{"format": "dd MMMM yyyy HH:m:s"}'/>
+                            <span class="wk_time" t-field="tokenObj.create_date" t-options='{"format": "dd MMMM yyyy HH:m:s"}'/>
                         </div>
                         <div  align="center" >
                             <p class="token_print" >Your token no. is generated successfully!! </p>
@@ -104,7 +104,7 @@
                             </p>
                         </div>
                         <div  align="center" class="token_no_div">
-                            <span  class="token_no" t-field="tokenObj.token_day_number" />
+                            <span  class="token_no" t-field="tokenObj.token_ref" />
                         </div>
                         <div id="wk_div_info">
                             <div style="float:left">

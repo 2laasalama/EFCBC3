@@ -13,6 +13,7 @@
             <field name="arch" type="xml">
                 <tree string="Department">
                     <field name="name"/>
+                    <field name="ref"/>
                 </tree>
             </field>
         </record>
@@ -28,6 +29,11 @@
                                 <field name="name"/>
                             </h1>
                         </div>
+                        <group>
+                            <group>
+                                <field name="ref"/>
+                            </group>
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -47,7 +53,7 @@
             <field name="name">Department</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">department.department</field>
-            
+
             <field name="view_id" ref="view_department_department_tree"/>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_department_department_filter"/>

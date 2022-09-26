@@ -164,7 +164,7 @@
                             <div class="upper_div">
                                 <div class="o_cust_details">
                                     <span class="wk_time" 
-                                          t-field="next_token.date" 
+                                          t-field="next_token.create_date"
                                           t-options='{"format": "dd MMMM yyyy HH:m:s"}'/>
                                 </div>
                                 <label class="qms_front1">
