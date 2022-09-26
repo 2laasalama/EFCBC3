@@ -10,9 +10,10 @@
         'data/report_layout.xml',
         'report/receipt_order_report.xml',
         'report/return_order_report.xml',
-        'report/check_receipt_report.xml',
         'report/delivery_order_report.xml',
+        'report/maintenance_order_report.xml',
         'report/inventory_adjustments_report.xml',
         'views/stock_picking_views.xml',
+        'views/stock_picking_type.xml',
     ]
 }

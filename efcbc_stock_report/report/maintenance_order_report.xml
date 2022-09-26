@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="return_order_report" model="ir.actions.report">
-        <field name="name">أذن مرتجع</field>
+    <record id="maintenance_order_report" model="ir.actions.report">
+        <field name="name">أذن صيانة</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">efcbc_stock_report.return_order_report_template</field>
-        <field name="report_file">efcbc_stock_report.return_order_report_template</field>
-        <field name="print_report_name">'أذن مرتجع - %s' % (object.name).replace('/', '')</field>
+        <field name="report_name">efcbc_stock_report.maintenance_order_report_template</field>
+        <field name="report_file">efcbc_stock_report.maintenance_order_report_template</field>
+        <field name="print_report_name">' أذن صيانة - %s' % (object.name).replace('/', '')</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">report</field>
         <field name="is_stock_report" eval="True"/>
     </record>
 
-    <template id="return_order_report_template">
+    <template id="maintenance_order_report_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="efcbc_report_layout.internal_layout">
@@ -38,25 +38,25 @@
                                     <span>التاريخ :</span>
                                     <t t-esc="context_timestamp(o.scheduled_date).strftime('%Y-%m-%d')"/>
                                 </div>
-                                <!--                                <div>-->
-                                <!--                                    <span>-->
-                                <!--                                        رقم امر التوريد:-->
-                                <!--                                    </span>-->
-                                <!--                                    <t t-esc="o.origin"/>-->
-
-
-                                <!--                                </div>-->
-                            </div>
-                            <div class="col-6">
-                                <!--                                <div>-->
-                                <!--                                    <span>-->
-                                <!--                                        الاصناف وردت من شركة:-->
-                                <!--                                    </span>-->
-                                <!--                                    <t t-esc="o.partner_id.name"/>-->
-                                <!--                                </div>-->
                                 <div>
                                     <span>
-                                        الاصناف المرتجعه من:
+                                        شركة الصيانة:
+                                    </span>
+                                    <t t-esc="o.maintenance_company_id.name"/>
+
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <span>
+                                        الاصناف وردت من شركة:
+                                    </span>
+                                    <t t-esc="o.partner_id.name"/>
+                                </div>
+                                <div>
+                                    <span>
+                                        الجهة الطالبة:
                                     </span>
                                     <t t-esc="o.analytic_account_id.name"/>
                                 </div>
@@ -72,7 +72,7 @@
                             <thead>
                                 <tr>
                                     <th style="text-align: center;width: 10%;">
-                                        <strong>الكمية المرتجعه</strong>
+                                        <strong>الكمية</strong>
                                     </th>
                                     <th style="text-align: center;width: 20%;">
                                         <strong>الوحدة</strong>
@@ -109,8 +109,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td class="text-right" colspan="3">
+                                    <td class="text-right" colspan="5">
                                         <span>إجمالى الكمية فقط</span>
                                         <span t-esc="total_qty"/>
                                     </td>

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="delivery_order_report" model="ir.actions.report">
-        <field name="name">Delivery Order</field>
+        <field name="name">اذن صرف</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">efcbc_stock_report.delivery_order_report_template</field>
         <field name="report_file">efcbc_stock_report.delivery_order_report_template</field>
-        <field name="print_report_name">'Delivery Order - %s' % (object.name).replace('/', '')</field>
+        <field name="print_report_name">'اذن صرف - %s' % (object.name).replace('/', '')</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">report</field>
-        <field name="paperformat_id" eval="False"/>
-
+        <field name="is_stock_report" eval="True"/>
     </record>
 
     <template id="delivery_order_report_template">
@@ -21,7 +20,9 @@
                         <div class="row" style="text-align: right;">
                             <div class="col-4"></div>
                             <div class="col-4" style="text-align: center;">
-                                <h2>إذن صــرف مخـازن</h2>
+                                <h2>
+                                    <t t-esc="o.report_name"/>
+                                </h2>
                             </div>
                             <div class="col-4" style="margin-top: 10px;">
                                 <t t-esc="o.name"/>
@@ -124,7 +125,7 @@
                             </div>
                             <div class="col-4">
                                 <span>
-                                    <strong>أمين المخازن/</strong>
+                                    <span t-esc="o.report_signature"/>
                                 </span>
                             </div>
 

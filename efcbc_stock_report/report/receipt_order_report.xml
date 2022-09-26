@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="receipt_order_report" model="ir.actions.report">
-        <field name="name">Receipt Order</field>
+        <field name="name">اذن توريد</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">efcbc_stock_report.receipt_order_report_template</field>
         <field name="report_file">efcbc_stock_report.receipt_order_report_template</field>
-        <field name="print_report_name">'Receipt Order - %s' % (object.name).replace('/', '')</field>
+        <field name="print_report_name">'اذن توريد - %s' % (object.name).replace('/', '')</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">report</field>
-        <field name="paperformat_id" eval="False"/>
+        <field name="is_stock_report" eval="True"/>
     </record>
 
     <template id="receipt_order_report_template">
@@ -20,9 +20,9 @@
                         <div class="row" style="text-align: right;">
                             <div class="col-4"></div>
                             <div class="col-4" style="text-align: center;">
-                                <h2 t-if="not o.maintenance_company_id and not o.fixed_assets">إذن تــوريــد مخـازن</h2>
-                                <h2 t-if="o.maintenance_company_id">إذن تسليم صيانه</h2>
-                                <h2 t-if="o.fixed_assets and not o.maintenance_company_id">اذن تــوريــد اصــول</h2>
+                                <h2>
+                                    <t t-esc="o.report_name"/>
+                                </h2>
                             </div>
                             <div class="col-4" style="margin-top: 10px;">
                                 <span t-if="o.state != 'done'">
@@ -38,7 +38,7 @@
                                     <span>التاريخ :</span>
                                     <t t-esc="context_timestamp(o.scheduled_date).strftime('%Y-%m-%d')"/>
                                 </div>
-                                <div t-if="not o.maintenance_company_id" >
+                                <div t-if="not o.maintenance_company_id">
                                     <span>
                                         رقم امر التوريد:
                                     </span>
@@ -132,7 +132,7 @@
                             </div>
                             <div class="col-4">
                                 <span>
-                                    <strong>حسابات المخازن</strong>
+                                    <span t-esc="o.report_signature"/>
                                 </span>
                             </div>
                             <div class="col-4">
