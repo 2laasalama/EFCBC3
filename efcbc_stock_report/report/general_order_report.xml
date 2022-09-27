@@ -90,10 +90,13 @@
                             </thead>
                             <tbody>
                                 <t t-set="total_qty" t-value="0"/>
-                                <tr t-foreach="o.move_lines" t-as="line">
+                                <t t-if="o.state == 'done'" t-set="move_lines"
+                                   t-value="o.move_lines.filtered(lambda p: p.quantity_done>0)"/>
+                                <t t-if="o.state != 'done'" t-set="move_lines" t-value="o.move_lines"/>
+                                <tr t-foreach="move_lines" t-as="line">
                                     <t t-set="total_qty" t-value="total_qty+line.product_qty"/>
                                     <td style="text-align: center;">
-                                        <span t-field="line.product_qty"/>
+                                        <span t-field="line.product_uom_qty"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="line.product_uom.name"/>
