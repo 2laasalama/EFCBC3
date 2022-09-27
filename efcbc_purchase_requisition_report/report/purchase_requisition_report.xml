@@ -38,7 +38,10 @@
                                         <t t-esc="context_timestamp(o.ordering_date).strftime('%Y-%m-%d')"/>
                                     </td>
                                     <td width="15%" class="fw-bold">
-                                        <strong>
+                                        <strong t-if="o.state == 'draft'">
+                                            الرقم المرجعى
+                                        </strong>
+                                        <strong t-if="o.state != 'draft'">
                                             رقم الطلب
                                         </strong>
 

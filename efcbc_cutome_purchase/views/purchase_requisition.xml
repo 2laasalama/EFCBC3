@@ -75,7 +75,7 @@
             <field name="arch" type="xml">
 
                 <field name="name" position="after">
-                    <field name="reference_number"  string="الرقم المرجعى"/>
+                    <field name="reference_number" filter_domain="['|', ('reference_number', 'ilike', self), ('reference_number', 'ilike', self)]" string="الرقم المرجعى"/>
                 </field>
 
             </field>

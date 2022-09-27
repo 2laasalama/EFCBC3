@@ -449,7 +449,7 @@ msgstr "الصنف"
 #. module: stock_inter_transfer_acs
 #: model_terms:ir.ui.view,arch_db:stock_inter_transfer_acs.view_stock_transfer_form
 msgid "Products"
-msgstr ""الاصناف
+msgstr "الاصناف"
 
 #. module: stock_inter_transfer_acs
 #: model:ir.model.fields,field_description:stock_inter_transfer_acs.field_stock_transfer__name
