@@ -45,7 +45,8 @@
                                     </td>
                                     <td width="2%">:</td>
                                     <td width="30%" class="text-right">
-                                        <t t-esc="o.name"/>
+                                        <t t-esc="o.reference_number" t-if="o.state == 'draft'"/>
+                                        <t t-esc="o.name" t-if="o.state != 'draft'"/>
                                     </td>
                                 </tr>
                                 <tr>
