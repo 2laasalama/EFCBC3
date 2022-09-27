@@ -8,14 +8,17 @@ from odoo.exceptions import ValidationError
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    accept_purchase_qty = fields.Float(string='الكمية المقبولة من لجنة الاستلام', related='purchase_line_id.accept_qty',
-                                       readonly=True)
+    accept_purchase_qty = fields.Float(string='الكمية المقبولة من لجنة الاستلام', copy=False, readonly=True)
 
     @api.model
     def create(self, vals):
         move = super(StockMove, self).create(vals)
-        if 'purchase_line_id' in vals:
-            move.write({'quantity_done': move.purchase_line_id.accept_qty})
+        cancel_backorder = self.env.context.get('cancel_backorder', False)
+        if not cancel_backorder and 'purchase_line_id' in vals:
+            move.write({
+                'quantity_done': move.purchase_line_id.accept_qty,
+                'accept_purchase_qty': move.purchase_line_id.accept_qty
+            })
         return move
 
     def check_accept_purchase_qty(self):
