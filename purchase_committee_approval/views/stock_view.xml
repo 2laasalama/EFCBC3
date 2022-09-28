@@ -10,13 +10,13 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='origin']" position="after">
-                    <field name="is_purchase_order" invisible="1"/>
+                    <field name="purchase_order_id" invisible="0"/>
                 </xpath>
 
                 <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
                        position="before">
                     <field name="accept_purchase_qty"
-                           attrs="{'column_invisible': [('parent.is_purchase_order', '=', False)]}"
+                           attrs="{'column_invisible': [('parent.purchase_order_id', '=', False)]}"
                            readonly="1"/>
                 </xpath>
 
