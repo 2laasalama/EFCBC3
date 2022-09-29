@@ -91,7 +91,7 @@
                                         <span t-field="line.product_qty"/>
                                     </td>
                                     <td class="text-right">
-                                        <span t-field="line.accept_qty"/>
+                                        <span t-field="line.total_accept_qty"/>
                                     </td>
                                     <td class="text-center">
                                         <span t-field="line.rejected_qty"/>
@@ -128,7 +128,7 @@
                                 <t t-foreach="o.picking_ids.filtered(lambda picking: picking.state != 'cancel')"
                                    t-as="picking">
                                     <div>
-                                        <span> - (
+                                        <span>- (
                                         </span>
                                         <t t-esc="picking.name"/>
                                         <span>

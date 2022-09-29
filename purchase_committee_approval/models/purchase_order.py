@@ -114,11 +114,17 @@ class PurchaseOrderLine(models.Model):
 
     accept_qty = fields.Float(string='الكمية المقبولة')
     backorder_accept_qty = fields.Float(string='الكمية المقبولة')
+    total_accept_qty = fields.Float(compute='_compute_total_accept_qty')
     rejected_qty = fields.Float(compute='_compute_rejected_qty')
     rejected_qty_rate = fields.Float(compute='_compute_rejected_qty')
 
-    @api.depends('accept_qty', 'product_qty')
+    @api.depends('accept_qty', 'backorder_accept_qty')
+    def _compute_total_accept_qty(self):
+        for rec in self:
+            rec.total_accept_qty = rec.accept_qty + rec.backorder_accept_qty
+
+    @api.depends('total_accept_qty', 'product_qty')
     def _compute_rejected_qty(self):
         for rec in self:
-            rec.rejected_qty = rec.product_qty - rec.accept_qty
+            rec.rejected_qty = rec.product_qty - rec.total_accept_qty
             rec.rejected_qty_rate = (rec.rejected_qty / rec.product_qty) * 100
