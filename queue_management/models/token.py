@@ -10,6 +10,7 @@
 from odoo import api, fields, models, _
 
 import logging
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -68,6 +69,13 @@ class TokenToken(models.Model):
         count = self.env['token.token'].search_count(
             [('date', '=', self.date), ('token_dept', '=', self.token_dept.id)])
         return str(count).zfill(3)
+
+    @api.constrains('token_dept', 'token_dept.capacity', 'token_dept.exception_ids')
+    def check_available_tickets(self):
+        for rec in self:
+            available_tickets = rec.token_dept.get_available_tickets(rec.date)
+            if available_tickets < 1:
+                raise ValidationError(_('This Department is Fully Capacity in {}'.format(rec.date)))
 
     # @api.model
     # def _manage_seq(self, tokenObj):

@@ -93,11 +93,12 @@ class ControllerREST(http.Controller):
         username = request_data['username'] if request_data.get('username') else None
         password = request_data['password'] if request_data.get('password') else None
         # Compare dbname (from HTTP-request vs. odoo config):
-        if db and (db != db_name):
-            info = "Wrong 'dbname'!"
-            error = 'wrong_dbname'
-            _logger.error(info)
-            return invalid_response(400, error, info)
+        print(">>>>>>>",db_name)
+        # if db and (db != db_name):
+        #     info = "Wrong 'dbname'!"
+        #     error = 'wrong_dbname'
+        #     _logger.error(info)
+        #     return invalid_response(400, error, info)
 
         # Empty 'db' or 'username' or 'password:
         if not db or not username or not password:

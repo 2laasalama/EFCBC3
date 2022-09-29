@@ -13,6 +13,7 @@
             <field name="arch" type="xml">
                 <tree string="Department">
                     <field name="name"/>
+                    <field name="capacity"/>
                     <field name="ref"/>
                 </tree>
             </field>
@@ -31,9 +32,23 @@
                         </div>
                         <group>
                             <group>
+                                <field name="capacity"/>
+                            </group>
+                            <group>
+                                <field name="available_tickets_today"/>
                                 <field name="ref"/>
                             </group>
                         </group>
+                        <notebook>
+                            <page string="Exceptions">
+                                <field name="exception_ids">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="capacity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
