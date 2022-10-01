@@ -34,14 +34,14 @@
                         </field>
                     </grop>
                     <footer>
-                        <button string="Approve" type="object" name="action_approve"
+                        <button string="موافقة" type="object" name="action_approve"
                                 groups="purchase_committee_approval.purchase_committee_manager_group"
                                 class="btn btn-primary"/>
-                        <button string="Refuse" type="object" name="action_refuse"
+                        <button string="رفض" type="object" name="action_refuse"
                                 groups="purchase_committee_approval.purchase_committee_manager_group"
                                 class="btn btn-primary"/>
-                        <button string="Save" special="save" class="btn btn-primary" close="1"/>
-                        <button string="Close" special="cancel" class="btn-secondary" close="1"/>
+                        <button string="حفظ" special="save" class="btn btn-primary" close="1"/>
+                        <button string="غلق" special="cancel" class="btn-secondary" close="1"/>
                     </footer>
                 </form>
             </field>
