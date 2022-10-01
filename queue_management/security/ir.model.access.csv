@@ -29,5 +29,8 @@ access_queue_dept_manager,department.department manager,model_department_departm
 access_dashboard_user,qms.dashboard user,model_qms_dashboard,group_queue_user,1,0,0,0
 access_dashboard_manager,qms.dashboard manager,model_qms_dashboard,group_queue_manager,1,1,1,1
 
+access_capacity_exception,access_capacity_exception,model_capacity_exception,base.group_user,1,1,1,1
+
+
 
 

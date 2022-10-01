@@ -182,6 +182,13 @@
                 parent="menu_warehouse_report"
                 action="stock_report_dashboard_action"/>
 
+          <menuitem
+            action="stock_inter_transfer_acs.action_stock_transfer"
+            id="stock_transfer_menu"
+            parent="menu_stock_warehouse_mgmt"
+            sequence="6"
+            name="التحويل بين المخازن"/>
+
 
     </data>
 </odoo>

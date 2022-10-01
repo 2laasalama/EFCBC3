@@ -12,7 +12,7 @@
                         <field name="require_committee_approval" string="يتطلب موافقة اللجنة"
                                attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])]}"/>
                         <field name="purchase_committee_member_ids" widget="many2many_tags"
-                               attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])],'required': [('require_rfq_unpacking', '=',True)]}"/>
+                               attrs="{'readonly': [('state', 'not in', ['draft','in_progress'])],'required': [('require_committee_approval', '=',True)]}"/>
 
                     </group>
                     <group string="لجنه تفريغ عروض الاسعار">

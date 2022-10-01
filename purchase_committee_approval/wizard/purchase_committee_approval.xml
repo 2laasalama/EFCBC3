@@ -13,13 +13,14 @@
                     <widget name="web_ribbon" title="Refused" bg_color="bg-danger"
                             attrs="{'invisible':[('committee_decision','!=','refuse')]}"/>
                     <grop>
+                        <field name="show_backorder" invisible="1"/>
                         <field name="purchase_id" invisible="1"/>
                         <field name="committee_decision" invisible="1"/>
                         <field name="line_ids" nolabel="1">
                             <tree editable="top" create="0" delete="0">
                                 <field name="employee_id"/>
                                 <field name="accept" widget="boolean_toggle"
-                                       attrs="{'readonly': [('can_edit', '=', False)]}"/>
+                                       attrs="{'readonly': ['|',('can_edit', '=', False),('parent.committee_decision','=','approve')]}"/>
                                 <field name="can_edit" invisible="1"/>
                             </tree>
                         </field>
@@ -27,7 +28,9 @@
                             <tree editable="top" create="0" delete="0">
                                 <field name="product_id"/>
                                 <field name="product_qty"/>
-                                <field name="accept_qty"/>
+                                <field name="qty_received"/>
+                                <field name="accept_qty"
+                                       attrs="{'readonly':[('parent.committee_decision','=','approve')]}"/>
                                 <field name="accept" invisible="1"/>
                             </tree>
                         </field>
@@ -38,6 +41,10 @@
                                 class="btn btn-primary"/>
                         <button string="Refuse" type="object" name="action_refuse"
                                 groups="purchase_committee_approval.purchase_committee_manager_group"
+                                class="btn btn-primary"/>
+                        <button string="اضافة لجنة مرتجعات" type="object" name="create_backorder"
+                                groups="purchase_committee_approval.purchase_committee_manager_group"
+                                attrs="{'invisible':[('show_backorder','=',False)]}"
                                 class="btn btn-primary"/>
                         <button string="Save" special="save" class="btn btn-primary" close="1"/>
                         <button string="Close" special="cancel" class="btn-secondary" close="1"/>

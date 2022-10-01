@@ -32,7 +32,7 @@
                                 <span>بالإشارة إلى العرض المقدم منكم بتاريخ</span>
                                 <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
                                 <span>وذلك لتنفيذ</span>
-                                <span t-esc="','.join(o.order_line.mapped('product_id.name'))"/>
+                                <span t-esc="','.join(o.order_line.filtered(lambda l: l.product_id.main_type == 'work').mapped('product_id.name'))"/>
                             </div>
                             <div>
                                 <span>

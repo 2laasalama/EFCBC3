@@ -14,6 +14,7 @@
     <template id="rfq_report_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
+                <t t-set="o" t-value="o.with_context(lang='ar_001')"/>
                 <t t-call="efcbc_report_layout.external_layout">
                     <div class="page" style="direction: rtl;">
                         <div style="text-align: center;padding: 15px;">
@@ -95,6 +96,16 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="row" style="text-align: left;">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <table class="table table-sm">
+                                    <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
+                                    <t t-call="account.document_tax_totals"/>
+                                </table>
+                            </div>
+                        </div>
 
                         <div style="line-height: 27px;text-align: right;">
                             <div>

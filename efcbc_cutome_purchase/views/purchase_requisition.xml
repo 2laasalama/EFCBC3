@@ -68,6 +68,19 @@
             </field>
         </record>
 
+        <record id="view_purchase_requisition_filter" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_filter"/>
+            <field name="arch" type="xml">
+
+                <field name="name" position="after">
+                    <field name="reference_number" filter_domain="['|', ('reference_number', 'ilike', self), ('reference_number', 'ilike', self)]" string="الرقم المرجعى"/>
+                </field>
+
+            </field>
+        </record>
+
 
         <record id="view_purchase_requisition_stock_form_inherit" model="ir.ui.view">
             <field name="name">purchase.requisition.form.inherit</field>

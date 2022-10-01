@@ -33,9 +33,15 @@
                             string="لجنة تفريغ عروض الاسعار"
                             attrs="{'invisible':[('require_rfq_unpacking','!=',True)]}"/>
 
+                    <button type="object" name="open_backorder_commit_approval" class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            string="لجنة استلام المرتجعات"
+                            attrs="{'invisible':[('require_backorder_committee','!=',True)]}"/>
+
                 </xpath>
 
                 <field name="date_order" position="before">
+                    <field name="require_backorder_committee" invisible="1"/>
                     <field name="require_committee_approval" invisible="1"/>
                     <field name="committee_approval_id" invisible="1"/>
                     <field name="require_rfq_unpacking" invisible="1"/>

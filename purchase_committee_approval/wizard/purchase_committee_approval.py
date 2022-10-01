@@ -12,6 +12,16 @@ class purchaseCommitteeapproval(models.Model):
 
     line_ids = fields.One2many('purchase.committee.approval.line', 'approval_id', "Approval Lines")
     quantity_line_ids = fields.One2many('purchase.quantity.approval.line', 'approval_id', "Quantity Lines")
+    show_backorder = fields.Boolean(compute='_compute_show_backorder', default=False)
+
+    @api.depends('quantity_line_ids', 'quantity_line_ids.qty_received')
+    def _compute_show_backorder(self):
+        for rec in self:
+            rec.show_backorder = False
+            for line in rec.quantity_line_ids.filtered(lambda p: p.qty_received > 0):
+                if line.qty_received < line.product_qty:
+                    rec.show_backorder = True
+                    return
 
     def action_approve(self):
         if self.purchase_id.state == 'purchase':
@@ -21,6 +31,9 @@ class purchaseCommitteeapproval(models.Model):
 
     def action_refuse(self):
         self.committee_decision = 'refuse'
+
+    def create_backorder(self):
+        self.purchase_id.require_backorder_committee = True
 
     def check_quantity_approval(self):
         if self.purchase_id:
@@ -67,7 +80,8 @@ class purchaseQuantityapprovalLine(models.Model):
     approval_id = fields.Many2one('purchase.committee.approval')
     order_line_id = fields.Many2one('purchase.order.line')
     product_id = fields.Many2one('product.product', related='order_line_id.product_id', string='الصنف', readonly=True)
-    product_qty = fields.Float(string='الكمية المطلوبه', related='order_line_id.product_qty', readonly=True)
+    product_qty = fields.Float(string='الكمية المطلوبة', related='order_line_id.product_qty', readonly=True)
+    qty_received = fields.Float(string='الكمية المستلمة', related='order_line_id.qty_received', readonly=True)
     price_unit = fields.Float(string='سعر الوحدة', related='order_line_id.price_unit', readonly=True)
     accept = fields.Boolean(related='order_line_id.accept', string='موافقه', readonly=True)
     accept_qty = fields.Float(string='الكمية المقبولة', related='order_line_id.accept_qty', readonly=False)

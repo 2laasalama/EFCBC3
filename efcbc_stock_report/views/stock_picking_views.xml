@@ -6,22 +6,30 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='do_print_picking']" position="after">
-                <button name="print_delivery_order_report" type="object" string="إذن صرف مخازن" icon="fa-print"
-                        attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>
+            <!--            <xpath expr="//button[@name='do_print_picking']" position="after">-->
+            <!--&lt;!&ndash;                <button name="print_delivery_order_report" type="object" string="إذن صرف مخازن" icon="fa-print"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        attrs="{'invisible': [('picking_type_code', '!=', 'outgoing')]}"/>&ndash;&gt;-->
 
-                <button name="print_receipt_order_report" type="object" string="إذن توريد مخازن" icon="fa-print"
-                        attrs="{'invisible': ['|','|',('maintenance_company_id', '!=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>
+            <!--&lt;!&ndash;                <button name="print_receipt_order_report" type="object" string="إذن توريد مخازن" icon="fa-print"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        attrs="{'invisible': ['|','|',('maintenance_company_id', '!=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>&ndash;&gt;-->
 
-                 <button name="print_receipt_order_report" type="object" string="إذن تسليم صيانة" icon="fa-print"
-                        attrs="{'invisible': ['|','|',('maintenance_company_id', '=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>
+            <!--&lt;!&ndash;                <button name="print_receipt_order_report" type="object" string="إذن تسليم صيانة" icon="fa-print"&ndash;&gt;-->
+            <!--&lt;!&ndash;                        attrs="{'invisible': ['|','|',('maintenance_company_id', '=', False),('picking_type_code', '!=', 'incoming'),('return_operation', '=', True)]}"/>&ndash;&gt;-->
 
-<!--                <button name="print_check_receipt_report" type="object" string="محضر فحص و إستلام" icon="fa-print"-->
-<!--                        attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'done')]}"/>-->
+            <!--                &lt;!&ndash;                <button name="print_check_receipt_report" type="object" string="محضر فحص و إستلام" icon="fa-print"&ndash;&gt;-->
+            <!--                &lt;!&ndash;                        attrs="{'invisible': ['|',('picking_type_code', '!=', 'incoming'),('state', '!=', 'done')]}"/>&ndash;&gt;-->
 
 
-                <button name="print_return_order_report" type="object" string="إذن مرتجع" icon="fa-print"
-                        attrs="{'invisible': [('return_operation', '=', False)]}"/>
+            <!--                <button name="print_return_order_report" type="object" string="إذن مرتجع" icon="fa-print"-->
+            <!--                        attrs="{'invisible': [('return_operation', '=', False)]}"/>-->
+            <!--            </xpath>-->
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <field name="has_report" invisible="1"/>
+                <button name="print_stock_order_report" type="object" icon="fa-print"
+                        attrs="{'invisible': [('has_report', '=', False)]}">
+                    <field name="report_name"/>
+                </button>
             </xpath>
 
         </field>

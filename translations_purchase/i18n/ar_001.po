@@ -2802,7 +2802,7 @@ msgstr "أنشطة اليوم "
 #: model_terms:ir.ui.view,arch_db:purchase.portal_my_purchase_rfqs
 #, python-format
 msgid "Total"
-msgstr "المجموع "
+msgstr "الاجمالى"
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order_line__product_uom_qty

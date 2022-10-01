@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="backorder_committee_approval_view_form" model="ir.ui.view">
+            <field name="name">backorder.committee.approval.view.form</field>
+            <field name="model">backorder.committee.approval</field>
+            <field name="arch" type="xml">
+                <form>
+                    <widget name="web_ribbon" title="Approved"
+                            attrs="{'invisible':[('committee_decision','!=','approve')]}"/>
+                    <widget name="web_ribbon" title="Refused" bg_color="bg-danger"
+                            attrs="{'invisible':[('committee_decision','!=','refuse')]}"/>
+                    <grop>
+                        <field name="purchase_id" invisible="1"/>
+                        <field name="committee_decision" invisible="1"/>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="top" create="0" delete="0">
+                                <field name="employee_id"/>
+                                <field name="accept" widget="boolean_toggle"
+                                       attrs="{'readonly': ['|',('can_edit', '=', False),('parent.committee_decision','=','approve')]}"/>
+                                <field name="can_edit" invisible="1"/>
+                            </tree>
+                        </field>
+                        <field name="quantity_line_ids" domain="[('accept','=',True)]" nolabel="1">
+                            <tree editable="top" create="0" delete="0">
+                                <field name="product_id"/>
+                                <field name="qty_remainder"/>
+                                <field name="backorder_accept_qty"
+                                       attrs="{'readonly':[('parent.committee_decision','=','approve')]}"/>
+                                <field name="accept" invisible="1"/>
+                            </tree>
+                        </field>
+                    </grop>
+                    <footer>
+                        <button string="موافقة" type="object" name="action_approve"
+                                groups="purchase_committee_approval.purchase_committee_manager_group"
+                                class="btn btn-primary"/>
+                        <button string="رفض" type="object" name="action_refuse"
+                                groups="purchase_committee_approval.purchase_committee_manager_group"
+                                class="btn btn-primary"/>
+                        <button string="حفظ" special="save" class="btn btn-primary" close="1"/>
+                        <button string="غلق" special="cancel" class="btn-secondary" close="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

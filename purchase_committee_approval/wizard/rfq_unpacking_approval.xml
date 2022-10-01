@@ -18,7 +18,7 @@
                             <tree editable="top" create="0" delete="0">
                                 <field name="employee_id"/>
                                 <field name="accept" widget="boolean_toggle"
-                                       attrs="{'readonly': [('can_edit', '=', False)]}"/>
+                                       attrs="{'readonly': ['|',('can_edit', '=', False),('parent.committee_decision','=','approve')]}"/>
                                 <field name="can_edit" invisible="1"/>
                             </tree>
                         </field>

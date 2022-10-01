@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="return_order_report" model="ir.actions.report">
-        <field name="name">Return Order</field>
+        <field name="name">أذن مرتجع</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">efcbc_stock_report.return_order_report_template</field>
@@ -9,7 +9,7 @@
         <field name="print_report_name">'أذن مرتجع - %s' % (object.name).replace('/', '')</field>
         <field name="binding_model_id" eval="False"/>
         <field name="binding_type">report</field>
-        <field name="paperformat_id" eval="False"/>
+        <field name="is_stock_report" eval="True"/>
     </record>
 
     <template id="return_order_report_template">
@@ -20,7 +20,9 @@
                         <div class="row" style="text-align: right;">
                             <div class="col-4"></div>
                             <div class="col-4" style="text-align: center;">
-                                <h2>إذن مرتجع</h2>
+                                <h2>
+                                    <t t-esc="o.report_name"/>
+                                </h2>
                             </div>
                             <div class="col-4" style="margin-top: 10px;">
                                 <span t-if="o.state != 'done'">
@@ -123,7 +125,7 @@
                             </div>
                             <div class="col-4">
                                 <span>
-                                    <strong>حسابات المخازن</strong>
+                                     <span t-esc="o.report_signature"/>
                                 </span>
                             </div>
                             <div class="col-4">

@@ -18,6 +18,7 @@
         'views/stock_view.xml',
         'wizard/purchase_committee_approval.xml',
         'wizard/rfq_unpacking_approval.xml',
+        'wizard/backorder_committee_approval.xml',
         'report/check_receipt_report.xml',
     ],
 
