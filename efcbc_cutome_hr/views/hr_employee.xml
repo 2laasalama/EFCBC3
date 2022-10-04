@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit.efcbc</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='km_home_work']" position="replace"></xpath>
+                <xpath expr="//div[@name='div_km_home_work']" position="replace"></xpath>
+                <xpath expr="//field[@name='passport_id']" position="after">
+                    <field name="social_insurance_no"/>
+                </xpath>
+                <xpath expr="//group[@name='has_work_permit']" position="replace"></xpath>
+            </field>
+        </record>
+
+        <record id="hr_employee_view_form" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit.efcbc</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_skills.hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='public']" position="replace"></xpath>
+            </field>
+        </record>
+    </odoo>
+</openerp>
