@@ -2,7 +2,7 @@
 #: model:ir.model.fields,field_description:hr.field_hr_employee__identification_id
 #: model:ir.model.fields,field_description:hr.field_res_users__identification_id
 msgid "Identification No"
-msgstr "رقم البطاقة "
+msgstr "الرقم القومي"
 
 #. module: efcbc_cutome_hr
 #: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__social_insurance_no
@@ -14,29 +14,29 @@ msgstr "الرقم التاميني"
 msgid ""
 "The Identification No must be unique, this one is already assigned to "
 "another employee."
-msgstr ""
+msgstr "خطأ في الادخال، حقل الرقم القومي يجب ان يكون رقم فريد، حيث تم تعيين هذا الرقم لموظف آخر"
 
 #. module: efcbc_cutome_hr
 #: model:ir.model.constraint,message:efcbc_cutome_hr.constraint_hr_employee_social_insurance_no
 msgid ""
 "The Social Insurance No must be unique, this one is already assigned to "
 "another employee."
-msgstr ""
+msgstr "خطأ في الادخال، حقل الرقم التأميني يجب ان يكون رقم فريد، حيث تم تعيين هذا الرقم لموظف آخر"
 
 #. module: efcbc_cutome_hr
 #: code:addons/efcbc_cutome_hr/models/hr_employee.py:0
 #, python-format
 msgid "Invalid Identification No, Accept only Numbers."
-msgstr ""
+msgstr " خطأ في الادخال، حقل الرقم القومي يجب ان يكون ارقام فقط"
 
 #. module: efcbc_cutome_hr
 #: code:addons/efcbc_cutome_hr/models/hr_employee.py:0
 #, python-format
 msgid "Invalid Identification No, Length Must be 14 Digit."
-msgstr ""
+msgstr "خطأ في الادخال، حقل الرقم القومي يجب ان يكون مكون من 14 رقم"
 
 #. module: efcbc_cutome_hr
 #: code:addons/efcbc_cutome_hr/models/hr_employee.py:0
 #, python-format
 msgid "Invalid Identification No, Length Must be 8 Digit."
-msgstr ""
+msgstr "خطأ في الادخال، حقل الرقم التأميني يجب ان يكون مكون من 8 رقم"

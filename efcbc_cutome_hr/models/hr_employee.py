@@ -38,5 +38,5 @@ class Employee(models.Model):
     def _identification_social_insurance_no(self):
         for rec in self:
             if rec.social_insurance_no:
-                if len(str(rec.identification_id)) != 8:
+                if len(str(rec.social_insurance_no)) != 8:
                     raise ValidationError(_('Invalid Identification No, Length Must be 8 Digit.'))
