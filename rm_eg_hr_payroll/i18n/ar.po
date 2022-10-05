@@ -1,560 +1,426 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* eg_hr_payroll
+# 	* rm_eg_hr_payroll
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-07 12:52+0000\n"
-"PO-Revision-Date: 2017-07-07 14:53+0200\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2022-10-05 10:54+0000\n"
+"PO-Revision-Date: 2022-10-05 10:54+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: ar\n"
-"X-Generator: Poedit 2.0.2\n"
 
-#. module: eg_hr_payroll
-#: model:hr.alw,name:eg_hr_payroll.other_alw_an17
-msgid "2017 Annual Raise"
-msgstr "علاوة اجتماعية 2017"
-
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_payroll_rule_raise2017
-msgid "2017 annual Raise"
-msgstr "علاوة اجتماعية 2017"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Age</strong>"
-msgstr "<strong>العمر</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Authorized signature</strong>"
-msgstr "<strong>توقيع معتمد</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Birth Date</strong>"
-msgstr "<strong>تاريخ الميلاد</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Department</strong>"
-msgstr "<strong>القسم</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Education</strong>"
-msgstr "<strong>المؤهل</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Marital Status</strong>"
-msgstr "<strong>الحالة الاجتماعية</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Name</strong>"
-msgstr "<strong>اسم</strong>"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "<strong>Start Working At</strong>"
-msgstr "<strong>بداية التعيين</strong>"
-
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_absence
-msgid "Absence"
-msgstr "غياب"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_age
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__age
 msgid "Age"
-msgstr "العـمــر"
+msgstr "العمر"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_payroll_rule_allowances
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_allowances
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_payroll_rule_allowances
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__allowances
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.hr_contract_form_egypt_inherit
 msgid "Allowances"
 msgstr "البدلات"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_amount
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__amount
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__amount
 msgid "Amount"
 msgstr "المبلغ"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_attdelay
-msgid "Attendance Delay"
-msgstr "تأخير"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_basic_salary
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__basic_salary
 msgid "Basic Salary"
-msgstr "أساسي التأمينات"
+msgstr "الراتب اساسي"
 
-#. module: eg_hr_payroll
-#: model:hr.rule.input,name:eg_hr_payroll.hr_rule_input_penalties
-msgid "Cash Penalties In Days"
-msgstr "عدد ايام الجزاءات"
-
-#. module: eg_hr_payroll
-#: selection:hr.employee,religion:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__religion__chris
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__religion__chris
 msgid "Christian"
 msgstr "مسيحي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_code
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__code
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__code
 msgid "Code"
 msgstr "الكود"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_create_uid
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_create_uid
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_create_uid
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__contract_id
+msgid "Contract"
+msgstr "العقد"
+
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__create_uid
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__create_uid
 msgid "Created by"
-msgstr "أنشئ بواسطة"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_create_date
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_create_date
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_create_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__create_date
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__create_date
 msgid "Created on"
-msgstr "أنشئ في"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,military_status:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__military_status__current
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__military_status__current
 msgid "Currently serving "
-msgstr "مازال في الخدمة"
+msgstr "يخدم حاليا"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.view_employee_form_inherit
 msgid "Days"
-msgstr "يوم"
+msgstr "ايام"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "Deduction"
-msgstr "الإستقطاعات"
+#. module: rm_eg_hr_payroll
+#: model:ir.model,name:rm_eg_hr_payroll.model_hr_department
+msgid "Department"
+msgstr "القسم"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_display_name
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_display_name
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_display_name
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_department__name
+msgid "Department Name"
+msgstr "اسم القسم"
+
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__display_name
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__display_name
 msgid "Display Name"
-msgstr "اسم العرض"
+msgstr "الاسم"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_name
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_edu_phase
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
-msgid "Education"
-msgstr "المؤهل"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
-msgid "Education Info"
-msgstr "بيانات التعليم"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_edu_note
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__edu_note
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__edu_note
 msgid "Education Notes"
-msgstr "ملاحظات"
+msgstr "ملاحظات التعليم"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
-msgid "Education Notes ..........."
-msgstr "ملاحظات"
-
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_employee
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_employee_id
+#. module: rm_eg_hr_payroll
+#: model:ir.model,name:rm_eg_hr_payroll.model_hr_employee
 msgid "Employee"
 msgstr "الموظف"
 
-#. module: eg_hr_payroll
-#: model:hr.rule.input,name:eg_hr_payroll.hr_rule_input_absence
-msgid "Employee Absence In Days"
-msgstr "عدد أيام الغياب"
+#. module: rm_eg_hr_payroll
+#: model:ir.actions.act_window,name:rm_eg_hr_payroll.view_action_other_alw
+#: model:ir.ui.menu,name:rm_eg_hr_payroll.menu_hr_alw
+msgid "Employee Allowances"
+msgstr "بدلات الموظف"
 
-#. module: eg_hr_payroll
-#: model:hr.rule.input,name:eg_hr_payroll.hr_rule_input_delay
-msgid "Employee Attendance Delay In Minutes"
-msgstr "عدد دقائق التاخير"
+#. module: rm_eg_hr_payroll
+#: model:ir.model,name:rm_eg_hr_payroll.model_hr_contract
+msgid "Employee Contract"
+msgstr "عقد الموظف"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,edu_grad:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__edu_grad__ex
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__edu_grad__ex
 msgid "Excellent"
 msgstr "ممتاز"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,military_status:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__military_status__exemption
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__military_status__exemption
 msgid "Exemption"
 msgstr "اعفاء"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_experience_y
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__experience_y
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__experience_y
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.view_employee_form_inherit
 msgid "Experience"
-msgstr "الخبرة"
+msgstr "خبرة"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_experience_d
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__experience_d
 msgid "Experience dayes"
-msgstr "Experience dayes"
+msgstr "أيام الخبرة"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_experience_m
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__experience_d
+msgid "Experience days"
+msgstr "أيام الخبرة"
+
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__experience_m
 msgid "Experience monthes"
-msgstr "Experience monthes"
+msgstr "شهور الخبرة"
 
-#. module: eg_hr_payroll
-#: model:hr.eg.school,name:eg_hr_payroll.hr_school_eng
-msgid "Faculity of Electronic Engineering"
-msgstr "كلية الهندسة الالكترونية"
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__experience_m
+msgid "Experience months"
+msgstr "شهور الخبرة"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,edu_grad:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__edu_grad__god
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__edu_grad__god
 msgid "Good"
 msgstr "جيد"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_edu_grad
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__edu_grad
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__edu_grad
 msgid "Grad"
-msgstr "التقدير"
+msgstr "الدرجة"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_rule_gross
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_rule_gross
 msgid "Gross"
-msgstr "ألاستحقاقات"
+msgstr "الاجمالى"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "Gross Value"
-msgstr "إجمالي ألاستحقاقات"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_mi_exist
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__mi_exist
 msgid "Has Medical Insurance"
-msgstr "يوجد تامين صحي"
+msgstr "لديه تأمين طبي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_sin_exist
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__sin_exist
 msgid "Has Social Insurance"
-msgstr "يوجد تامين اجتماعي"
+msgstr "لديه تأمين اجتماعي"
 
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_department
-msgid "Hr Department"
-msgstr "القسم"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_id
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_id
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_id
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__id
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__id
 msgid "ID"
-msgstr "المعرف"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_tax_deduction
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_salary_rule_tax_deduction
 msgid "Income tax Deduction"
 msgstr "خصم ضريبة الدخل"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.hr_contract_form_egypt_inherit
 msgid "Insurance Information"
-msgstr "بيانات التامينات "
+msgstr "معلومات التأمين"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.hr_contract_form_egypt_inherit
 msgid "Insurance Items"
-msgstr "بنود التامينات"
+msgstr "بنود التأمين"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_variable
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_salary_rule_variable
 msgid "Insurance Variable"
-msgstr "متغير التامين"
+msgstr "متغير التأمين"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_basic
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_salary_rule_basic
 msgid "Insurance basic"
-msgstr "اساسي التامين"
+msgstr "ثابت التأمين"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education___last_update
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school___last_update
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw___last_update
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw____last_update
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line____last_update
 msgid "Last Modified on"
-msgstr "آخر تعديل في"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_write_uid
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_write_uid
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_write_uid
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__write_uid
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__write_uid
 msgid "Last Updated by"
-msgstr "آخر تحديث بواسطة"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_write_date
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_write_date
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_write_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__write_date
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__write_date
 msgid "Last Updated on"
-msgstr "آخر تحديث في"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,help:eg_hr_payroll.field_hr_employee_mi_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,help:rm_eg_hr_payroll.field_hr_contract__mi_date
 msgid "Medical  Insurance Date"
-msgstr "تاريخ التامين الصحي"
+msgstr "تاريخ التأمين الطبي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,help:eg_hr_payroll.field_hr_employee_mi_no
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,help:rm_eg_hr_payroll.field_hr_contract__mi_no
 msgid "Medical  Insurance No"
-msgstr "رقم التامين الصحي"
+msgstr "رقم التأمين الطبي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_mi_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__mi_amount
+msgid "Medical Insurance Amount"
+msgstr "مبلغ التأمين الطبي"
+
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__mi_date
 msgid "Medical Insurance Date"
-msgstr "تاريخ التامين الصحي"
+msgstr "تاريخ التأمين الطبي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_mi_no
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__mi_no
 msgid "Medical Insurance NO"
-msgstr "رقم التامين الصحي"
+msgstr "رقم التامين الطبى"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_military_status
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__military_status
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__military_status
 msgid "Military Status"
-msgstr "الموقف من التجنيد"
+msgstr "حالة التجنيد"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.view_employee_form_inherit
 msgid "Months-"
-msgstr "شهر"
+msgstr "شهر-"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,religion:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__religion__mus
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__religion__mus
 msgid "Muslem"
 msgstr "مسلم"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,military_status:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__military_status__not_req
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__military_status__not_req
 msgid "Not Required"
-msgstr "غير مطلوب "
+msgstr "غير مطلوب"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_education_note
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_note
-msgid "Note"
-msgstr "الملاحظة"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.hr_contract_form_egypt_inherit
 msgid "Ohter allowances"
-msgstr "بدلات اخري"
+msgstr "بدلات أخرى"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_other_alw_ids
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__other_alw_ids
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.hr_contract_form_egypt_inherit
 msgid "Other Allowances"
-msgstr "بدلات اخري"
+msgstr "بدلات أخرى"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,religion:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__religion__other
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__religion__other
 msgid "Others"
-msgstr "أخري"
+msgstr "أخرى"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,edu_grad:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__edu_grad__pas
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__edu_grad__pas
 msgid "Pass"
-msgstr "مقبول"
+msgstr "اجتاز"
 
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_payslip
-msgid "Pay Slip"
-msgstr "ظرف المرتب"
-
-#. module: eg_hr_payroll
-#: model:ir.actions.report.xml,name:eg_hr_payroll.action_report_eg_payslip
-msgid "Payslip Report"
-msgstr "تقرير استمارة المرتب"
-
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_penalties
-msgid "Penalties"
-msgstr "الجزاءات"
-
-#. module: eg_hr_payroll
-#: selection:hr.employee,military_status:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__military_status__post
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__military_status__post
 msgid "Postponed"
 msgstr "مؤجل"
 
-#. module: eg_hr_payroll
-#: model:hr.employee,name:eg_hr_payroll.employee_rk
-#: model:hr.employee,name_related:eg_hr_payroll.employee_rk
-#: model:resource.resource,name:eg_hr_payroll.employee_rk_resource_resource
-msgid "Ramadan Khalil"
-msgstr "رمضان خليل"
+#. module: rm_eg_hr_payroll
+#: model:ir.model,name:rm_eg_hr_payroll.model_hr_employee_public
+msgid "Public Employee"
+msgstr "موظف في القطاع العام"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_religion
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__religion
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__religion
 msgid "Religion"
 msgstr "الديانة"
 
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_resource_resource
-msgid "Resource Detail"
-msgstr "تفاصيل المصدر"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.hr_contract_form_egypt_inherit
 msgid "Salary Items"
-msgstr "بنود المرتب"
+msgstr "مفردات المرتب"
 
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_salary_rule_category
-msgid "Salary Rule Category"
-msgstr "فئة قاعدة المرتب"
-
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_rule_input
-msgid "Salary Rule Input"
-msgstr "مدخلات قاعده المرتب "
-
-#. module: eg_hr_payroll
-#: code:addons/eg_hr_payroll/models/eg_hr_payroll.py:176
-#, python-format
-msgid "Salary Slip for %s"
-msgstr "استمارة مرتب لشهر  %s"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_eg_school_name
-msgid "School name"
-msgstr "اسم المدرسة /الكلية/المعهد"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_edu_school
-msgid "School/University/Institute"
-msgstr "اسم المدرسة /الكلية/المعهد"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_sin_end_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__sin_end_date
 msgid "Social Insurance  end Date"
-msgstr "تاريخ نهاية التامينات"
+msgstr "تاريخ انتهاء التأمين الاجتماعي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_sin_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__sin_date
 msgid "Social Insurance Date"
-msgstr "تاريخ بداية التامين الاجتماعي"
+msgstr "تاريخ التأمين الاجتماعي"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_salary_rule_insurance_deduction
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_salary_rule_insurance_deduction
 msgid "Social Insurance Deduction"
-msgstr "خصم التامينات الاجتماعية"
+msgstr "خصم التأمين الاجتماعي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_sin_no
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__sin_no
 msgid "Social Insurance No"
-msgstr "رقم التامين الاجتماعي"
+msgstr "رقم التأمين الاجتماعي"
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_start_date
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__start_date
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__start_date
 msgid "Start Working At"
-msgstr "تاريخ بداية العمل "
+msgstr "تاريخ التعيين"
 
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_rule_taxable
+#. module: rm_eg_hr_payroll
+#: model:hr.salary.rule,name:rm_eg_hr_payroll.hr_rule_taxable
 msgid "Taxable Amount"
 msgstr "المبلغ الخاضع للضريبة"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "Total"
-msgstr "الإجمالي "
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "Total Deduction Value"
-msgstr "إجمالي الاستقطاعات"
-
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.report_payslip_eg
-msgid "Total Net"
-msgstr "الصافي"
-
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_variable_salary
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__variable_salary
 msgid "Variable Salary"
-msgstr "متغير التامينات"
+msgstr "الراتب المتغير"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,edu_grad:0
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__edu_grad__vgod
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__edu_grad__vgod
 msgid "Very Good"
 msgstr "جيد جدا"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.view_employee_form_inherit
 msgid "Years"
-msgstr "سنة"
+msgstr "سنوات"
 
-#. module: eg_hr_payroll
-#: model:ir.ui.view,arch_db:eg_hr_payroll.view_employee_form_inherit
+#. module: rm_eg_hr_payroll
+#: model_terms:ir.ui.view,arch_db:rm_eg_hr_payroll.view_employee_form_inherit
 msgid "Years-"
-msgstr "سنة"
+msgstr "سنة-"
 
-#. module: eg_hr_payroll
-#: model:hr.eg.education,name:eg_hr_payroll.hr_education_bacelor
-msgid "bachelor of Engineering"
-msgstr "بكالوريوس"
+#. module: rm_eg_hr_payroll
+#: model:ir.actions.server,name:rm_eg_hr_payroll.employee_age_cron_ir_actions_server
+#: model:ir.cron,cron_name:rm_eg_hr_payroll.employee_age_cron
+#: model:ir.cron,name:rm_eg_hr_payroll.employee_age_cron
+msgid "calculate employee age"
+msgstr "حساب عمر الموظف"
 
-#. module: eg_hr_payroll
-#: selection:hr.employee,military_status:0
+#. module: rm_eg_hr_payroll
+#: model:ir.actions.server,name:rm_eg_hr_payroll.employee_exp_cron_ir_actions_server
+#: model:ir.cron,cron_name:rm_eg_hr_payroll.employee_exp_cron
+#: model:ir.cron,name:rm_eg_hr_payroll.employee_exp_cron
+msgid "calculate employee experience"
+msgstr "حساب خبرة الموظف"
+
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__military_status__complete
+#: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee_public__military_status__complete
 msgid "complete"
-msgstr "انهي الخدمة"
+msgstr "ادى الخدمة "
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,help:eg_hr_payroll.field_hr_employee_experience_y
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,help:rm_eg_hr_payroll.field_hr_employee__experience_y
+#: model:ir.model.fields,help:rm_eg_hr_payroll.field_hr_employee_public__experience_y
 msgid "experience in our company"
-msgstr "سنوات الخبرة داخل الشركة"
+msgstr "معين منذ"
 
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_eg_education
-msgid "hr.eg.education"
-msgstr "hr.eg.education"
-
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_eg_school
-msgid "hr.eg.school"
-msgstr "hr.eg.school"
-
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_other_alw
+#. module: rm_eg_hr_payroll
+#: model:ir.model,name:rm_eg_hr_payroll.model_hr_alw
 msgid "hr.alw"
-msgstr "hr.alw"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model,name:eg_hr_payroll.model_hr_salary_rule
-msgid "hr.salary.rule"
-msgstr "hr.salary.rule"
+#. module: rm_eg_hr_payroll
+#: model:ir.model,name:rm_eg_hr_payroll.model_hr_alw_line
+msgid "hr.alw.line"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_edu_major
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee__edu_major
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_employee_public__edu_major
 msgid "major"
-msgstr "التخصص"
+msgstr ""
 
-#. module: eg_hr_payroll
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_other_alw_name
+#. module: rm_eg_hr_payroll
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw__name
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__allowance_id
+#: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_alw_line__name
 msgid "name"
 msgstr "الاسم"
-
-#. module: eg_hr_payroll
-#: model:hr.salary.rule,name:eg_hr_payroll.hr_payroll_rule_raise
-#: model:ir.model.fields,field_description:eg_hr_payroll.field_hr_employee_prev_raise
-msgid "previous Annual Raises"
-msgstr "علاوات اجتماعية سابقة"
