@@ -1,4 +1,3 @@
-
 import functools
 import logging
 
@@ -19,9 +18,10 @@ def valid_request_data(func):
     def wrap(self, *args, **kwargs):
         request_data = json.loads(request.httprequest.data)
 
-        mandatory_data = [('name', 'str'), ('uuid', 'int')]
+        mandatory_data = [('name', 'str'), ('uuid', 'str')]
 
-        optional_data = [('mobile', 'str'), ('email', 'str'), ('id_number', 'str'), ('address', 'str'),
+        optional_data = [('mobile', 'str'), ('email', 'str'), ('id_number', 'str'),
+                         ('address', 'str'),
                          ('company_type', 'str'), ('bank_account', 'str')]
 
         all_data = mandatory_data + optional_data
@@ -82,13 +82,14 @@ class ControllerREST(http.Controller):
             'street': request_data.get('address') or False,
             'company_type': request_data.get('company_type') or False,
             'bank_ids': [
-                (0, 0, {'acc_number': request_data.get('bank_account')})] if 'bank_account' in request_data else False,
+                (0, 0, {'acc_number': request_data.get(
+                    'bank_account')})] if 'bank_account' in request_data else False,
         }
 
         try:
             with request.env.cr.savepoint():
-                request.env['res.partner'].sudo().create(vals)
-                return valid_response({"Massage": 'Customer Added Successfully'})
+                partner = request.env['res.partner'].sudo().create(vals)
+                return valid_response({"contractorID": partner.id})
         except Exception as e:
             info = ("{}").format(e)
             error = 'ValidationError'
