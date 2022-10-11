@@ -34,7 +34,7 @@ class DepartmentDepartment(models.Model):
             rec.available_tickets_today = rec.get_available_tickets(today)
 
     def get_available_tickets(self, date):
-        all_tickets = len(self.token_ids.filtered(lambda t: t.date == date))
+        all_tickets = len(self.token_ids.filtered(lambda t: t.date == date and t.state != 'cancel'))
         exception = self.exception_ids.filtered(lambda t: t.date == date)
         capacity = exception.capacity if exception else self.capacity
         available_tickets = capacity - all_tickets
@@ -49,5 +49,6 @@ class CapacityException(models.Model):
     capacity = fields.Integer(default=30)
 
     _sql_constraints = [
-        ('date_department_uid_unique', 'unique (department_id, date)', ' Sorry, One exception per day'),
+        ('date_department_uid_unique', 'unique (department_id, date)',
+         ' Sorry, One exception per day'),
     ]
