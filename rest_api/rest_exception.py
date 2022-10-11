@@ -18,16 +18,16 @@ class JSONEncoder(json.JSONEncoder):
 
 def valid_response(data):
     data.update({'rest_api_code': 200,
-                 'isSucess': True})
+                 'isSuccess': True})
     return data
 
 
-def invalid_response(status, error, info):
+def invalid_response(status, error_code, error_info):
     return {
-        'error': error,
-        'error_descrip': info,
+        'errorCode': error_code,
+        'errorDescription': error_info,
         'rest_api_code': status,
-        'isSucess': False
+        'isSuccess': False
     }
 
 
