@@ -105,8 +105,7 @@
 
                         <div style="text-align: right;line-height: 32px;">
                             <div>
-                                <span>بعد الفحص والمعاينة الفعلية والأستلام نري قبول /عدم قبول .....................
-                                </span>
+                                <span>بعد الفحص والمعاينه الفعلية والاستلام نري الاستلام بما جاء قبوله بالجدول </span>
                             </div>
                             <div t-if="len(o.picking_ids.filtered(lambda picking: picking.state != 'cancel'))==1">
                                 <span>
