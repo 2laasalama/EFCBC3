@@ -4,6 +4,11 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
+class EmployeePublic(models.Model):
+    _inherit = 'hr.employee.public'
+    social_insurance_no = fields.Integer()
+
+
 class Employee(models.Model):
     _inherit = 'hr.employee'
 
