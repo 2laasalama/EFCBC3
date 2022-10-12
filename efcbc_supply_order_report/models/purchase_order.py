@@ -16,7 +16,7 @@ class PurchaseOrder(models.Model):
     payment_mode = fields.Many2one('payment.mode')
     executive_secretariat = fields.Many2one('hr.employee', 'Executive Secretariat for Purchasing and Stores')
     general_secretary = fields.Many2one('hr.employee', 'General Secretary')
-    supply_date = fields.Date(compute='_compute_supply_date')
+    supply_date = fields.Date()
     supply_order_delivery = fields.Many2one('supply.order.delivery', 'تسليم أمر التوريد')
     committe_recommendation_date = fields.Date(string='تاريخ توصيه اللجان المختصه')
     committe_certified_date = fields.Date(string='تاريخ اعتماد السلطة المختصه')

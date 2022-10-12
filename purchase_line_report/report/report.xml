@@ -29,7 +29,7 @@
     <record id="unpacking_report" model="ir.actions.report">
         <field name="name">مذكرة عرض</field>
         <field name="model">unpacking.rfq</field>
-        <field name="report_type">qweb-html</field>
+        <field name="report_type">qweb-pdf</field>
         <field name="report_name">purchase_line_report.unpacking_report_template</field>
         <field name="report_file">purchase_line_report.unpacking_report_template</field>
         <field name="print_report_name">'مذكرة عرض'</field>
