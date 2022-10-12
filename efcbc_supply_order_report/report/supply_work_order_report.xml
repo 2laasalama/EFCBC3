@@ -17,7 +17,7 @@
                 <t t-call="efcbc_report_layout.external_layout">
                     <div class="page" style="direction: rtl;text-align: right;font-size: 20px;line-height: 42px;">
                         <div style="text-align: center;padding: 15px;">
-                            <h2 t-if="o.order_type == 'works'">أمـــر أسـنـاد و تـوريـد</h2>
+                            <h2>أمـــر أسـنـاد و تـوريـد</h2>
                         </div>
                         <div style="text-align: right;">
                             <div>
@@ -150,7 +150,7 @@
                             <div class="col-4"></div>
                             <div style="text-align: center;" class="col-4">
                                 <strong>
-                                    السيد الامين العام للاتحاد
+                                    الامين العام للاتحاد
                                 </strong>
                                 <br></br>
                                 <br></br>

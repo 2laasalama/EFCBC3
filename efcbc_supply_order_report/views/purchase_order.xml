@@ -33,6 +33,7 @@
                         <field name="executive_secretariat"/>
                         <field name="general_secretary"/>
                         <field name="supply_order_delivery"/>
+                        <field name="supply_date"/>
                     </group>
                     <group string="أمر اسناد">
                         <field name="committe_recommendation_date"/>

@@ -18,11 +18,13 @@ def valid_request_data(func):
     def wrap(self, *args, **kwargs):
         request_data = json.loads(request.httprequest.data)
 
-        mandatory_data = [('payment_number', 'int'), ('date', 'str'), ('payment_type', 'str'), ('amount', 'float'),
+        mandatory_data = [('payment_number', 'int'), ('date', 'str'), ('payment_type', 'str'),
+                          ('amount', 'float'),
                           ('journal', 'str'), ('state', 'str')]
 
         optional_data = [('notes', 'str'), ('customer_id', 'int'), ('currency_code', 'str'),
-                         ('bank_account', 'str'), ('receipt_number', 'str'), ('request_type', 'str')]
+                         ('bank_account', 'str'), ('receipt_number', 'str'),
+                         ('request_type', 'str')]
 
         all_data = mandatory_data + optional_data
 
@@ -119,14 +121,16 @@ class ControllerREST(http.Controller):
     def add_payment(self, **kw):
         request_data = json.loads(request.httprequest.data)
 
-        if request.env['account.payment'].sudo().search([('payment_number', '=', request_data['payment_number'])]):
+        if request.env['account.payment'].sudo().search(
+                [('payment_number', '=', request_data['payment_number'])]):
             info = "Payment already exists! payment_number must be unique"
             error = 'invalid_data'
             return invalid_response(400, error, info)
 
         customer = False
         if 'customer_id' in request_data:
-            customer = request.env['res.partner'].sudo().search([('uuid', '=', request_data['customer_id'])])
+            customer = request.env['res.partner'].sudo().search(
+                [('id', '=', request_data['customer_id'])])
             if not customer:
                 info = "Three is no customer with uuid '{}'. Please Define it and retry.".format(
                     request_data['customer_id'])
@@ -135,14 +139,16 @@ class ControllerREST(http.Controller):
 
         currency = False
         if 'currency_code' in request_data:
-            currency = request.env['res.currency'].sudo().search([('name', '=', request_data['currency_code'])])
+            currency = request.env['res.currency'].sudo().search(
+                [('name', '=', request_data['currency_code'])])
             if not currency:
                 info = "Three is no currency with code '{}'. Please Define it and retry.".format(
                     request_data['currency_code'])
                 error = 'MissingError'
                 return invalid_response(400, error, info)
 
-        journal = request.env['account.journal'].sudo().search([('type', '=', request_data['journal'])], limit=1)
+        journal = request.env['account.journal'].sudo().search(
+            [('type', '=', request_data['journal'])], limit=1)
         if not journal:
             info = "Three is no journal with type '{}'. Please Define it and retry.".format(
                 request_data['journal'])
@@ -157,7 +163,8 @@ class ControllerREST(http.Controller):
         bank_account = False
         if 'bank_account' in request_data:
             bank_account = request.env['res.partner.bank'].sudo().search(
-                [('acc_number', '=', request_data['bank_account']), ('partner_id', '=', customer.id)],
+                [('acc_number', '=', request_data['bank_account']),
+                 ('partner_id', '=', customer.id)],
                 limit=1)
             if not bank_account:
                 bank_account = request.env['res.partner.bank'].sudo().create({

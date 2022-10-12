@@ -7,7 +7,7 @@
     'license': 'OPL-1',
     'category': 'Stock',
     'version': '0.2',
-    'depends': ['stock_account', 'efcbc_cutome_stock'],
+    'depends': ['stock_account', 'efcbc_cutome_stock', 'stock_inter_transfer_acs'],
     'data': [
         'views/stock_assets.xml',
         'views/stock.xml',
