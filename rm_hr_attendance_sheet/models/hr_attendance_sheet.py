@@ -93,6 +93,9 @@ class AttendanceSheet(models.Model):
                                   readonly=True,
                                   states={'draft': [('readonly', False)]})
 
+    allowed_lateness = fields.Float(compute="_compute_sheet_total", readonly=True, store=True)
+    recorded_lateness = fields.Float(compute="_compute_sheet_total", readonly=True, store=True)
+
     def unlink(self):
         if any(self.filtered(
                 lambda att: att.state not in ('draft', 'confirm'))):
@@ -160,12 +163,14 @@ class AttendanceSheet(models.Model):
             sheet.tot_overtime = sum([l.overtime for l in overtime_lines])
             sheet.no_overtime = len(overtime_lines)
             # Compute Total Late In
-            late_lines = sheet.line_ids.filtered(lambda l: l.late_in > 0)
+            late_lines = sheet.line_ids.filtered(lambda l: l.late_in > 0 and l.status != "ab")
             sheet.tot_late = sum([l.late_in for l in late_lines])
             sheet.no_late = len(late_lines)
+            sheet.allowed_lateness = sheet.att_policy_id.late_rule_id.allowed_lateness
+            sheet.recorded_lateness = sheet.tot_late - sheet.allowed_lateness if sheet.tot_late > sheet.allowed_lateness else 0
             # Compute Absence
             absence_lines = sheet.line_ids.filtered(
-                lambda l: l.diff_time > 0 and l.status == "ab")
+                lambda l: l.status == "ab")
             sheet.tot_absence = sum([l.diff_time for l in absence_lines])
             sheet.no_absence = len(absence_lines)
             # conmpute earlyout
@@ -230,7 +235,7 @@ class AttendanceSheet(models.Model):
             [('date_from', '<=', date), ('date_to', '>=', date),
              ('state', '=', 'active')])
         for ph in public_holidays:
-            print('ph is', ph.name, [e.name for e in ph.emp_ids])
+            # print('ph is', ph.name, [e.name for e in ph.emp_ids])
             if not ph.emp_ids:
                 return public_holidays
             if emp.id in ph.emp_ids.ids:
@@ -267,7 +272,7 @@ class AttendanceSheet(models.Model):
                                             second=59)
                 day_str = str(day.weekday())
                 date = day.strftime('%Y-%m-%d')
-                work_intervals = att_sheet._get_work_intervals(calendar_id,day_start,day_end, tz)
+                work_intervals = att_sheet._get_work_intervals(calendar_id, day_start, day_end, tz)
                 attendance_intervals = self.get_attendance_intervals(emp,
                                                                      day_start,
                                                                      day_end,
@@ -517,6 +522,9 @@ class AttendanceSheet(models.Model):
                             policy_late, late_cnt = policy_id.get_late(
                                 float_late,
                                 late_cnt)
+                            # check max_late_absence
+                            if policy_late >= 8:
+                                status = 'ab'
                             float_diff = diff_time.total_seconds() / 3600
                             if status == 'ab':
                                 if not abs_flag:
@@ -529,6 +537,9 @@ class AttendanceSheet(models.Model):
                             else:
                                 act_float_diff = float_diff
                                 float_diff = policy_id.get_diff(float_diff)
+                            # check max_late_absence
+                            if policy_late >= 8:
+                                status = 'ab'
                             values = {
                                 'date': date,
                                 'day': day_str,
@@ -632,7 +643,7 @@ class AttendanceSheet(models.Model):
                         }
                         att_line.create(values)
 
-    def _get_work_intervals(self,calendar,day_start,day_end,tz):
+    def _get_work_intervals(self, calendar, day_start, day_end, tz):
         self.ensure_one()
         return calendar.att_get_work_intervals(day_start, day_end, tz)
 
@@ -664,8 +675,8 @@ class AttendanceSheet(models.Model):
                 'employee_id': sheet.employee_id.id,
                 'date_from': sheet.date_from,
                 'date_to': sheet.date_to,
-                'contract_id':contracts[0].id,
-                'struct_id':contracts[0].structure_type_id.default_struct_id.id
+                'contract_id': contracts[0].id,
+                'struct_id': contracts[0].structure_type_id.default_struct_id.id
             })
             new_payslip._onchange_employee()
             payslip_dict = new_payslip._convert_to_write({
@@ -677,7 +688,7 @@ class AttendanceSheet(models.Model):
                                                worked_day_lines]
             payslip_id.compute_sheet()
             sheet.payslip_id = payslip_id
-            payslips+=payslip_id
+            payslips += payslip_id
         return payslips
 
     def _get_workday_lines(self):

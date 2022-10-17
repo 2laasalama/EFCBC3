@@ -205,6 +205,7 @@ class HrLateRule(models.Model):
     name = fields.Char(string='name', required=True)
     line_ids = fields.One2many(comodel_name='hr.late.rule.line',
                                inverse_name='late_id', string='Late In Periods')
+    allowed_lateness = fields.Float(default=2.0)
 
 
 class HrLateRuleLine(models.Model):
