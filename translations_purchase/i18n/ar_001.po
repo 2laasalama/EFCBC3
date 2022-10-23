@@ -2254,7 +2254,7 @@ msgstr "إعادة الإرسال عن طريق البريد الإلكترون�
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_purchase_order__date_planned
 msgid "Receipt Date"
-msgstr "تاريخ الإيصال "
+msgstr "تاريخ الاستلام "
 
 #. module: purchase
 #: model:ir.model.fields,field_description:purchase.field_res_config_settings__group_send_reminder

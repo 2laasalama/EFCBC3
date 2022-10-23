@@ -39,9 +39,12 @@
         <field name="arch" type="xml">
             <form string="">
                 <sheet>
-                    <group>
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
                         <field name="name"/>
-
+                    </h1>
+                    <group>
+                        <field name="allowed_lateness" widget="float_time"/>
                     </group>
                     <group string="Late In Periods"/>
                     <field name="line_ids">

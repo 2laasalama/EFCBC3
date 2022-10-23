@@ -37,7 +37,7 @@ class ResourceCalendar(models.Model):
         attendance_intervals = self._attendance_intervals_batch(day_start, day_end)[False]
         working_intervals = []
         for interval in attendance_intervals:
-            print(interval)
+            # print(interval)
             working_interval_tz = (
                 interval[0].astimezone(pytz.UTC).replace(
                     tzinfo=None),
