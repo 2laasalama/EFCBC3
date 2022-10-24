@@ -4,11 +4,6 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
-class EmployeePublic(models.Model):
-    _inherit = 'hr.employee.public'
-    social_insurance_no = fields.Integer()
-
-
 class Employee(models.Model):
     _inherit = 'hr.employee'
 
@@ -16,9 +11,13 @@ class Employee(models.Model):
     country_id = fields.Many2one(default=lambda self: self.env.ref('base.eg', False))
     country_of_birth = fields.Many2one(default=lambda self: self.env.ref('base.eg', False))
     identification_id = fields.Char(required=True)
-    social_insurance_no = fields.Integer(required=True)
+    social_insurance_no = fields.Integer(required=True, groups="hr.group_hr_user", )
     gender = fields.Selection(required=True)
     birthday = fields.Date(required=True)
+    hajj_granted = fields.Selection([('granted', "Granted"), ('not_granted', "Not Granted")],
+                                    required=True, groups="hr.group_hr_user",
+                                    default='not_granted')
+    hajj_date = fields.Date(groups="hr.group_hr_user",)
 
     _sql_constraints = [
         ('identification_id_uniq', 'unique (identification_id)',
