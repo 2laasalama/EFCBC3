@@ -18,7 +18,7 @@ def valid_request_data(func):
     def wrap(self, *args, **kwargs):
         request_data = json.loads(request.httprequest.data)
 
-        mandatory_data = [('payment_number', 'int'), ('date', 'str'), ('payment_type', 'str'),
+        mandatory_data = [('payment_number', 'str'), ('date', 'str'), ('payment_type', 'str'),
                           ('amount', 'float'),
                           ('journal', 'str'), ('state', 'str')]
 
@@ -79,7 +79,7 @@ def valid_cancel_data(func):
     def wrap(self, *args, **kwargs):
         request_data = json.loads(request.httprequest.data)
 
-        mandatory_data = [('payment_number', 'int'), ('cancel_reason', 'str')]
+        mandatory_data = [('payment_number', 'str'), ('cancel_reason', 'str')]
 
         optional_data = []
 

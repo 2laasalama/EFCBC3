@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    uuid = fields.Integer()
+    uuid = fields.Char(readonly=True)
     id_number = fields.Char("ID Number")
 
     @api.constrains('uuid')

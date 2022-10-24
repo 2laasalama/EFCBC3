@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
 
-    payment_number = fields.Integer()
+    payment_number = fields.Char(readonly=True)
     receipt_number = fields.Char()
     cancel_reason = fields.Char()
     request_type = fields.Char()
