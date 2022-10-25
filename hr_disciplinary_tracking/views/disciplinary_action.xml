@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-         <record id="disciplinary_search_view" model="ir.ui.view">
+        <record id="disciplinary_search_view" model="ir.ui.view">
             <field name="name">hr disciplinary search view</field>
             <field name="model">disciplinary.action</field>
             <field name="arch" type="xml">
@@ -12,15 +12,20 @@
                     <field name="joined_date"/>
                     <field name="discipline_reason"/>
                     <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
-                    <filter string="Waiting Explanation" name="explain" domain="[('state','=','explain')]"/>
-                    <filter string="Waiting Action" name="submitted" domain="[('state','=','submitted')]"/>
-                    <filter string="Action Validated" name="action" domain="[('state','=','action')]"/>
+                    <filter string="Waiting Explanation" name="explain"
+                            domain="[('state','=','explain')]"/>
+                    <filter string="Waiting Action" name="submitted"
+                            domain="[('state','=','submitted')]"/>
+                    <filter string="Action Validated" name="action"
+                            domain="[('state','=','action')]"/>
                     <filter string="Cancel" name="cancel" domain="[('state','=','cancel')]"/>
                     <separator/>
                     <group expand="1" string="Group By">
                         <filter string="State" name="state" context="{'group_by': 'state'}"/>
-                        <filter string="Department" name="department_name" context="{'group_by':'department_name'}"/>
-                        <filter string="Joined Date" name="joined_date" context="{'group_by': 'joined_date'}"/>
+                        <filter string="Department" name="department_name"
+                                context="{'group_by':'department_name'}"/>
+                        <filter string="Joined Date" name="joined_date"
+                                context="{'group_by': 'joined_date'}"/>
                     </group>
                 </search>
             </field>
@@ -44,17 +49,23 @@
             <field name="arch" type="xml">
                 <form string="Disciplinary Action">
                     <header>
-                        <button name="assign_function" type="object" string="Proceed" class="oe_highlight"
+                        <button name="assign_function" type="object" string="Proceed"
+                                class="oe_highlight"
                                 states="draft"/>
-                        <button name="explanation_function" type="object" string="Submit" class="oe_highlight"
+                        <button name="explanation_function" type="object" string="Submit"
+                                class="oe_highlight"
                                 states="explain"/>
-                        <button name="action_function" type="object" string="Validate Action" states="submitted"
+                        <button name="action_function" type="object" string="Validate Action"
+                                states="submitted"
                                 class="oe_highlight" groups="hr.group_hr_manager"/>
-                        <button name="cancel_function" type="object" string="Cancel" states="draft,submitted"
+                        <button name="cancel_function" type="object" string="Cancel"
+                                states="draft,submitted"
                                 groups="hr.group_hr_manager"/>
-                        <button name="set_to_function" type="object" string="Set to Draft" states="cancel"
+                        <button name="set_to_function" type="object" string="Set to Draft"
+                                states="cancel"
                                 groups="hr.group_hr_manager"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,explain,action"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,explain,action"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -71,7 +82,8 @@
                         <group>
                             <group>
                                 <field name="department_name" required="True"
-                                       attrs="{'readonly': [('state','=','action')]}" groups="hr.group_hr_manager"/>
+                                       attrs="{'readonly': [('state','=','action')]}"
+                                       groups="hr.group_hr_manager"/>
                                 <field name="joined_date" string="Joined Date"/>
                                 <field name="read_only" invisible="True"/>
                                 <field name="warning" invisible="True"/>
@@ -84,7 +96,8 @@
                                   string="Disciplinary Information">
                                 <group colspan="4">
                                     <group>
-                                        <field name="discipline_reason" string="Reason" required="True"
+                                        <field name="discipline_reason" string="Reason"
+                                               required="True"
                                                attrs="{'readonly': [('read_only','!=',True)]}"
                                                domain="[('category_type','=','disciplinary')]"/>
                                     </group>
@@ -93,20 +106,40 @@
                                                attrs="{'invisible' :[('state','=','draft')],'readonly': [('state','=','action')]}"/>
                                     </group>
                                     <group>
-                                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"
+                                        <field name="attachment_ids" widget="many2many_binary"
+                                               class="oe_inline"
                                                attrs="{'invisible' :[('state','=','draft')],'readonly': [('state','=','action')]}"/>
                                     </group>
                                 </group>
                                 <group>
-                                    <field name="note" attrs="{'readonly': [('state','=','action')]}"/>
+                                    <group>
+                                        <field name="monetary_penalty"
+                                               attrs="{'readonly': [('state','=','action')]}"/>
+                                        <field name="penalty_mode"
+                                               attrs="{'readonly': [('state','=','action')],'invisible': [('monetary_penalty','=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="note"
+                                               attrs="{'readonly': [('state','=','action')]}"/>
+                                    </group>
                                 </group>
+                                <field name="action_lines"
+                                       attrs="{'readonly': [('state','=','action')],'invisible': [('monetary_penalty','=',False)]}">
+                                    <tree editable="bottom">
+                                        <field name="hours"  attrs="{'column_invisible': [('parent.penalty_mode', '!=', 'hours')]}"/>
+                                        <field name="amount" attrs="{'column_invisible': [('parent.penalty_mode', '!=', 'amount')]}"/>
+                                        <field name="month"/>
+                                        <field name="year"/>
+                                    </tree>
+                                </field>
                             </page>
                             <page name="action_information" states="submitted,action"
                                   string="Action Information">
                                 <group>
                                     <field name="action" string="Action"
                                            attrs="{'invisible': [('state','not in',['submitted','action'])],'readonly': [('state','=','action')]}"
-                                           domain="[('category_type','=','action')]" groups="hr.group_hr_manager"/>
+                                           domain="[('category_type','=','action')]"
+                                           groups="hr.group_hr_manager"/>
                                 </group>
                                 <group>
                                     <field name="action_details"
@@ -129,14 +162,17 @@
             <field name="name">Disciplinary Action</field>
             <field name="res_model">disciplinary.action</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','in',('draft','explain','submitted','action','cancel'))]</field>
+            <field name="domain">
+                [('state','in',('draft','explain','submitted','action','cancel'))]
+            </field>
         </record>
 
         <record id="disciplinary_action_details" model="ir.actions.act_window">
             <field name="name">Disciplinary Actions</field>
             <field name="res_model">disciplinary.action</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','action'),('employee_name.id', '=', active_id)]</field>
+            <field name="domain">[('state','=','action'),('employee_name.id', '=', active_id)]
+            </field>
         </record>
 
         <record id="disciplinary_action_details_view" model="ir.actions.act_window">
@@ -158,7 +194,8 @@
                             icon="fa-info-circle"
                             type="action"
                     >
-                        <field string="Disciplinary Action" name="discipline_count" widget="statinfo"/>
+                        <field string="Disciplinary Action" name="discipline_count"
+                               widget="statinfo"/>
                     </button>
                 </xpath>
             </field>
@@ -167,7 +204,8 @@
 
         <menuitem id="disciplinary_action" name="Disciplinary Actions" parent="hr.menu_hr_root"
                   sequence="23"/>
-        <menuitem id="disciplinary_action_create" action="action_disciplinary_action" groups="hr.group_hr_user"
+        <menuitem id="disciplinary_action_create" action="action_disciplinary_action"
+                  groups="hr.group_hr_user"
                   name="Disciplinary Action" parent="disciplinary_action"
                   sequence="1"/>
 
