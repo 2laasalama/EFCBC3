@@ -151,7 +151,7 @@ class DisciplinaryActionLine(models.Model):
 
     def _get_months(self):
         return [(str(i), i) for i in
-                range(1, 12, +1)]
+                range(1, 13, +1)]
 
     disciplinary_id = fields.Many2one('disciplinary.action', string='Disciplinary')
     hours = fields.Float()

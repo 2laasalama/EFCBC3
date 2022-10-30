@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-12 08:42+0000\n"
-"PO-Revision-Date: 2020-02-12 08:42+0000\n"
+"POT-Creation-Date: 2022-10-30 09:27+0000\n"
+"PO-Revision-Date: 2022-10-30 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,21 +22,12 @@ msgid "Action"
 msgstr "عمل"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.actions.act_window,name:hr_disciplinary_tracking.action_category_action_view
-#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.category_action_view_tree
-msgid "Action Categories"
-msgstr "فئات العمل"
-
-#. module: hr_disciplinary_tracking
-#: model:ir.model,name:hr_disciplinary_tracking.model_action_category
-#: model:ir.ui.menu,name:hr_disciplinary_tracking.action_category_view
-#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.category_action_view_form
+#: model:ir.model.fields.selection,name:hr_disciplinary_tracking.selection__discipline_category__category_type__action
 msgid "Action Category"
-msgstr "فئة العمل"
+msgstr ""
 
 #. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__action_details
-#: model:ir.ui.menu,name:hr_disciplinary_tracking.disciplinary_action_view
 msgid "Action Details"
 msgstr "تفاصيل العمل"
 
@@ -44,6 +35,11 @@ msgstr "تفاصيل العمل"
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
 msgid "Action Information"
 msgstr "معلومات العمل"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__action_lines
+msgid "Action Lines"
+msgstr ""
 
 #. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__message_needaction
@@ -71,6 +67,27 @@ msgid "Activity State"
 msgstr "حالة النشاط"
 
 #. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__amount
+#: model:ir.model.fields.selection,name:hr_disciplinary_tracking.selection__disciplinary_action__penalty_mode__amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__month
+msgid "Applied Month"
+msgstr "شهور التطبيق"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__year
+msgid "Applied Year"
+msgstr "سنوات التطبيق"
+
+#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__message_attachment_count
 msgid "Attachment Count"
 msgstr "عدد المرفقات"
@@ -91,44 +108,84 @@ msgid "Cancelled"
 msgstr "ألغيت"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__code
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__category_type
+msgid "Category Type"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_discipline_category__code
+msgid "Category code"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_discipline_category__name
+msgid "Category name"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__discipline_reason
+msgid "Choose a disciplinary reason"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__action
+msgid "Choose an action for this disciplinary action"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_discipline_category__category_type
+msgid "Choose the category type disciplinary or action"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__code
 msgid "Code"
 msgstr "الشفرة"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.ui.menu,name:hr_disciplinary_tracking.disciplinary_action_create
-msgid "Create Action"
-msgstr "خلق العمل"
-
-#. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__create_uid
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__create_uid
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__create_uid
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__create_uid
 msgid "Created by"
 msgstr "انشأ من قبل"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__create_date
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__create_date
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__create_date
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__create_date
 msgid "Created on"
 msgstr "تم إنشاؤها على"
 
 #. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__department_name
+#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.disciplinary_search_view
 msgid "Department"
 msgstr "قسم"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__description
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__department_name
+msgid "Department name"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__description
 msgid "Details"
 msgstr "تفاصيل"
 
 #. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_discipline_category__description
+msgid "Details for this category"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__disciplinary_id
+msgid "Disciplinary"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
 #: model:ir.actions.act_window,name:hr_disciplinary_tracking.action_disciplinary_action
 #: model:ir.model,name:hr_disciplinary_tracking.model_disciplinary_action
+#: model:ir.ui.menu,name:hr_disciplinary_tracking.disciplinary_action_create
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_tree
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_form_inherit_disciplinary
@@ -145,6 +202,16 @@ msgstr "تفاصيل الإجراءات التأديبية"
 #: model:ir.ui.menu,name:hr_disciplinary_tracking.disciplinary_action
 msgid "Disciplinary Actions"
 msgstr "اجراءات تأديبية"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields.selection,name:hr_disciplinary_tracking.selection__discipline_category__category_type__disciplinary
+msgid "Disciplinary Category"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
+msgid "Disciplinary Information"
+msgstr ""
 
 #. module: hr_disciplinary_tracking
 #: model:ir.actions.act_window,name:hr_disciplinary_tracking.action_disciplinary_category_view
@@ -164,8 +231,8 @@ msgid "Discipline Count"
 msgstr "عدد الانضباط"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__display_name
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__display_name
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__display_name
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__display_name
 msgid "Display Name"
 msgstr "اسم العرض"
@@ -183,11 +250,6 @@ msgid "Employee"
 msgstr "الموظف"
 
 #. module: hr_disciplinary_tracking
-#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
-msgid "Employee Information"
-msgstr "معلومات الموظف"
-
-#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__attachment_ids
 msgid "Employee can submit any documents which supports their explanation"
 msgstr "يمكن للموظف تقديم أي مستندات تدعم شرحهم"
@@ -197,9 +259,18 @@ msgstr "يمكن للموظف تقديم أي مستندات تدعم شرحهم
 msgid ""
 "Employee have to give Explanationto manager about the violation of "
 "discipline"
+msgstr "يجب على الموظف إعطاء الشرح للمدير حول انتهاكانضباط"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__joined_date
+msgid "Employee joining date"
 msgstr ""
-"يجب على الموظف إعطاء الشرح للمدير حول انتهاك"
-"انضباط"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__employee_name
+msgid "Employee name"
+msgstr ""
+
 #. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__explanation
 msgid "Explanation by Employee"
@@ -211,18 +282,39 @@ msgid "Followers"
 msgstr "متابعون"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__message_channel_ids
-msgid "Followers (Channels)"
-msgstr "(المتابعون (القنوات"
-
-#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__message_partner_ids
 msgid "Followers (Partners)"
 msgstr "(المتابعون (الشركاء"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__id
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__action_details
+msgid "Give the details for this action"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.disciplinary_search_view
+msgid "Group By"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__hours
+#: model:ir.model.fields.selection,name:hr_disciplinary_tracking.selection__disciplinary_action__penalty_mode__hours
+msgid "Hours"
+msgstr "ساعات"
+
+#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__id
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__id
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__id
 msgid "ID"
 msgstr "هوية شخصية"
@@ -245,7 +337,6 @@ msgstr ".إذا تم تحديد ذلك ، فإن الرسائل الجديدة �
 
 #. module: hr_disciplinary_tracking
 #: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__message_has_error
-#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ".إذا تم التحقق ، فبعض الرسائل بها خطأ في التسليم"
 
@@ -266,22 +357,22 @@ msgid "Joined Date"
 msgstr "تاريخ الانضمام"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category____last_update
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action____last_update
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line____last_update
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category____last_update
 msgid "Last Modified on"
 msgstr "آخر تعديل في"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__write_uid
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__write_uid
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__write_uid
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__write_uid
 msgid "Last Updated by"
 msgstr "آخر تحديث بواسطة"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__write_date
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__write_date
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action_line__write_date
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__write_date
 msgid "Last Updated on"
 msgstr "آخر تحديث في"
@@ -302,7 +393,16 @@ msgid "Messages"
 msgstr "رسائل"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_action_category__name
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__monetary_penalty
+msgid "Monetary Penalty"
+msgstr "جزاء مالي"
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_discipline_category__name
 msgid "Name"
 msgstr "اسم"
@@ -311,7 +411,12 @@ msgstr "اسم"
 #: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
 #, python-format
 msgid "New"
-msgstr "جديد"
+msgstr ""
+
+#. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
 
 #. module: hr_disciplinary_tracking
 #: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__activity_date_deadline
@@ -354,6 +459,11 @@ msgid "Number of unread messages"
 msgstr "عدد الرسائل غير المقروءة"
 
 #. module: hr_disciplinary_tracking
+#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__penalty_mode
+msgid "Penalty Mode"
+msgstr "صيغة العقوبة"
+
+#. module: hr_disciplinary_tracking
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
 msgid "Proceed"
 msgstr "تقدم"
@@ -385,9 +495,9 @@ msgid "Responsible User"
 msgstr "المستخدم المسؤول"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "خطأ في تسليم الرسائل القصيرة"
+#: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.disciplinary_search_view
+msgid "Search information"
+msgstr ""
 
 #. module: hr_disciplinary_tracking
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
@@ -411,6 +521,7 @@ msgstr ""
 "المتأخرة: تاريخ الاستحقاق مر\n"
 "اليوم: تاريخ النشاط هو اليوم\n"
 "المخطط: الأنشطة المستقبلية."
+
 #. module: hr_disciplinary_tracking
 #: model_terms:ir.ui.view,arch_db:hr_disciplinary_tracking.employee_disciplinary_form
 msgid "Submit"
@@ -467,16 +578,6 @@ msgid "Warning Letter"
 msgstr "رسالة تحذير"
 
 #. module: hr_disciplinary_tracking
-#: model:ir.model.fields,field_description:hr_disciplinary_tracking.field_disciplinary_action__website_message_ids
-msgid "Website Messages"
-msgstr "رسائل الموقع"
-
-#. module: hr_disciplinary_tracking
-#: model:ir.model.fields,help:hr_disciplinary_tracking.field_disciplinary_action__website_message_ids
-msgid "Website communication history"
-msgstr "سجل اتصالات الموقع"
-
-#. module: hr_disciplinary_tracking
 #: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
 #: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
 #, python-format
@@ -486,26 +587,8 @@ msgstr "!! لا يمكنك تحرير إجراء تم التحقق منه"
 #. module: hr_disciplinary_tracking
 #: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
 #, python-format
-msgid "You have to fill up the  Action Information !!"
-msgstr "!! لديك لملء معلومات العمل"
-
-#. module: hr_disciplinary_tracking
-#: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
-#, python-format
-msgid "You have to fill up the Suspension Letter in Action Information !!"
-msgstr "!! يجب عليك ملء خطاب التعليق في معلومات العمل"
-
-#. module: hr_disciplinary_tracking
-#: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
-#, python-format
-msgid "You have to fill up the Termination Letter in  Action Information !!"
-msgstr "!! يجب عليك ملء خطاب الإنهاء في معلومات العمل"
-
-#. module: hr_disciplinary_tracking
-#: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
-#, python-format
-msgid "You have to fill up the Warning Letter in Action Information !!"
-msgstr "!! يجب عليك ملء خطاب الإنهاء في معلومات العمل"
+msgid "You have to fill up the Action Details in Action Information !!"
+msgstr ""
 
 #. module: hr_disciplinary_tracking
 #: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
@@ -520,7 +603,6 @@ msgid "You must give an explanation !!"
 msgstr "!! يجب أن تعطي تفسيرا"
 
 #. module: hr_disciplinary_tracking
-#: code:addons/hr_disciplinary_tracking/models/disciplinary_action.py:0
-#, python-format
-msgid "Your explanation must contain at least 5 words !!"
-msgstr "!! يجب أن يحتوي تفسيرك على 5 كلمات على الأقل"
+#: model:ir.model,name:hr_disciplinary_tracking.model_disciplinary_action_line
+msgid "disciplinary.action.line"
+msgstr ""
