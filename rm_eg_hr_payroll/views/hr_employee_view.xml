@@ -28,8 +28,39 @@
                         <field name="start_date"/>
                         <label for="experience_y"/>
                         <div class="o_row">
-                            <field name="experience_y"/>Years-<field name="experience_m"/>Months-<field
-                                name="experience_d"/>Days
+                            <field name="experience_y"/>
+                            <span>Years</span>
+                            <field name="experience_m"/>
+                            <span>Months</span>
+                            <field name="experience_d"/>
+                            <span>Days</span>
+                        </div>
+                        <label for="unpaid_y"/>
+                        <div class="o_row">
+                            <field name="unpaid_y"/>
+                            <span>Years</span>
+                            <field name="unpaid_m"/>
+                            <span>Months</span>
+                            <field name="unpaid_d"/>
+                            <span>Days</span>
+                        </div>
+                        <label for="part_time_y"/>
+                        <div class="o_row">
+                            <field name="part_time_y"/>
+                            <span>Years</span>
+                            <field name="part_time_m"/>
+                            <span>Months</span>
+                            <field name="part_time_d"/>
+                            <span>Days</span>
+                        </div>
+                        <label for="net_experience_y"/>
+                        <div class="o_row">
+                            <field name="net_experience_y"/>
+                            <span>Years</span>
+                            <field name="net_experience_m"/>
+                            <span>Months</span>
+                            <field name="net_experience_d"/>
+                            <span>Days</span>
                         </div>
                     </group>
                 </xpath>
