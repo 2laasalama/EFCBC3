@@ -14,10 +14,10 @@ class Employee(models.Model):
     social_insurance_no = fields.Integer(required=True, groups="hr.group_hr_user", )
     gender = fields.Selection(required=True)
     birthday = fields.Date(required=True)
-    hajj_granted = fields.Selection([('granted', "Granted"), ('not_granted', "Not Granted")],
-                                    required=True, groups="hr.group_hr_user",
-                                    default='not_granted')
-    hajj_date = fields.Date(groups="hr.group_hr_user",)
+    hajj_granted_ids = fields.One2many('hajj.granted.line', 'employee_id',
+                                       groups="hr.group_hr_user", )
+    education_lines = fields.One2many('employee.education.line', 'employee_id',
+                                      groups="hr.group_hr_user", )
 
     _sql_constraints = [
         ('identification_id_uniq', 'unique (identification_id)',
@@ -44,3 +44,43 @@ class Employee(models.Model):
             if rec.social_insurance_no:
                 if len(str(rec.social_insurance_no)) != 8:
                     raise ValidationError(_('Invalid Identification No, Length Must be 8 Digit.'))
+
+
+class HajjGrantedLine(models.Model):
+    _name = 'hajj.granted.line'
+    _description = 'Hajj Granted Line'
+
+    employee_id = fields.Many2one('hr.employee', string='Employee')
+    type = fields.Selection([('umrah', "Umrah"), ('hajj', "Hajj"), ('other', "Other")],
+                            required=True)
+    name = fields.Char()
+    date = fields.Date(default=fields.Date.context_today)
+
+    @api.onchange('type')
+    def onchange_type(self):
+        if self.type == 'umrah':
+            self.name = _("Umrah")
+        if self.type == 'hajj':
+            self.name = _("Hajj")
+        if self.type == 'other':
+            self.name = False
+
+
+class EmployeeEducationLine(models.Model):
+    _name = 'employee.education.line'
+    _description = 'Employee Education Line'
+
+    def _get_years(self):
+        return [(str(i), i) for i in
+                range(1950, fields.Date.today().year, +1)]
+
+    employee_id = fields.Many2one('hr.employee', string='Employee')
+    certificate = fields.Selection([
+        ('graduate', 'Graduate'),
+        ('bachelor', 'Bachelor'),
+        ('master', 'Master'),
+        ('doctor', 'Doctor'),
+        ('other', 'Other'),
+    ], 'Certificate Level', default='other')
+    study_field = fields.Char("Field of Study")
+    year = fields.Selection(selection='_get_years')

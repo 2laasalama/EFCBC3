@@ -6,10 +6,16 @@
     'author': "Mahmoud AbdElaziz",
     'license': 'OPL-1',
     'category': 'HR',
-    'version': '0.2',
+    'version': '0.1',
     'depends': ['hr_skills'],
     'data': [
+        'security/ir.model.access.csv',
         'views/hr_employee.xml',
     ],
+    'assets': {
+        'web.assets_qweb': [
+            'efcbc_cutome_hr/static/src/xml/**/*',
+        ],
+    },
 
 }

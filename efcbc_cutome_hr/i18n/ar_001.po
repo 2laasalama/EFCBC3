@@ -132,5 +132,5 @@ msgstr ""
 
 #. module: efcbc_cutome_hr
 #: model_terms:ir.ui.view,arch_db:efcbc_cutome_hr.view_employee_form
-msgid "Umrah/ Hajj"
-msgstr " منحة الحج والعمرة "
+msgid "Allowance"
+msgstr "منح"
