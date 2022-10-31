@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-24 08:18+0000\n"
-"PO-Revision-Date: 2022-10-24 08:18+0000\n"
+"POT-Creation-Date: 2022-10-31 12:18+0000\n"
+"PO-Revision-Date: 2022-10-31 12:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,12 +25,39 @@ msgstr ""
 "المختارة إلى هذه اللغة. "
 
 #. module: efcbc_cutome_hr
+#: model_terms:ir.ui.view,arch_db:efcbc_cutome_hr.view_employee_form
+msgid "Allowance"
+msgstr "المنح"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__employee_education_line__certificate__bachelor
+msgid "Bachelor"
+msgstr "بكالوريوس"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__certificate
+msgid "Certificate Level"
+msgstr "مستوى الشهادة"
+
+#. module: efcbc_cutome_hr
 #: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__country_of_birth
 msgid "Country of Birth"
 msgstr "بلد الميلاد"
 
 #. module: efcbc_cutome_hr
-#: model_terms:ir.ui.view,arch_db:efcbc_cutome_hr.view_employee_form
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__create_uid
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__create_date
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__date
 msgid "Date"
 msgstr "التاريخ"
 
@@ -40,9 +67,47 @@ msgid "Date of Birth"
 msgstr "تاريخ الميلاد"
 
 #. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__display_name
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__employee_education_line__certificate__doctor
+msgid "Doctor"
+msgstr "دكتور"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_resume_line__duration
+msgid "Duration"
+msgstr "المدة"
+
+#. module: efcbc_cutome_hr
+#: model_terms:ir.ui.view,arch_db:efcbc_cutome_hr.view_employee_form
+msgid "Education"
+msgstr "التعليم"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__education_lines
+msgid "Education Lines"
+msgstr "التعليم"
+
+#. module: efcbc_cutome_hr
 #: model:ir.model,name:efcbc_cutome_hr.model_hr_employee
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__employee_id
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__employee_id
 msgid "Employee"
 msgstr "الموظف"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model,name:efcbc_cutome_hr.model_employee_education_line
+msgid "Employee Education Line"
+msgstr "التعليم"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__study_field
+msgid "Field of Study"
+msgstr "مجال الدراسة"
 
 #. module: efcbc_cutome_hr
 #: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__gender
@@ -50,19 +115,32 @@ msgid "Gender"
 msgstr "الجنس"
 
 #. module: efcbc_cutome_hr
-#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__hr_employee__hajj_granted__granted
-msgid "Granted"
-msgstr "منحت"
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__employee_education_line__certificate__graduate
+msgid "Graduate"
+msgstr "خريج"
 
 #. module: efcbc_cutome_hr
-#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__hajj_date
-msgid "Hajj Date"
-msgstr "تاريخ الحج"
+#: code:addons/efcbc_cutome_hr/models/hr_employee.py:0
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__hajj_granted_line__type__hajj
+#, python-format
+msgid "Hajj"
+msgstr "حج"
 
 #. module: efcbc_cutome_hr
-#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__hajj_granted
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__hajj_granted_ids
 msgid "Hajj Granted"
-msgstr "منحة الحج والعمرة"
+msgstr "منحة الحج"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model,name:efcbc_cutome_hr.model_hajj_granted_line
+msgid "Hajj Granted Line"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__id
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__id
+msgid "ID"
+msgstr ""
 
 #. module: efcbc_cutome_hr
 #: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__identification_id
@@ -93,24 +171,53 @@ msgid "Lang"
 msgstr "اللغة "
 
 #. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line____last_update
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__write_uid
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__write_date
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__employee_education_line__certificate__master
+msgid "Master"
+msgstr "ماجستير"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__name
+msgid "Name"
+msgstr "اسم المنحة"
+
+#. module: efcbc_cutome_hr
 #: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__country_id
 msgid "Nationality (Country)"
 msgstr "الجنسية (البلد)"
 
 #. module: efcbc_cutome_hr
-#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__hr_employee__hajj_granted__not_granted
-msgid "Not Granted"
-msgstr "لم تمنح"
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__employee_education_line__certificate__other
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__hajj_granted_line__type__other
+msgid "Other"
+msgstr "اخرى"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model,name:efcbc_cutome_hr.model_hr_resume_line
+msgid "Resumé line of an employee"
+msgstr "بند السيرة الذاتية لموظف "
 
 #. module: efcbc_cutome_hr
 #: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hr_employee__social_insurance_no
 msgid "Social Insurance No"
 msgstr "الرقم التاميني"
-
-#. module: efcbc_cutome_hr
-#: model_terms:ir.ui.view,arch_db:efcbc_cutome_hr.view_employee_form
-msgid "Status"
-msgstr "الحالة"
 
 #. module: efcbc_cutome_hr
 #: model:ir.model.constraint,message:efcbc_cutome_hr.constraint_hr_employee_identification_id_uniq
@@ -131,6 +238,18 @@ msgstr ""
 "الرقم لموظف آخر"
 
 #. module: efcbc_cutome_hr
-#: model_terms:ir.ui.view,arch_db:efcbc_cutome_hr.view_employee_form
-msgid "Allowance"
-msgstr "منح"
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_hajj_granted_line__type
+msgid "Type"
+msgstr "النوع"
+
+#. module: efcbc_cutome_hr
+#: code:addons/efcbc_cutome_hr/models/hr_employee.py:0
+#: model:ir.model.fields.selection,name:efcbc_cutome_hr.selection__hajj_granted_line__type__umrah
+#, python-format
+msgid "Umrah"
+msgstr "عمرة"
+
+#. module: efcbc_cutome_hr
+#: model:ir.model.fields,field_description:efcbc_cutome_hr.field_employee_education_line__year
+msgid "Year"
+msgstr "السنة"
