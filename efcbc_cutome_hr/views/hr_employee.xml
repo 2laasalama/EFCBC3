@@ -31,7 +31,7 @@
                             <tree editable="bottom">
                                 <field name="certificate"/>
                                 <field name="study_field"/>
-                                <field name="year   "/>
+                                <field name="year"/>
                             </tree>
                         </field>
                     </group>
