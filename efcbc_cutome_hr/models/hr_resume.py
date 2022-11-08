@@ -14,5 +14,6 @@ class ResumeLine(models.Model):
     def _compute_duration(self):
         for rec in self:
             date_end = date.today() if not rec.date_end else rec.date_end
-            duration = relativedelta(date_end, rec.date_start).years
-            rec.duration = "{} Years".format(duration)
+            duration = relativedelta(date_end, rec.date_start)
+            rec.duration = "{} Years {} Months {} Days".format(duration.years, duration.months,
+                                                               duration.days)
