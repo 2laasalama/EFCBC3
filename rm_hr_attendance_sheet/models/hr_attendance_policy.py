@@ -33,6 +33,8 @@ class HrAttendancePolicy(models.Model):
                                       string="Absence Rule", required=True)
     diff_rule_id = fields.Many2one(comodel_name="hr.diff.rule",
                                    string="Difference Time Rule", required=True)
+    lateness_penalty_ids = fields.One2many("lateness.penalty", 'policy_id')
+    absence_penalty_ids = fields.One2many("absence.penalty", 'policy_id')
 
     def get_overtime(self):
         self.ensure_one()
@@ -282,3 +284,32 @@ class HrAbsenceRuleLine(models.Model):
     absence_id = fields.Many2one(comodel_name='hr.absence.rule', string='name')
     rate = fields.Float(string='Rate', required=True)
     counter = fields.Selection(string="Times", selection=times, required=True, )
+
+
+class LatenessPenalty(models.Model):
+    _name = 'lateness.penalty'
+    _description = 'Lateness Penalty'
+
+    policy_id = fields.Many2one('hr.attendance.policy')
+    from_time = fields.Float('Form')
+    to_time = fields.Float('To')
+    first = fields.Float('First Time', default=1)
+    second = fields.Float('Second Time', default=1)
+    third = fields.Float('Third Time', default=1)
+    fourth = fields.Float('Fourth Time', default=1)
+
+
+class AbsencePenalty(models.Model):
+    _name = 'absence.penalty'
+    _description = 'Absence Penalty'
+    type = [
+        ('fix', 'Fixed'),
+        ('rate', 'Rate')
+    ]
+
+    policy_id = fields.Many2one('hr.attendance.policy')
+    penalty = fields.Integer('Penalty to Apply')
+    first = fields.Float('First Time', default=1)
+    second = fields.Float('Second Time', default=1)
+    third = fields.Float('Third Time', default=1)
+    fourth = fields.Float('Fourth Time', default=1)
