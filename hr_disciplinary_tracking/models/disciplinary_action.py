@@ -72,7 +72,7 @@ class DisciplinaryAction(models.Model):
     note = fields.Text(string="Internal Note")
     joined_date = fields.Date(string="Joined Date", help="Employee joining date")
     monetary_penalty = fields.Boolean(required=False)
-    penalty_mode = fields.Selection(selection=[('hours', 'Hours'), ('amount', 'Amount')],
+    penalty_mode = fields.Selection(selection=[('days', 'Days'), ('amount', 'Amount')],
                                     default='hours')
     action_lines = fields.One2many('disciplinary.action.line', 'disciplinary_id',
                                    string='Action Lines')
@@ -154,7 +154,7 @@ class DisciplinaryActionLine(models.Model):
                 range(1, 13, +1)]
 
     disciplinary_id = fields.Many2one('disciplinary.action', string='Disciplinary')
-    hours = fields.Float()
+    days = fields.Float()
     amount = fields.Float()
     month = fields.Selection(selection='_get_months', string='Applied Month', required=True,
                              default=lambda x: str(fields.Date.today().month))

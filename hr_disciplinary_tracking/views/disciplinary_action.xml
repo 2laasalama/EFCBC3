@@ -126,7 +126,7 @@
                                 <field name="action_lines"
                                        attrs="{'readonly': [('state','=','action')],'invisible': [('monetary_penalty','=',False)]}">
                                     <tree editable="bottom">
-                                        <field name="hours"  attrs="{'column_invisible': [('parent.penalty_mode', '!=', 'hours')]}"/>
+                                            <field name="days"  attrs="{'column_invisible': [('parent.penalty_mode', '!=', 'days')]}"/>
                                         <field name="amount" attrs="{'column_invisible': [('parent.penalty_mode', '!=', 'amount')]}"/>
                                         <field name="month"/>
                                         <field name="year"/>

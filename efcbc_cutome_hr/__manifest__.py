@@ -7,10 +7,12 @@
     'license': 'OPL-1',
     'category': 'HR',
     'version': '0.1',
-    'depends': ['hr_skills'],
+    'depends': ['hr_skills', 'hr_payroll',
+                'hr_holidays', ],
     'data': [
         'security/ir.model.access.csv',
         'views/hr_employee.xml',
+        'views/hr_leave_type.xml',
     ],
     'assets': {
         'web.assets_qweb': [

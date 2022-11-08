@@ -21,6 +21,7 @@
                                 <field name="name" force_save="1"
                                        attrs="{'readonly': [('type', '!=', 'other')]}"/>
                                 <field name="date"/>
+                                <field name="amount"/>
                             </tree>
                         </field>
                     </group>

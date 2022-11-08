@@ -55,6 +55,7 @@ class HajjGrantedLine(models.Model):
                             required=True)
     name = fields.Char()
     date = fields.Date(default=fields.Date.context_today)
+    amount = fields.Float()
 
     @api.onchange('type')
     def onchange_type(self):

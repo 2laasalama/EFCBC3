@@ -15,6 +15,7 @@ from odoo import models, fields, api, tools, _
 import babel
 import time
 from datetime import datetime, timedelta
+from odoo.exceptions import ValidationError
 
 
 class HrAttendancePolicy(models.Model):
@@ -33,8 +34,13 @@ class HrAttendancePolicy(models.Model):
                                       string="Absence Rule", required=True)
     diff_rule_id = fields.Many2one(comodel_name="hr.diff.rule",
                                    string="Difference Time Rule", required=True)
+    lateness_penalty_month = fields.Integer(string="Retrospective months to apply on")
     lateness_penalty_ids = fields.One2many("lateness.penalty", 'policy_id')
-    absence_penalty_ids = fields.One2many("absence.penalty", 'policy_id')
+    absence_penalty_month = fields.Integer(string="Retrospective months to apply on")
+    absence_penalty_first = fields.Float('First Time')
+    absence_penalty_second = fields.Float('Second Time')
+    absence_penalty_third = fields.Float('Third Time')
+    absence_penalty_fourth = fields.Float('Fourth Time')
 
     def get_overtime(self):
         self.ensure_one()
@@ -297,6 +303,17 @@ class LatenessPenalty(models.Model):
     second = fields.Float('Second Time', default=1)
     third = fields.Float('Third Time', default=1)
     fourth = fields.Float('Fourth Time', default=1)
+
+    @api.constrains('from_time', 'to_time')
+    def validate_times(self):
+        for rec in self:
+            if rec.from_time >= rec.to_time:
+                raise ValidationError(_("Time [From] Must Be Greater than Time [To]."))
+            lines = self.search(
+                [('from_time', '>=', rec.from_time), ('to_time', '<=', rec.from_time),
+                 ('id', '!=', rec.id)])
+            if lines:
+                raise ValidationError(_("Times can't overlap."))
 
 
 class AbsencePenalty(models.Model):
