@@ -310,7 +310,7 @@ class LatenessPenalty(models.Model):
             if rec.from_time >= rec.to_time:
                 raise ValidationError(_("Time [From] Must Be Greater than Time [To]."))
             lines = self.search(
-                [('from_time', '>=', rec.from_time), ('to_time', '<=', rec.from_time),
+                [('from_time', '<=', rec.from_time), ('to_time', '>=', rec.from_time),
                  ('id', '!=', rec.id)])
             if lines:
                 raise ValidationError(_("Times can't overlap."))
