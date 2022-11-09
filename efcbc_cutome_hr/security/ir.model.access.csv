@@ -1,3 +1,8 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hajj_granted_line_group_user,access_hajj_granted_line_group_user,model_hajj_granted_line,base.group_user,1,1,1,1
 access_employee_education_line_group_user,access_employee_education_line_group_user,model_employee_education_line,base.group_user,1,1,1,1
+excessive_leave_policy_access,excessive_leave_policy_access,model_excessive_leave_policy,,1,1,1,1
+excessive_leave_policy_line_access,excessive_leave_policy_line_access,model_excessive_leave_policy_line,,1,1,1,1
+excessive_leave_access,excessive_leave_access,model_excessive_leave,,1,1,1,1
+excessive_leave_line_access,excessive_leave_line_access,model_excessive_leave_line,,1,1,1,1
+

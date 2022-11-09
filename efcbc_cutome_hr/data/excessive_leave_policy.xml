@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="excessive_leave_policy_1" model="excessive.leave.policy">
+            <field name="name">Excessive Time-Off Policy</field>
+        </record>
+
+
+    </data>
+</odoo>

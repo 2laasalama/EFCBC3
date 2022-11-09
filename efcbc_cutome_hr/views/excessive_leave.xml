@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+
+
+        <record id="excessive_leave_view_form" model="ir.ui.view">
+            <field name="name">excessive_leave_view_form</field>
+            <field name="model">excessive.leave</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="8" colspan="4">
+                            <label for="date_from" string="Period"/>
+                            <div>
+                                <field name="date_from" class="oe_inline"/>
+                                -
+                                <field name="date_to" class="oe_inline"/>
+                            </div>
+                            <button name="action_apply" type="object" string="Apply" class="btn-primary"/>
+                        </group>
+                        <field name="excessive_lines" readonly="1" nolabel="1">
+                            <tree>
+                                <field name="employee_id"/>
+                                <field name="number_of_days"/>
+                                <field name="deduction_name"/>
+                                <field name="deduction"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="excessive_leave_view_tree" model="ir.ui.view">
+            <field name="name">excessive_leave_view_tree</field>
+            <field name="model">excessive.leave</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="excessive_leave_action" model="ir.actions.act_window">
+            <field name="name">Excessive Time-Off</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">excessive.leave</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="excessive_leave_menuitem"
+                  parent="hr_holidays.menu_hr_holidays_approvals"
+                  action="excessive_leave_action"
+                  sequence="3"/>
+
+    </odoo>
+</openerp>

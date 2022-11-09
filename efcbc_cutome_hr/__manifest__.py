@@ -10,9 +10,12 @@
     'depends': ['hr_skills', 'hr_payroll',
                 'hr_holidays', ],
     'data': [
+        'data/excessive_leave_policy.xml',
         'security/ir.model.access.csv',
         'views/hr_employee.xml',
         'views/hr_leave_type.xml',
+        'views/excessive_leave_policy.xml',
+        'views/excessive_leave.xml',
     ],
     'assets': {
         'web.assets_qweb': [
