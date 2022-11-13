@@ -39,11 +39,11 @@ class Employee(models.Model):
 
     @api.onchange('social_insurance_no')
     @api.constrains('social_insurance_no')
-    def _identification_social_insurance_no(self):
+    def _social_insurance_validation(self):
         for rec in self:
             if rec.social_insurance_no:
-                if len(str(rec.social_insurance_no)) != 8:
-                    raise ValidationError(_('Invalid Identification No, Length Must be 8 Digit.'))
+                if len(str(rec.social_insurance_no)) < 5:
+                    raise ValidationError(_('Invalid Social Insurance No, Length Must be at least 5 Digit.'))
 
 
 class HajjGrantedLine(models.Model):
