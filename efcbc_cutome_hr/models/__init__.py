@@ -5,3 +5,5 @@ from . import hr_leave_type
 from . import hr_leave
 from . import excessive_leave_policy
 from . import excessive_leave
+from . import resource_calendar
+from . import resource_mixin
