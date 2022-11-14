@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_approval_category,access_approval_category,approvals.model_approval_category,base.group_portal,1,1,1,1
+access_ir_attachment,access_ir_attachment,mail.model_ir_attachment,base.group_portal,1,1,1,1

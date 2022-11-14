@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+
+    <template id="approval_sharing_embed" name="Project Sharing View Embed">
+        <t t-call="web.layout">
+            <t t-set="head_project_sharing">
+                <script type="text/javascript">
+                    odoo.__session_info__ = <t t-out="json.dumps(session_info)"/>;
+                    // Prevent the menu_service to load anything. In an ideal world, Project Sharing assets would only contain
+                    // what is genuinely necessary, and not the whole backend.
+                    odoo.loadMenusPromise = Promise.resolve();
+                    odoo.loadTemplatesPromise = fetch(`/web/webclient/qweb/${odoo.__session_info__.cache_hashes.qweb}?bundle=approval_portal.assets_qweb`).then(doc => doc.text());
+                </script>
+                <base target="_parent"/>
+                <t t-call-assets="web.assets_common" t-js="false"/>
+                <t t-call-assets="approval_portal.webclient" t-js="false"/>
+                <t t-call-assets="web.assets_common" t-css="false"/>
+                <t t-call-assets="approval_portal.webclient" t-css="false"/>
+                <t t-call="web.conditional_assets_tests"/>
+            </t>
+            <t t-set="head" t-value="head_project_sharing + (head or '')"/>
+            <t t-set="body_classname" t-value="'o_web_client'"/>
+        </t>
+    </template>
+
+</odoo>
