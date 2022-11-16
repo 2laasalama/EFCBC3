@@ -62,7 +62,7 @@
                         </div>
 
                         <div>
-                            <t t-foreach="o.get_amount_totals()" t-as="order">
+                            <t t-foreach="o.get_totals()" t-as="order">
                                 <div>
                                     <t t-esc="order['sequence']"/>
                                     <span>- كانت قيمه العرض المقدم من شركة
@@ -93,7 +93,7 @@
                             والامر معروض علي سيادتكم للتفضل بالموافقه علي الشراء من الشركات الاتية :
                         </div>
                         <div>
-                            <t t-foreach="o.get_amount_totals(accept=True)" t-as="order">
+                            <t t-foreach="o.get_accept_totals()" t-as="order">
                                 <div>
 
                                     <span>- شركة(</span>

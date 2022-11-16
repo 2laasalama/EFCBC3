@@ -26,19 +26,11 @@ class UnpackingRFQ(models.Model):
             if partner_id == partner['id']:
                 return partner['sequence']
 
-    def get_amount_totals(self, accept=False):
+    def get_totals(self):
         totals = []
         for partner in self.get_partners():
-
-            if accept:
-                line_ids = self.line_ids.filtered(
-                    lambda x: x.partner_id.id == partner['id'] and x.accept)
-            else:
-                line_ids = self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'])
+            line_ids = self.line_ids.filtered(lambda x: x.partner_id.id == partner['id'])
             amount_total = sum(x.price_total for x in line_ids)
-            # accept_lines = self.line_ids.filtered(
-            #     lambda x: x.partner_id.id == partner['id'] and x.accept)
-            # if accept_lines:
             amount_total_txt = self.requisition_id.currency_id.with_context(
                 lang='ar_001').amount_to_text(
                 amount_total)
@@ -48,6 +40,24 @@ class UnpackingRFQ(models.Model):
                 'amount_total': amount_total,
                 'amount_total_txt': amount_total_txt,
             })
+        return sorted(totals, key=lambda d: d['amount_total'])
+
+    def get_accept_totals(self):
+        totals = []
+        for partner in self.get_partners():
+            line_ids = self.line_ids.filtered(
+                lambda x: x.partner_id.id == partner['id'] and x.accept)
+            if line_ids:
+                amount_total = sum(x.price_total for x in line_ids)
+                amount_total_txt = self.requisition_id.currency_id.with_context(
+                    lang='ar_001').amount_to_text(
+                    amount_total)
+                totals.append({
+                    'sequence': partner['sequence'],
+                    'partner_name': partner['name'],
+                    'amount_total': amount_total,
+                    'amount_total_txt': amount_total_txt,
+                })
         return sorted(totals, key=lambda d: d['amount_total'])
 
     def get_total_purchases(self):
