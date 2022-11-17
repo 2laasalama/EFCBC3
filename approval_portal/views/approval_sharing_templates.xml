@@ -5,6 +5,11 @@
 
 
     <template id="approval_sharing_embed" name="Project Sharing View Embed">
+        <div style="padding: 10px;background-color: #fff;">
+          <a href="/my/approvals" style="padding: 26px;font-size: 20px;    text-decoration: none;">Approvals</a>
+          <a href="/my/approvals" style="padding: 26px;font-size: 20px;    text-decoration: none;    font-family: 'Roboto-Regular';">My Requests</a>
+
+        </div>
         <t t-call="web.layout">
             <t t-set="head_project_sharing">
                 <script type="text/javascript">

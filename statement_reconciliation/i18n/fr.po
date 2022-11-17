@@ -1,0 +1,67 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* statement_reconciliation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-07 07:34+0000\n"
+"PO-Revision-Date: 2021-12-07 07:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: statement_reconciliation
+#: model:ir.model.fields,field_description:statement_reconciliation.field_account_bank_statement__statement_entries_ids
+msgid " Statement Entries"
+msgstr "Entrées de relevé"
+
+#. module: statement_reconciliation
+#: model:ir.model.fields,field_description:statement_reconciliation.field_account_bank_statement__account_id
+msgid "Account"
+msgstr "Compte"
+
+#. module: statement_reconciliation
+#: model:ir.model,name:statement_reconciliation.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Relevé bancaire"
+
+#. module: statement_reconciliation
+#: model:ir.model.fields,field_description:statement_reconciliation.field_account_bank_statement__move_line_ids
+msgid "Entry lines"
+msgstr "Lignes d'entrée"
+
+#. module: statement_reconciliation
+#: model_terms:ir.ui.view,arch_db:statement_reconciliation.move_line
+#: inherit_bank_sattement
+msgid "Journal Entries"
+msgstr "Écritures de journal"
+
+#. module: statement_reconciliation
+#: model_terms:ir.ui.view,arch_db:statement_reconciliation.move_line
+#: inherit_bank_sattement
+msgid "Move lines"
+msgstr "Déplacer des lignes"
+
+#. module: statement_reconciliation
+#: model_terms:ir.ui.view,arch_db:statement_reconciliation.move_line
+#: inherit_bank_sattement
+msgid "Reconcile"
+msgstr "Réconcilier"
+
+#. module: statement_reconciliation
+#: model_terms:ir.ui.view,arch_db:statement_reconciliation.move_line
+#: inherit_bank_sattement
+msgid "Validate"
+msgstr "Valider"
+
+#. module: statement_reconciliation
+#: model:ir.model.fields,help:statement_reconciliation.field_account_bank_statement__account_id
+msgid ""
+"used in statement reconciliation domain, but shouldn't be used elswhere."
+msgstr ""
+"utilisé dans le domaine de rapprochement des déclarations, mais ne doit pas être utilisé ailleurs."
