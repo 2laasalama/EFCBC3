@@ -4,11 +4,6 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
-class EmployeePublic(models.Model):
-    _inherit = 'hr.employee.public'
-    social_insurance_no = fields.Integer()
-
-
 class Employee(models.Model):
     _inherit = 'hr.employee'
 
@@ -16,9 +11,13 @@ class Employee(models.Model):
     country_id = fields.Many2one(default=lambda self: self.env.ref('base.eg', False))
     country_of_birth = fields.Many2one(default=lambda self: self.env.ref('base.eg', False))
     identification_id = fields.Char(required=True)
-    social_insurance_no = fields.Integer(required=True)
+    social_insurance_no = fields.Integer(required=True, groups="hr.group_hr_user", )
     gender = fields.Selection(required=True)
     birthday = fields.Date(required=True)
+    hajj_granted_ids = fields.One2many('hajj.granted.line', 'employee_id',
+                                       groups="hr.group_hr_user", )
+    education_lines = fields.One2many('employee.education.line', 'employee_id',
+                                      groups="hr.group_hr_user", )
 
     _sql_constraints = [
         ('identification_id_uniq', 'unique (identification_id)',
@@ -40,8 +39,49 @@ class Employee(models.Model):
 
     @api.onchange('social_insurance_no')
     @api.constrains('social_insurance_no')
-    def _identification_social_insurance_no(self):
+    def _social_insurance_validation(self):
         for rec in self:
             if rec.social_insurance_no:
-                if len(str(rec.social_insurance_no)) != 8:
-                    raise ValidationError(_('Invalid Identification No, Length Must be 8 Digit.'))
+                if len(str(rec.social_insurance_no)) < 5:
+                    raise ValidationError(_('Invalid Social Insurance No, Length Must be at least 5 Digit.'))
+
+
+class HajjGrantedLine(models.Model):
+    _name = 'hajj.granted.line'
+    _description = 'Hajj Granted Line'
+
+    employee_id = fields.Many2one('hr.employee', string='Employee')
+    type = fields.Selection([('umrah', "Umrah"), ('hajj', "Hajj"), ('other', "Other")],
+                            required=True)
+    name = fields.Char()
+    date = fields.Date(default=fields.Date.context_today)
+    amount = fields.Float()
+
+    @api.onchange('type')
+    def onchange_type(self):
+        if self.type == 'umrah':
+            self.name = _("Umrah")
+        if self.type == 'hajj':
+            self.name = _("Hajj")
+        if self.type == 'other':
+            self.name = False
+
+
+class EmployeeEducationLine(models.Model):
+    _name = 'employee.education.line'
+    _description = 'Employee Education Line'
+
+    def _get_years(self):
+        return [(str(i), i) for i in
+                range(1950, fields.Date.today().year, +1)]
+
+    employee_id = fields.Many2one('hr.employee', string='Employee')
+    certificate = fields.Selection([
+        ('graduate', 'Graduate'),
+        ('bachelor', 'Bachelor'),
+        ('master', 'Master'),
+        ('doctor', 'Doctor'),
+        ('other', 'Other'),
+    ], 'Certificate Level', default='other')
+    study_field = fields.Char("Field of Study")
+    year = fields.Selection(selection='_get_years')

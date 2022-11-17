@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-extend="hr_resume_data_row">
+    <t t-jquery=".o_resume_line_dates" t-operation="replace">
+         <small class="o_resume_line_dates row">
+             <div class="col-8"> <b t-esc="data.date_start"/>-
+                 <b t-esc="data.date_end"/></div>
+             <div class="col-4 text-right"><b t-esc="data.duration"/></div>
+         </small>
+    </t>
+</t>
+
+</templates>

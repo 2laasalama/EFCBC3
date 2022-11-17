@@ -190,10 +190,40 @@
                     <group string="Absence Rule">
                         <field name="absence_rule_id" nolabel="1"/>
                     </group>
+                    <group string="Lateness Penalty">
+                        <group>
+                            <field name="lateness_penalty_month"/>
+                        </group>
+                        <group></group>
+                    </group>
+                    <group>
+                        <field name="lateness_penalty_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="from_time" widget="float_time"/>
+                                <field name="to_time" widget="float_time"/>
+                                <field name="first"/>
+                                <field name="second"/>
+                                <field name="third"/>
+                                <field name="fourth"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Absence Penalty">
+                        <group>
+                            <field name="absence_penalty_month"/>
+                            <field name="absence_penalty_first"/>
+                            <field name="absence_penalty_second"/>
+                            <field name="absence_penalty_third"/>
+                            <field name="absence_penalty_fourth"/>
+                        </group>
+                        <group></group>
+                    </group>
+
                 </sheet>
             </form>
         </field>
     </record>
+
 
     <record id="hr_attendance_policy_tree_view" model="ir.ui.view">
         <field name="name">hr.attendance.tree.view</field>

@@ -42,6 +42,28 @@ class HrEmployee(models.Model):
                                   string="Experience monthes", store=True)
     experience_d = fields.Integer(compute="_calculate_experience",
                                   string="Experience dayes", store=True)
+    unpaid_y = fields.Integer("Unpaid Leaves")
+    unpaid_m = fields.Integer()
+    unpaid_d = fields.Integer()
+    part_time_y = fields.Integer("Part Time")
+    part_time_m = fields.Integer()
+    part_time_d = fields.Integer()
+    net_experience_y = fields.Integer("Net Experience", compute="_calculate_net_experience", )
+    net_experience_m = fields.Integer(compute="_calculate_net_experience", )
+    net_experience_d = fields.Integer(compute="_calculate_net_experience", )
+
+    @api.depends('start_date', 'unpaid_y', 'unpaid_m', 'unpaid_d', 'part_time_y', 'part_time_m',
+                 'part_time_d')
+    def _calculate_net_experience(self):
+        for rec in self:
+            total_days = rec.experience_y * 365 + rec.experience_m * 30 + rec.experience_d - \
+                         rec.unpaid_y * 365 - rec.unpaid_m * 30 - rec.unpaid_d - \
+                         rec.part_time_y * 365 - rec.part_time_m * 30 - rec.part_time_d
+            rec.net_experience_y = int(total_days / 365)
+            rec.net_experience_m = int((total_days - rec.net_experience_y * 365) / 30)
+            rec.net_experience_d = total_days - rec.net_experience_y * 365 - rec.net_experience_m * 30
+
+        return
 
     @api.depends("birthday")
     def _calculate_age(self):
@@ -77,6 +99,7 @@ class HrEmployee(models.Model):
     def _cron_employee_exp(self):
         self._calculate_experience()
 
+
 class HrEmployeePublic(models.Model):
     _inherit = "hr.employee.public"
 
@@ -97,13 +120,8 @@ class HrEmployeePublic(models.Model):
     edu_note = fields.Text("Education Notes")
 
     experience_y = fields.Integer(
-                                  string="Experience",
-                                  help="experience in our company", )
+        string="Experience",
+        help="experience in our company", )
     experience_m = fields.Integer(
-                                  string="Experience months",)
+        string="Experience months", )
     experience_d = fields.Integer(string="Experience days", )
-
-
-
-
-

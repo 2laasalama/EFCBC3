@@ -13,7 +13,8 @@ class InheritEmployee(models.Model):
             ('employee_name', 'in', self.ids),
             ('state', '=', 'action'),
         ], fields=['employee_name'], groupby=['employee_name'])
-        mapping = dict([(action['employee_name'][0], action['employee_name_count']) for action in all_actions])
+        mapping = dict(
+            [(action['employee_name'][0], action['employee_name_count']) for action in all_actions])
         for employee in self:
             employee.discipline_count = mapping.get(employee.id, 0)
 
@@ -26,8 +27,9 @@ class CategoryDiscipline(models.Model):
 
     code = fields.Char(string="Code", required=True, help="Category code")
     name = fields.Char(string="Name", required=True, help="Category name")
-    category_type = fields.Selection([('disciplinary', 'Disciplinary Category'), ('action', 'Action Category')],
-                                     string="Category Type", help="Choose the category type disciplinary or action")
+    category_type = fields.Selection(
+        [('disciplinary', 'Disciplinary Category'), ('action', 'Action Category')],
+        string="Category Type", help="Choose the category type disciplinary or action")
     description = fields.Text(string="Details", help="Details for this category")
 
 
@@ -48,12 +50,15 @@ class DisciplinaryAction(models.Model):
     name = fields.Char(string='Reference', required=True, copy=False, readonly=True,
                        default=lambda self: _('New'))
 
-    employee_name = fields.Many2one('hr.employee', string='Employee', required=True, help="Employee name")
-    department_name = fields.Many2one('hr.department', string='Department', required=True, help="Department name")
+    employee_name = fields.Many2one('hr.employee', string='Employee', required=True,
+                                    help="Employee name")
+    department_name = fields.Many2one('hr.department', string='Department', required=True,
+                                      help="Department name")
     discipline_reason = fields.Many2one('discipline.category', string='Reason', required=True,
                                         help="Choose a disciplinary reason")
-    explanation = fields.Text(string="Explanation by Employee", help='Employee have to give Explanation'
-                                                                     'to manager about the violation of discipline')
+    explanation = fields.Text(string="Explanation by Employee",
+                              help='Employee have to give Explanation'
+                                   'to manager about the violation of discipline')
     action = fields.Many2one('discipline.category', string="Action",
                              help="Choose an action for this disciplinary action")
     read_only = fields.Boolean(compute="get_user", default=True)
@@ -66,6 +71,11 @@ class DisciplinaryAction(models.Model):
                                       help="Employee can submit any documents which supports their explanation")
     note = fields.Text(string="Internal Note")
     joined_date = fields.Date(string="Joined Date", help="Employee joining date")
+    monetary_penalty = fields.Boolean(required=False)
+    penalty_mode = fields.Selection(selection=[('days', 'Days'), ('amount', 'Amount')],
+                                    default='hours')
+    action_lines = fields.One2many('disciplinary.action.line', 'disciplinary_id',
+                                   string='Action Lines')
 
     # assigning the sequence for the record
     @api.model
@@ -117,7 +127,8 @@ class DisciplinaryAction(models.Model):
                 raise ValidationError(_('You have to select an Action !!'))
 
             if not rec.action_details or rec.action_details == '<p><br></p>':
-                raise ValidationError(_('You have to fill up the Action Details in Action Information !!'))
+                raise ValidationError(
+                    _('You have to fill up the Action Details in Action Information !!'))
             rec.state = 'action'
 
     def explanation_function(self):
@@ -129,3 +140,24 @@ class DisciplinaryAction(models.Model):
         self.write({
             'state': 'submitted'
         })
+
+
+class DisciplinaryActionLine(models.Model):
+    _name = 'disciplinary.action.line'
+
+    def _get_years(self):
+        return [(str(i), i) for i in
+                range(fields.Date.today().year, fields.Date.today().year + 10, +1)]
+
+    def _get_months(self):
+        return [(str(i), i) for i in
+                range(1, 13, +1)]
+
+    disciplinary_id = fields.Many2one('disciplinary.action', string='Disciplinary')
+    days = fields.Float()
+    amount = fields.Float()
+    month = fields.Selection(selection='_get_months', string='Applied Month', required=True,
+                             default=lambda x: str(fields.Date.today().month))
+    year = fields.Selection(
+        selection='_get_years', string='Applied Year', required=True,
+        default=lambda x: str(fields.Date.today().year))
