@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_statement_line_create_view_form" model="ir.ui.view">
+        <field name="name">account_statement_line_create_form</field>
+        <field name="model">account.statement.line.create</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="statement_id" invisible="1"/>
+                <field name="journal_id" invisible="1"/>
+                <field name="payment_ids"  nolabel="1"/>
+                <footer>
+                    <button
+                            name="create_statement_lines"
+                            type="object"
+                            string="Create Statement Lines"
+                            class="oe_highlight"
+                    />
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="account_statement_line_create_action" model="ir.actions.act_window">
+        <field name="name">Create Lines from Payments</field>
+        <field name="res_model">account.statement.line.create</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
