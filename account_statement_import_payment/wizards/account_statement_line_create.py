@@ -7,7 +7,8 @@ class AccountStatementLineCreate(models.TransientModel):
 
     statement_id = fields.Many2one("account.bank.statement", string="Bank Statement")
     journal_id = fields.Many2one('account.journal', related='statement_id.journal_id')
-    payment_ids = fields.Many2many("account.payment", string="Payments", domain="[('journal_id', '=', journal_id)]")
+    payment_ids = fields.Many2many("account.payment", string="Payments",
+                                   domain="[('journal_id', '=', journal_id),('state', '=', 'posted')]")
 
     @api.model
     def default_get(self, field_list):
