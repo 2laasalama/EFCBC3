@@ -7,6 +7,6 @@ from odoo import models, api
 class AccountBankStatement(models.Model):
     _inherit = "account.bank.statement"
 
-    @api.onchange('balance_end')
-    def onchange_balance_end(self):
+    def button_validate_or_action(self):
         self.balance_end_real = self.balance_end
+        return super(AccountBankStatement, self).button_validate_or_action()
