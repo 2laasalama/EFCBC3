@@ -13,6 +13,7 @@
                     <field name="exclude_penalty"/>
                     <field name="exclude_weekends"/>
                     <field name="exclude_holidays"/>
+                    <field name="payroll_summary"/>
                 </xpath>
             </field>
         </record>

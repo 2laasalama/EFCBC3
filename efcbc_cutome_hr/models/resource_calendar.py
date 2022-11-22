@@ -44,7 +44,6 @@ class ResourceCalendar(models.Model):
         return intervals
 
     def _attendance_intervals_batch(self, start_dt, end_dt, resources=None, domain=None, tz=None):
-        print("_attendance_intervals_batch")
         res = super()._attendance_intervals_batch(start_dt=start_dt, end_dt=end_dt, resources=resources, domain=domain,
                                                   tz=tz)
         if not self.env.context.get("exclude_weekends") and resources:

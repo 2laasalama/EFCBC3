@@ -16,3 +16,4 @@ class HRLeaveType(models.Model):
                                           'If enabled,  Public Holidays are skipped in leave days'
                                           ' calculation.'
                                       ), )
+    payroll_summary = fields.Boolean('Show in Payroll Summary', default=True)

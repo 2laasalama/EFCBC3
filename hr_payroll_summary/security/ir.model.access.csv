@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_payslip_summary,access_hr_payslip_summary,model_hr_payslip_summary,hr_payroll.group_hr_payroll_user,1,1,1,1
+access_hr_payslip_summary_line,access_hr_payslip_summary_line,model_hr_payslip_summary_line,hr_payroll.group_hr_payroll_user,1,1,1,1
+access_hr_payslip_summary_employees,access_hr_payslip_summary_employees,model_hr_payslip_summary_employees,,1,1,1,1
+access_hr_payslip_summary_leave,access_hr_payslip_summary_leave,model_hr_payslip_summary_leave,,1,1,1,1
+access_hr_lateness_penalty_report,access_hr_lateness_penalty_report,model_hr_lateness_penalty_report,,1,1,1,1

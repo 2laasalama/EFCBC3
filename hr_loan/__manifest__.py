@@ -30,5 +30,6 @@
         'views/hr_loan.xml',
         'views/hr_payroll.xml',
         # 'views/res_config_views.xml',
-    ]
+    ],
+    'license': 'LGPL-3',
 }

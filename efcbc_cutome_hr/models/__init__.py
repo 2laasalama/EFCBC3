@@ -7,3 +7,4 @@ from . import excessive_leave_policy
 from . import excessive_leave
 from . import resource_calendar
 from . import resource_mixin
+from . import hr_attendance

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hr_payslip_summary_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.summary.tree</field>
+        <field name="model">hr.payslip.summary</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_range_id" decoration-bf="1"/>
+                <field name="date_from" decoration-bf="1"/>
+                <field name="date_to" decoration-bf="1"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+                <field
+                        name="state"
+                        decoration-success="state == 'close'"
+                        decoration-info="state == 'draft'"
+                        widget="badge"
+                        optional="show"
+                />
+                <field name="message_needaction" invisible="1"/>
+                <field
+                        name="company_id"
+                        groups="base.group_multi_company"
+                        optional="show"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_payslip_summary_view_form" model="ir.ui.view">
+        <field name="name">hr.payslip.summary.form</field>
+        <field name="model">hr.payslip.summary</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                            name="close_payslip_summary" type="object" string="Close" states="draft"
+                            class="oe_highlight"/>
+                    <button name="%(action_hr_payslip_summary_by_employees)d" type="action" states="draft"
+                            string="Generate Sheet"
+                            class="oe_highlight"/>
+                    <button icon="fa-cogs" string="Update Sheet" name="compute_sheet" type="object"
+                            class="oe_highlight"/>
+                    <button string="Set to Draft" name="draft_payslip_summary" type="object" states="close"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <label for="name" class="oe_edit_only"/>
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <group>
+                    <group name="period_group">
+                        <field name="date_range_id"/>
+                        <label for="date_from" string=""/>
+                        <div>
+                            <field name="date_from" widget="daterange" class="oe_inline"
+                                   options="{'related_end_date': 'date_to'}"/>
+                            -
+                            <field name="date_to" widget="daterange" class="oe_inline"
+                                   options="{'related_start_date': 'date_from'}"/>
+                        </div>
+                        <field invisible="1" name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <field name="line_ids" readonly="1">
+                    <tree>
+                        <field name="sequence"/>
+                        <field name="employee_id"/>
+                        <field name="category_ids" widget="many2many_tags"/>
+                        <field name="leave_ids" widget="many2many_tags" style="width:150px"/>
+                        <field name="attendant_absence"/>
+                        <field name="fingerprint_absence" invisible="1"/>
+                        <field name="total_lateness"/>
+                        <field name="penalty_days"/>
+                        <field name="motivation_effort_days"/>
+                        <field name="written_warning"/>
+                        <button icon="fa-cogs" string="Update" name="compute_sheet" type="object" class="oe_highlight"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="hr_payslip_summary_action" model="ir.actions.act_window">
+        <field name="name">Payslips Summary</field>
+        <field name="res_model">hr.payslip.summary</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            action="hr_payslip_summary_action"
+            id="hr_payslip_summary_menu"
+            parent="hr_payroll.menu_hr_payroll_payslips"
+            sequence="1"
+            groups="hr_payroll.group_hr_payroll_user"
+    />
+</odoo>

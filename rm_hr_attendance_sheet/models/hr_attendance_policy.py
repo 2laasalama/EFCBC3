@@ -35,6 +35,7 @@ class HrAttendancePolicy(models.Model):
     diff_rule_id = fields.Many2one(comodel_name="hr.diff.rule",
                                    string="Difference Time Rule", required=True)
     lateness_penalty_month = fields.Integer(string="Retrospective months to apply on")
+    written_warning = fields.Float(default=0.25)
     lateness_penalty_ids = fields.One2many("lateness.penalty", 'policy_id')
     absence_penalty_month = fields.Integer(string="Retrospective months to apply on")
     absence_penalty_first = fields.Float('First Time')
@@ -297,6 +298,7 @@ class LatenessPenalty(models.Model):
     _description = 'Lateness Penalty'
 
     policy_id = fields.Many2one('hr.attendance.policy')
+    name = fields.Char(default='Rule #1')
     from_time = fields.Float('Form')
     to_time = fields.Float('To')
     first = fields.Float('First Time', default=1)

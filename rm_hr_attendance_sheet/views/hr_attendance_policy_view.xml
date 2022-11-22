@@ -193,12 +193,14 @@
                     <group string="Lateness Penalty">
                         <group>
                             <field name="lateness_penalty_month"/>
+                            <field name="written_warning" widget="float_time"/>
                         </group>
                         <group></group>
                     </group>
                     <group>
                         <field name="lateness_penalty_ids" nolabel="1">
                             <tree editable="bottom">
+                                <field name="name"/>
                                 <field name="from_time" widget="float_time"/>
                                 <field name="to_time" widget="float_time"/>
                                 <field name="first"/>

@@ -358,7 +358,7 @@ msgstr "المبلغ الخاضع للضريبة"
 #. module: rm_eg_hr_payroll
 #: model:ir.model.fields,field_description:rm_eg_hr_payroll.field_hr_contract__variable_salary
 msgid "Variable Salary"
-msgstr "الراتب المتغير"
+msgstr "العلاوات الغير مضافة"
 
 #. module: rm_eg_hr_payroll
 #: model:ir.model.fields.selection,name:rm_eg_hr_payroll.selection__hr_employee__edu_grad__vgod
