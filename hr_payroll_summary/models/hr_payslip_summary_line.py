@@ -129,8 +129,7 @@ class HrPayslipsummaryLine(models.Model):
             fingerprint_absence = rec.get_fingerprint_absence(rec.employee_id, rec.date_from, rec.date_to)
             # get number of lateness
             rec.get_attendance_sheet_data()
-            # lateness_penalty = self.get_lateness_penalty_report(rec.total_lateness / 60)
-            lateness_penalty = rec.get_lateness_penalty_report(200 / 60)
+            lateness_penalty = self.get_lateness_penalty_report(rec.total_lateness / 60)
             rec.update(
                 {
                     'leave_ids': [(6, 0, leave_ids.ids)],
