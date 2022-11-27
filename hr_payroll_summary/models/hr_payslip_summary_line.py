@@ -14,27 +14,29 @@ class HrPayslipsummaryLine(models.Model):
     contract_id = fields.Many2one('hr.contract', string='Contract', compute='compute_required_data')
     sequence = fields.Integer(readonly=True, string='م')
     employee_id = fields.Many2one('hr.employee', 'الموظف', required=True, readonly=True)
-    category_ids = fields.Many2many('hr.employee.category', related='employee_id.category_ids',
-                                    string='المستوى الوظيفى',
-                                    readonly=True)
+    category_ids = fields.Many2many('hr.employee.category', related='employee_id.category_ids', readonly=True
+                                    , string='المستوى الوظيفى')
     leave_ids = fields.One2many("hr.payslip.summary.leave", "summary_line_id", string='أجازات', readonly=True)
     fingerprint_absence = fields.Float(string='غياب بصمة', readonly=True)
     attendant_absence = fields.Float(string='أيام الغياب', readonly=True)
     total_lateness = fields.Float(string='تاخيرات بالدقيقة', readonly=True)
+    excessive_leave_id = fields.Many2one('excessive.leave.line')
+    excessive_leave_deduction = fields.Float(string='نسبة من الحافز والجهود والبدل', readonly=False)
     lateness_penalty_id = fields.Many2one('hr.lateness.penalty.report', string='تقرير عقوبة التاخيرات')
-    penalty_absence = fields.Float(related='lateness_penalty_id.absence_days', readonly=True)
-    penalty_value = fields.Float(related='lateness_penalty_id.penalty_value', readonly=True)
-    penalty_days = fields.Float(string='أيام من الاجر اليومى', compute='_get_lateness_penalty', readonly=True)
-    motivation_effort_days = fields.Float(compute='_compute_motivation_effort_days',
-                                          string='ايام من الحافز والجهود والبدل', readonly=True)
+    penalty_absence = fields.Float()
+    penalty_value = fields.Float()
+    written_warning = fields.Boolean()
+    penalty_days = fields.Float(string='أيام من الاجر اليومى')
+    motivation_effort_days = fields.Float(string='ايام من الحافز والجهود والبدل', readonly=True)
+    disciplinary_id = fields.Many2one('disciplinary.action')
+    direct_motivation_effort = fields.Float(string='من الحافز والجهود مباشر', readonly=True)
+    motivation_ratio = fields.Float(string='نسبة الحافز')
+    effort_ratio = fields.Float(string='نسبة الجهود')
 
-    written_warning = fields.Boolean(related='lateness_penalty_id.written_warning', )
-
-    @api.depends('motivation_effort_days', 'penalty_days', 'att_policy_id')
-    def _get_lateness_penalty(self):
+    def get_penalty_days(self, motivation_effort_days):
         for rec in self:
-            penalty_days = rec.penalty_days
-            total_absence = rec.motivation_effort_days
+            penalty_days = 0
+            total_absence = motivation_effort_days
             if total_absence > 1:
                 total_absence -= 1
                 penalty_days += rec.att_policy_id.absence_penalty_first
@@ -47,12 +49,12 @@ class HrPayslipsummaryLine(models.Model):
             while total_absence > 1:
                 total_absence -= 1
                 penalty_days += rec.att_policy_id.absence_penalty_fourth
-            rec.penalty_days = penalty_days
+            return penalty_days
 
-    @api.depends('attendant_absence', 'penalty_absence')
-    def _compute_motivation_effort_days(self):
+    def get_motivation_effort_days(self):
         for rec in self:
-            rec.motivation_effort_days = rec.attendant_absence + rec.penalty_absence
+            motivation_effort_days = rec.attendant_absence + rec.penalty_absence
+            return motivation_effort_days
 
     @api.depends('employee_id', 'date_from', 'date_to')
     def compute_required_data(self):
@@ -119,6 +121,45 @@ class HrPayslipsummaryLine(models.Model):
 
         return lateness_penalty_id
 
+    def get_excessive_leave_report(self):
+        self.excessive_leave_id.unlink()
+        excessive_leave_id = self.env['excessive.leave.line'].create({
+            'employee_id': self.employee_id.id,
+            'date_from': self.date_from,
+            'date_to': self.date_to,
+        })
+        excessive_leave_id.action_update()
+
+        return excessive_leave_id
+
+    def get_direct_motivation_effort(self):
+        actions = self.env['disciplinary.action'].search([('employee_name', '=', self.employee_id.id),
+                                                          ('state', '=', 'action'),
+                                                          '|', ('date_range_id', '=', self.date_range_id.id),
+                                                          ('date_range_id2', '=', self.date_range_id.id)])
+        actions_deduction = sum(action.deduction_percentage for action in actions)
+        return actions_deduction
+
+    def get_motivation_ratio(self, direct_motivation_effort, excessive_leave_deduction, motivation_effort_days):
+        for rec in self:
+            motivation_ratio = 0
+            motivation_effort = 100 - direct_motivation_effort - excessive_leave_deduction
+            if motivation_effort > 0:
+                motivation_ratio = motivation_effort * rec.summary_id.motivation_ratio / 100
+                motivation_ratio -= (5 * motivation_effort_days)
+                motivation_ratio = motivation_ratio if motivation_ratio > 0 else 0
+            return motivation_ratio
+
+    def get_effort_ratio(self, direct_motivation_effort, excessive_leave_deduction, motivation_effort_days):
+        for rec in self:
+            effort_ratio = 0
+            motivation_effort = 100 - direct_motivation_effort - excessive_leave_deduction
+            if motivation_effort > 0:
+                effort_ratio = motivation_effort * rec.summary_id.effort_ratio / 100
+                effort_ratio -= (5 * motivation_effort_days)
+                effort_ratio = effort_ratio if effort_ratio > 0 else 0
+            return effort_ratio
+
     def compute_sheet(self):
         for rec in self:
             # get number of leaves
@@ -129,11 +170,25 @@ class HrPayslipsummaryLine(models.Model):
             fingerprint_absence = rec.get_fingerprint_absence(rec.employee_id, rec.date_from, rec.date_to)
             # get number of lateness
             rec.get_attendance_sheet_data()
-            lateness_penalty = self.get_lateness_penalty_report(rec.total_lateness / 60)
+            lateness_penalty = rec.get_lateness_penalty_report(rec.total_lateness / 60)
+            excessive_leave_id = rec.get_excessive_leave_report()
+            motivation_effort_days = rec.get_motivation_effort_days()
+            direct_motivation_effort = self.get_direct_motivation_effort()
+            excessive_leave_deduction = excessive_leave_id.deduction
             rec.update(
                 {
                     'leave_ids': [(6, 0, leave_ids.ids)],
                     'fingerprint_absence': fingerprint_absence,
-                    'lateness_penalty_id': lateness_penalty.id,
+                    'penalty_absence': lateness_penalty.absence_days,
+                    'penalty_value': lateness_penalty.penalty_value,
+                    'motivation_effort_days': motivation_effort_days,
+                    'written_warning': lateness_penalty.written_warning,
+                    'excessive_leave_deduction': excessive_leave_deduction,
+                    'direct_motivation_effort': self.get_direct_motivation_effort(),
+                    'penalty_days': rec.get_penalty_days(motivation_effort_days),
+                    'motivation_ratio': rec.get_motivation_ratio(direct_motivation_effort, excessive_leave_deduction,
+                                                                 motivation_effort_days),
+                    'effort_ratio': rec.get_effort_ratio(direct_motivation_effort, excessive_leave_deduction,
+                                                         motivation_effort_days),
                 }
             )

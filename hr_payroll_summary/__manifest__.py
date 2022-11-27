@@ -13,6 +13,7 @@
         "wizard/hr_payslips_summary_employees.xml",
         "views/hr_payslip_summary_views.xml",
         "views/hr_lateness_penalty_report.xml",
+        "views/res_config_settings_views.xml",
         "report/payslip_summary_report.xml",
     ],
     "application": True,

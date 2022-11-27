@@ -9,7 +9,7 @@ class HrLeave(models.Model):
     exclude_weekends = fields.Boolean(related='holiday_status_id.exclude_weekends')
     exclude_holidays = fields.Boolean(related='holiday_status_id.exclude_holidays')
 
-    @api.onchange('holiday_status_id')
+    @api.onchange('holiday_status_id', 'exclude_weekends', 'exclude_holidays')
     def recompute_no_days(self):
         self._compute_number_of_days()
 

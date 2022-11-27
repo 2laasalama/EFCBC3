@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, fields
 from odoo.addons.resource.models.resource import Intervals
 
 from pytz import timezone
@@ -8,6 +8,8 @@ from dateutil import rrule
 
 class ResourceCalendar(models.Model):
     _inherit = 'resource.calendar'
+
+    work_entry_type_id = fields.Many2one('hr.work.entry.type', 'Work Entry Type', readonly=True)
 
     def _weekend_intervals(self, start_dt, end_dt, resource=None):
         """ Return the weekend intervals in the given datetime range.
@@ -40,7 +42,6 @@ class ResourceCalendar(models.Model):
             for day in self._weekend_intervals(start_dt, end_dt, resource):
                 attendances.append(day)
             intervals[resource.id] = Intervals(attendances)
-
         return intervals
 
     def _attendance_intervals_batch(self, start_dt, end_dt, resources=None, domain=None, tz=None):

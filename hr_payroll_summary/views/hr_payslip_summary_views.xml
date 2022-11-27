@@ -40,8 +40,8 @@
                     <button name="%(action_hr_payslip_summary_by_employees)d" type="action" states="draft"
                             string="Generate Sheet"
                             class="oe_highlight"/>
-                    <button icon="fa-cogs" string="Update Sheet" name="compute_sheet" type="object"
-                            class="oe_highlight"/>
+                    <button icon="fa-cogs" string="Update Sheet" name="compute_sheet" type="object"/>
+                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
                     <button string="Set to Draft" name="draft_payslip_summary" type="object" states="close"/>
                     <field name="state" widget="statusbar"/>
                 </header>
@@ -62,9 +62,13 @@
                         </div>
                         <field invisible="1" name="company_id" groups="base.group_multi_company"/>
                     </group>
+                    <group>
+                        <field name="motivation_ratio"/>
+                        <field name="effort_ratio"/>
+                    </group>
                 </group>
-                <field name="line_ids" readonly="1">
-                    <tree>
+                <field name="line_ids">
+                    <tree editable="top" create="0" delete="0">
                         <field name="sequence"/>
                         <field name="employee_id"/>
                         <field name="category_ids" widget="many2many_tags"/>
@@ -72,9 +76,13 @@
                         <field name="attendant_absence"/>
                         <field name="fingerprint_absence" invisible="1"/>
                         <field name="total_lateness"/>
-                        <field name="penalty_days"/>
-                        <field name="motivation_effort_days"/>
-                        <field name="written_warning"/>
+                        <field name="penalty_days" readonly="0"/>
+                        <field name="motivation_effort_days" readonly="0"/>
+                        <field name="excessive_leave_deduction" readonly="0"/>
+                        <field name="direct_motivation_effort" readonly="0"/>
+                        <field name="written_warning" readonly="0"/>
+                        <field name="motivation_ratio" readonly="0"/>
+                        <field name="effort_ratio" readonly="0"/>
                         <button icon="fa-cogs" string="Update" name="compute_sheet" type="object" class="oe_highlight"/>
                     </tree>
                 </field>

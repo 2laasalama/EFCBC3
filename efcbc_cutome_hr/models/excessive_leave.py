@@ -9,36 +9,21 @@ class ExcessiveLeave(models.Model):
     _name = 'excessive.leave'
     _description = 'Excessive Leave'
 
-    date_from = fields.Date(
-        string='From', required=True,
-        default=lambda self: fields.Date.to_string(date.today().replace(day=1)))
-    date_to = fields.Date(
-        string='To', required=True,
-        default=lambda self: fields.Date.to_string((datetime.now() + relativedelta(months=+1, day=1, days=-1)).date()))
-
+    date_range_id = fields.Many2one("date.range", required=True, string="Period")
+    date_from = fields.Date(string="Date From", required=False, related='date_range_id.date_start', store=True)
+    date_to = fields.Date(string="Date To", required=False, related='date_range_id.date_end', store=True)
     excessive_lines = fields.One2many('excessive.leave.line', 'excessive_id')
 
     def action_apply(self):
-        self.excessive_lines = False
+        self.excessive_lines.unlink()
         for employee in self.env['hr.employee'].search([]):
-            leaves = self.env['hr.leave'].search([
-                ('employee_id', '=', employee.id),
-                ('state', '=', 'validate'),
-                ('exclude_penalty', '=', False)
-            ])
-            leaves_in = leaves.filtered(lambda l: l.date_from.date() < self.date_to
-                                                  and self.date_from <= l.date_to.date() < self.date_to)
-            number_of_days = sum(leaves_in.mapped('number_of_days'))
-            rule = False
-            if number_of_days > 0:
-                rule = self.env['excessive.leave.policy'].check_deduction_rule(number_of_days)
-            self.env['excessive.leave.line'].create({
+            line = self.env['excessive.leave.line'].create({
                 'excessive_id': self.id,
                 'employee_id': employee.id,
-                'number_of_days': number_of_days,
-                'deduction_name': rule.name if rule else False,
-                'deduction': rule.deduction if rule else False,
+                'date_from': self.date_from,
+                'date_to': self.date_to,
             })
+            line.action_update()
 
     @api.depends('date_from', 'date_to')
     def name_get(self):
@@ -54,7 +39,26 @@ class ExcessiveLeaveLine(models.Model):
     _description = 'Excessive Leave Line'
 
     excessive_id = fields.Many2one('excessive.leave')
+    date_from = fields.Date()
+    date_to = fields.Date()
     employee_id = fields.Many2one('hr.employee', string='Employee')
     number_of_days = fields.Float('Number of Days Taken')
     deduction_name = fields.Char('Name of Rule')
     deduction = fields.Float('Deduction (%)')
+
+    def action_update(self):
+        for rec in self:
+
+            start_dt = datetime.combine(rec.date_from, datetime.min.time())
+            end_dt = datetime.combine(rec.date_to, datetime.min.time())
+            left = rec.employee_id.sudo()._get_leave_days_data_batch(start_dt, end_dt,
+                                                                     domain=[('time_type', '=', 'leave')])[
+                rec.employee_id.id]['days']
+
+            if left > 0:
+                rule = self.env['excessive.leave.policy'].check_deduction_rule(left)
+                rec.update({
+                    'number_of_days': left,
+                    'deduction_name': rule.name,
+                    'deduction': rule.deduction,
+                })

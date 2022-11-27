@@ -8,7 +8,7 @@
     'category': 'HR',
     'version': '0.1',
     'depends': ['hr_skills', 'hr_payroll',
-                'hr_holidays', ],
+                'hr_holidays','date_range' ],
     'data': [
         'data/excessive_leave_policy.xml',
         'security/ir.model.access.csv',

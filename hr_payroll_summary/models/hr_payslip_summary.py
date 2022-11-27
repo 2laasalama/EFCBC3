@@ -20,10 +20,14 @@ class HrPayslipsummary(models.Model):
     date_from = fields.Date(string="Date From", required=True,
                             related='date_range_id.date_start')
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')
+    motivation_ratio = fields.Float(related='company_id.motivation_ratio', readonly=True)
+    effort_ratio = fields.Float(related='company_id.effort_ratio', readonly=True)
+
+    def print_report(self):
+        return self.env.ref('hr_payroll_summary.payslip_summary_report').report_action(self.id)
 
     def get_leave_types(self):
         return self.env['hr.leave.type'].search([('payroll_summary', '=', True)])
-
 
     _sql_constraints = [
         (

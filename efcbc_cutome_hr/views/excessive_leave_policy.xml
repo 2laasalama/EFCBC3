@@ -6,7 +6,7 @@
             <field name="name">excessive_leave_policy_view_form</field>
             <field name="model">excessive.leave.policy</field>
             <field name="arch" type="xml">
-                <form>
+                <form create="0" delete="0" edit="1">
                     <sheet>
                         <field name="policy_lines" nolabel="1">
                             <tree editable="bottom">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="paperformat_hrsummary" model="report.paperformat">
         <field name="name">Payslin Summary</field>
         <field name="default" eval="True"/>
@@ -15,6 +16,7 @@
         <field name="header_spacing">20</field>
         <field name="dpi">90</field>
     </record>
+
     <record id="payslip_summary_report" model="ir.actions.report">
         <field name="name">Payslip Summary Report</field>
         <field name="model">hr.payslip.summary</field>
@@ -97,13 +99,16 @@
                                     <th t-att-colspan="len(o.get_leave_types())+2" rowspan="2">اجازات - غياب - أذون -
                                         تاخيرات
                                     </th>
-                                    <th colspan="4">خصم وفقا لائحة الجزاءات</th>
+                                    <th colspan="5">خصم وفقا لائحة الجزاءات</th>
                                     <th colspan="2" rowspan="2">قرارالسلطة المختصة</th>
                                 </tr>
                                 <tr>
                                     <th rowspan="3">ايام من الاجر اليومي</th>
                                     <th rowspan="3">ايام من الحافز والجهود والبدل</th>
-                                    <th rowspan="3">نسبة من الحافز والجهود والبدل</th>
+                                    <th rowspan="3" style="font-size: 11px;">نسبة من الحافز والجهود والبدل قرار
+                                        (2013/96)
+                                    </th>
+                                    <th rowspan="3">من الحافز والجهود مباشر</th>
                                     <th rowspan="3">انذار كتابي</th>
                                 </tr>
                                 <tr>
@@ -150,18 +155,36 @@
                                         <span t-field="line.motivation_effort_days"/>
                                     </td>
                                     <td>
-                                        X
+                                        <t t-set="excessive_leave_deduction"
+                                           t-value="int(line.excessive_leave_deduction)"/>
+                                        <span t-esc="excessive_leave_deduction"/>
+                                        <span>%</span>
+                                    </td>
+                                    <td>
+                                        <t t-set="direct_motivation_effort"
+                                           t-value="int(line.direct_motivation_effort)"/>
+                                        <span t-esc="direct_motivation_effort"/>
+                                        <span>%</span>
                                     </td>
                                     <td>
                                         <span t-if="line.written_warning">
-                                            O
+                                            &#10004;
+                                        </span>
+                                        <span t-if="not line.written_warning">
+                                            x
                                         </span>
                                     </td>
                                     <td>
-                                        X
+                                        <t t-set="motivation_ratio"
+                                           t-value="int(line.motivation_ratio)"/>
+                                        <span t-esc="motivation_ratio"/>
+                                        <span>%</span>
                                     </td>
                                     <td>
-                                        X
+                                        <t t-set="effort_ratio"
+                                           t-value="int(line.effort_ratio)"/>
+                                        <span t-esc="effort_ratio"/>
+                                        <span>%</span>
                                     </td>
                                 </tr>
                             </tbody>
