@@ -31,6 +31,9 @@ access_dashboard_manager,qms.dashboard manager,model_qms_dashboard,group_queue_m
 
 access_capacity_exception,access_capacity_exception,model_capacity_exception,base.group_user,1,1,1,1
 
+access_ir_actions_client_user,access_ir_actions_client_user,base.model_ir_actions_client,group_queue_user,1,0,0,0
+
+
 
 
 
