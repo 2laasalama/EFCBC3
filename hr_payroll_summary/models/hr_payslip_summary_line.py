@@ -37,16 +37,16 @@ class HrPayslipsummaryLine(models.Model):
         for rec in self:
             penalty_days = 0
             total_absence = motivation_effort_days
-            if total_absence > 1:
+            if total_absence > 0:
                 total_absence -= 1
                 penalty_days += rec.att_policy_id.absence_penalty_first
-            if total_absence > 1:
+            if total_absence > 0:
                 total_absence -= 1
                 penalty_days += rec.att_policy_id.absence_penalty_second
-            if total_absence > 1:
+            if total_absence > 0:
                 total_absence -= 1
                 penalty_days += rec.att_policy_id.absence_penalty_third
-            while total_absence > 1:
+            while total_absence > 0:
                 total_absence -= 1
                 penalty_days += rec.att_policy_id.absence_penalty_fourth
             return penalty_days
@@ -106,7 +106,7 @@ class HrPayslipsummaryLine(models.Model):
         attendance.get_attendances()
         self.update(
             {
-                'total_lateness': attendance.tot_late,
+                'total_lateness': attendance.tot_late * 60,
                 'attendant_absence': attendance.no_absence
             }
         )

@@ -46,19 +46,35 @@ class ExcessiveLeaveLine(models.Model):
     deduction_name = fields.Char('Name of Rule')
     deduction = fields.Float('Deduction (%)')
 
+    def get_leaves_summary(self, date_from, date_to, employee_id):
+        holidays = self.env['hr.leave'].search([
+            ('employee_id', '=', employee_id.id), ('state', '=', 'validate'),
+            ('date_from', '<=', date_to),
+            ('date_to', '>=', date_from)
+        ])
+        count = 0
+        for holiday in holidays:
+            if holiday.date_from.date() < date_from:
+                start_dt = datetime.combine(date_from, datetime.min.time())
+                end_dt = holiday.date_to
+                count += employee_id._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[employee_id.id][
+                    'days']
+            elif holiday.date_to.date() > date_to:
+                start_dt = holiday.date_from
+                end_dt = datetime.combine(date_to, datetime.min.time())
+                count += employee_id._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[employee_id.id][
+                    'days']
+            else:
+                count += holiday.number_of_days
+        return count
+
     def action_update(self):
         for rec in self:
-
-            start_dt = datetime.combine(rec.date_from, datetime.min.time())
-            end_dt = datetime.combine(rec.date_to, datetime.min.time())
-            left = rec.employee_id.sudo()._get_leave_days_data_batch(start_dt, end_dt,
-                                                                     domain=[('time_type', '=', 'leave')])[
-                rec.employee_id.id]['days']
-
-            if left > 0:
-                rule = self.env['excessive.leave.policy'].check_deduction_rule(left)
+            leaves_count = self.get_leaves_summary(rec.date_from, rec.date_to, rec.employee_id)
+            if leaves_count > 0:
+                rule = self.env['excessive.leave.policy'].check_deduction_rule(leaves_count)
                 rec.update({
-                    'number_of_days': left,
+                    'number_of_days': leaves_count,
                     'deduction_name': rule.name,
                     'deduction': rule.deduction,
                 })

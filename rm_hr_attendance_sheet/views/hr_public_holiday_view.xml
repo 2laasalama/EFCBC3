@@ -74,17 +74,17 @@
     </record>
 
 
-    <menuitem
-            id="menu_hr_public_holiday"
-            name="Public Holidays"
-            parent="hr_holidays.menu_hr_holidays_root"
-            sequence="4"
-            groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"/>
+<!--    <menuitem-->
+<!--            id="menu_hr_public_holiday"-->
+<!--            name="Public Holidays"-->
+<!--            parent="hr_holidays.menu_hr_holidays_root"-->
+<!--            sequence="4"-->
+<!--            groups="hr_holidays.group_hr_holidays_manager,hr_holidays.group_hr_holidays_user"/>-->
 
-    <menuitem id="menu_action_public_holiday" name="Public Holidays"
-              parent="menu_hr_public_holiday"
-              action="action_hr_public_holiday"
-              sequence="96"/>
+<!--    <menuitem id="menu_action_public_holiday" name="Public Holidays"-->
+<!--              parent="menu_hr_public_holiday"-->
+<!--              action="action_hr_public_holiday"-->
+<!--              sequence="96"/>-->
 
 
 </odoo>

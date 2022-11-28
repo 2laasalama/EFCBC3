@@ -95,7 +95,7 @@ class DisciplinaryAction(models.Model):
                                        '|', ('date_range_id', '=', self.date_range_id.id),
                                        ('date_range_id2', '=', self.date_range_id.id)])
                 actions_deduction = sum(action.deduction_percentage for action in actions)
-                if actions_deduction + self.deduction_percentage > 1:
+                if actions_deduction + self.deduction_percentage > 100:
                     raise ValidationError(
                         _("Sorry, You can not apply deduction on month ({}) because it fully deducted.".format(
                             self.date_range_id.name)))
@@ -103,7 +103,7 @@ class DisciplinaryAction(models.Model):
                 actions = self.search([('state', '=', 'action'), ('date_range_id', '=', self.date_range_id2.id),
                                        ('date_range_id2', '=', self.date_range_id2.id)])
                 actions_deduction = sum(action.deduction_percentage for action in actions)
-                if actions_deduction + self.deduction_percentage > 1:
+                if actions_deduction + self.deduction_percentage > 100:
                     raise ValidationError(
                         _("Sorry, You can not apply deduction on month {} because it fully deducted.".format(
                             self.date_range_id2.name)))
