@@ -30,52 +30,57 @@
         <field name="paperformat_id" ref="paperformat_hrsummary"/>
     </record>
 
+    <template id="internal_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <div class="article" style="font-family:efcbc_arial" t-att-data-oe-model="o and o._name"
+             t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+    </template>
+
     <template id="payslip_summary_report_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="web.internal_layout">
+                <t t-call="hr_payroll_summary.internal_layout">
                     <div class="page" style="direction: rtl;">
 
 
-                        <!--                        <div class="row" style="text-align: right;">-->
-                        <!--                            <div class="col-6">-->
-                        <!--                                <div>-->
-                        <!--                                    <span>التاريخ :</span>-->
-                        <!--                                    <t t-esc="context_timestamp(o.scheduled_date).strftime('%Y-%m-%d')"/>-->
-                        <!--                                </div>-->
-                        <!--                                <div t-if="not o.maintenance_company_id">-->
-                        <!--                                    <span>-->
-                        <!--                                        رقم امر التوريد:-->
-                        <!--                                    </span>-->
-                        <!--                                    <t t-esc="o.origin"/>-->
+                        <div class="row" style="text-align: right;margin-bottom: 8px;margin-top: 8px;">
+                            <div class="col-4 text-center">
+                                <div>
+                                    الأمانة التنفيذية للموارد البشرية والشئون الإدارية
+                                </div>
+                                <div>
+                                    إدارة شئون العاملين والإستحقاقات
+                                </div>
+                            </div>
+                            <div class="col-4">
 
-
-                        <!--                                </div>-->
-                        <!--                                <div t-if="o.maintenance_company_id">-->
-                        <!--                                    <span>-->
-                        <!--                                        شركة الصيانة:-->
-                        <!--                                    </span>-->
-                        <!--                                    <t t-esc="o.maintenance_company_id.name"/>-->
-
-
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="col-6">-->
-                        <!--                                <div>-->
-                        <!--                                    <span>-->
-                        <!--                                        الاصناف وردت من شركة:-->
-                        <!--                                    </span>-->
-                        <!--                                    <t t-esc="o.partner_id.name"/>-->
-                        <!--                                </div>-->
-                        <!--                                <div>-->
-                        <!--                                    <span>-->
-                        <!--                                        الجهة الطالبة:-->
-                        <!--                                    </span>-->
-                        <!--                                    <t t-esc="o.analytic_account_id.name"/>-->
-                        <!--                                </div>-->
-
-                        <!--                            </div>-->
-                        <!--                        </div>-->
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <br></br>
+                                </div>
+                                <div class="table-bordered">
+                                    <span>
+                                        الحد الاقصى للحافز
+                                    </span>
+                                    <t t-set="motivation_ratio"
+                                       t-value="int(o.motivation_ratio)"/>
+                                    <t t-esc="motivation_ratio"/>
+                                    <span>
+                                        % والجهود
+                                    </span>
+                                    <t t-set="effort_ratio"
+                                       t-value="int(o.effort_ratio)"/>
+                                    <t t-esc="effort_ratio"/>
+                                    <span>
+                                        %
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
                         <table class="table table-condensed table-bordered">
                             <tbody>
@@ -189,6 +194,87 @@
                                 </tr>
                             </tbody>
                         </table>
+
+                        <div class="row" style="text-align: right;margin-bottom: 8px;margin-top: 8px;">
+                            <div class="col-4 text-center">
+                                <div>
+                                    وحــدة شـئون العاملين
+                                </div>
+                                <div>
+                                    <br></br>
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.personnel_affairs_unit_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.personnel_affairs_unit" t-esc="o.personnel_affairs_unit.name"/>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div>
+                                    نائب رئيس الأمانة التنفيذية
+                                </div>
+                                <div>
+                                    للموارد البشرية والشئون الإدارية
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.vice_hr_manager_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.vice_hr_manager" t-esc="o.vice_hr_manager.name"/>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div>
+                                    رئيس الأمانة التنفيذية
+                                </div>
+                                <div>
+                                    للموارد البشرية والشئون الإدارية
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.hr_manager_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.hr_manager" t-esc="o.hr_manager.name"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row"
+                             style="font-size: 20px;font-weight: 700;text-align: right;margin-bottom: 8px;margin-top: 8px;">
+                            <div class="col-4 text-center">
+                            </div>
+                            <div class="col-4 text-center">
+                                <div>
+                                    يعتمد ,,
+                                </div>
+                                <div>
+                                    الامين العام
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.general_secretary_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.general_secretary" t-esc="o.general_secretary.name"/>
+                                </div>
+                            </div>
+
+                            <div class="col-4 text-center">
+                            </div>
+
+                        </div>
 
 
                     </div>

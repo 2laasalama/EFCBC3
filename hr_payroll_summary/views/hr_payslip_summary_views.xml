@@ -86,6 +86,40 @@
                         <button icon="fa-cogs" string="Update" name="compute_sheet" type="object" class="oe_highlight"/>
                     </tree>
                 </field>
+                <group>
+                    <group>
+                        <label for="personnel_affairs_unit"/>
+                        <div>
+                            <field name="personnel_affairs_unit_title" placeholder="محاسب" class="oe_inline"/>
+                            <span>/</span>
+                            <field name="personnel_affairs_unit" class="oe_inline"/>
+                        </div>
+                    </group>
+                    <group>
+                        <label for="vice_hr_manager"/>
+                        <div>
+                            <field name="vice_hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                            <span>/</span>
+                            <field name="vice_hr_manager" class="oe_inline"/>
+                        </div>
+                    </group>
+                    <group>
+                        <label for="hr_manager"/>
+                        <div>
+                            <field name="hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                            <span>/</span>
+                            <field name="hr_manager" class="oe_inline"/>
+                        </div>
+                    </group>
+                    <group>
+                        <label for="general_secretary"/>
+                        <div>
+                            <field name="general_secretary_title" placeholder="محاسب" class="oe_inline"/>
+                            <span>/</span>
+                            <field name="general_secretary" class="oe_inline"/>
+                        </div>
+                    </group>
+                </group>
             </form>
         </field>
     </record>

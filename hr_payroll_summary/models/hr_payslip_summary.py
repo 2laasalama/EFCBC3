@@ -15,13 +15,21 @@ class HrPayslipsummary(models.Model):
                              copy=False, tracking=1, default="draft", )
     company_id = fields.Many2one("res.company", string="Company", required=True, copy=False,
                                  default=lambda self: self.env.company, )
-    date_range_id = fields.Many2one("date.range", required=True, string="Period",
+    date_range_id = fields.Many2one("date.range", required=True, string="الفترة",
                                     states={"draft": [("readonly", False)]})
     date_from = fields.Date(string="Date From", required=True,
                             related='date_range_id.date_start')
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')
-    motivation_ratio = fields.Float(related='company_id.motivation_ratio', readonly=True)
-    effort_ratio = fields.Float(related='company_id.effort_ratio', readonly=True)
+    motivation_ratio = fields.Float(related='company_id.motivation_ratio', string='نسبة الحافز', readonly=True)
+    effort_ratio = fields.Float(related='company_id.effort_ratio', string='نسبة الجهود', readonly=True)
+    personnel_affairs_unit = fields.Many2one('hr.employee', string='وحدة شئون العاملين')
+    personnel_affairs_unit_title = fields.Char(default='محاسب')
+    vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية')
+    vice_hr_manager_title = fields.Char(default='أستاذة')
+    hr_manager = fields.Many2one('hr.employee', string='رئيس الأمانة التنفيذية للموارد البشرية')
+    hr_manager_title = fields.Char(default='محاسب')
+    general_secretary = fields.Many2one('hr.employee', string='الامين العام')
+    general_secretary_title = fields.Char(default='محاسب')
 
     def print_report(self):
         return self.env.ref('hr_payroll_summary.payslip_summary_report').report_action(self.id)

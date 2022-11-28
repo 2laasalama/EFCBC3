@@ -25,7 +25,7 @@ class HrPayslipsummaryLine(models.Model):
     lateness_penalty_id = fields.Many2one('hr.lateness.penalty.report', string='تقرير عقوبة التاخيرات')
     penalty_absence = fields.Float()
     penalty_value = fields.Float()
-    written_warning = fields.Boolean()
+    written_warning = fields.Boolean('انذار كتابى')
     penalty_days = fields.Float(string='أيام من الاجر اليومى')
     motivation_effort_days = fields.Float(string='ايام من الحافز والجهود والبدل', readonly=True)
     disciplinary_id = fields.Many2one('disciplinary.action')
