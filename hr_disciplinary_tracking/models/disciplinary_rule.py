@@ -19,7 +19,7 @@ class DisciplineRule(models.Model):
     sequence = fields.Integer(default=1)
     days = fields.Integer(required=True, default=1)
     percentage = fields.Float(default=0)
-    duration_per_months = fields.Integer(default=1)
+    applied_on_months = fields.Integer(default=1)
     applied_on = fields.Selection([('one', 'One Month'), ('two', 'Two Months')], default='one', required=True, )
 
     @api.constrains('percentage')

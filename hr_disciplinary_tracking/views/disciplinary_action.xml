@@ -146,10 +146,8 @@
 
                                         <field name="applied_on" invisible="1"/>
 
-                                        <field name="date_range_id"
+                                        <field name="date_range_ids" widget="many2many_tags"
                                                attrs="{'required': [('action_type','=','deduction')],'readonly': [('state','=','action')],'invisible': [('action_type','!=','deduction')]}"/>
-                                        <field name="date_range_id2" string=" "
-                                               attrs="{'required': [('applied_on','=','two')],'readonly': [('state','=','action')],'invisible': ['|',('action_type','!=','deduction'),('applied_on','!=','two')]}"/>
                                         <field name="deduction_percentage"
                                                attrs="{'invisible': [('action_type','!=','deduction')]}"/>
                                     </group>

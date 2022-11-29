@@ -49,6 +49,7 @@ class ExcessiveLeaveLine(models.Model):
     def get_leaves_summary(self, date_from, date_to, employee_id):
         holidays = self.env['hr.leave'].search([
             ('employee_id', '=', employee_id.id), ('state', '=', 'validate'),
+            ('exclude_penalty', '=', False),
             ('date_from', '<=', date_to),
             ('date_to', '>=', date_from)
         ])

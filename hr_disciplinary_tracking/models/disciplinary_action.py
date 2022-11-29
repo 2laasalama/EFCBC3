@@ -75,6 +75,7 @@ class DisciplinaryAction(models.Model):
     penalty_days = fields.Float()
     date_range_id = fields.Many2one("date.range", string="Applied On")
     date_range_id2 = fields.Many2one("date.range", string="Applied On")
+    date_range_ids = fields.Many2many("date.range", string="Applied On")
     penalty_mode = fields.Selection(selection=[('days', 'Days'), ('amount', 'Amount')],
                                     default='days')
     action_type = fields.Selection(selection=[('warring', 'Warring Action'), ('deduction', 'Deduction From Salary')])
@@ -87,50 +88,44 @@ class DisciplinaryAction(models.Model):
     applied_on = fields.Selection([('one', 'One Month'), ('two', 'Two Months')],
                                   related='disciplinary_rule_id.applied_on')
     deduction_percentage = fields.Float(related='disciplinary_rule_id.percentage', store=True)
+    applied_on_months = fields.Integer(related='disciplinary_rule_id.applied_on_months', store=True)
 
     def check_deduction_percentage(self):
         if self.action_type == 'deduction':
-            if self.date_range_id:
+            for date_range_id in self.date_range_ids:
                 actions = self.search([('employee_name', '=', self.employee_name.id), ('state', '=', 'action'),
-                                       '|', ('date_range_id', '=', self.date_range_id.id),
-                                       ('date_range_id2', '=', self.date_range_id.id)])
+                                       ('date_range_ids', 'in', date_range_id.id)])
                 actions_deduction = sum(action.deduction_percentage for action in actions)
                 if actions_deduction + self.deduction_percentage > 100:
                     raise ValidationError(
                         _("Sorry, You can not apply deduction on month ({}) because it fully deducted.".format(
-                            self.date_range_id.name)))
-            if self.date_range_id2:
-                actions = self.search([('state', '=', 'action'), ('date_range_id', '=', self.date_range_id2.id),
-                                       ('date_range_id2', '=', self.date_range_id2.id)])
-                actions_deduction = sum(action.deduction_percentage for action in actions)
-                if actions_deduction + self.deduction_percentage > 100:
-                    raise ValidationError(
-                        _("Sorry, You can not apply deduction on month {} because it fully deducted.".format(
-                            self.date_range_id2.name)))
+                            date_range_id.name)))
 
-    @api.onchange('date_range_id', 'date_range_id2')
-    @api.constrains('date_range_id', 'date_range_id2')
+    @api.onchange('date_range_ids')
+    @api.constrains('date_range_ids')
     def _check_date_range_ids(self):
         for rec in self:
-            if rec.date_range_id and rec.date_range_id2:
-                if rec.date_range_id == rec.date_range_id2:
-                    raise ValidationError(_("You must select two different months."))
             today = fields.Date.context_today(self)
-            if rec.date_range_id and rec.date_range_id.date_end < today:
-                raise ValidationError(_("You can not select month before the current date."))
-            if rec.date_range_id2 and rec.date_range_id2.date_end < today:
-                raise ValidationError(_("You can not select month before the current date."))
+            for date_range_id in rec.date_range_ids:
+                if date_range_id and date_range_id.date_end < today:
+                    raise ValidationError(_("You can not select month before the current date."))
+
+    @api.constrains('applied_on_months', 'date_range_ids')
+    def _check_applied_on_months(self):
+        for rec in self:
+            if rec.applied_on_months:
+                if len(rec.date_range_ids) != rec.applied_on_months:
+                    raise ValidationError(_("Deduction must applied on {} month.".format(rec.applied_on_months)))
 
     @api.depends('disciplinary_rule_id', 'penalty_days')
     def _compute_disciplinary_rule_action(self):
         for rec in self:
             action = ""
             if rec.disciplinary_rule_id:
-                month = 'one month' if rec.disciplinary_rule_id.applied_on == 'one' else "two months"
                 action = "TIP: {} days of penalty require to " \
-                         "apply [{}] deduction percentage on {}".format(rec.penalty_days,
-                                                                        rec.disciplinary_rule_id.percentage,
-                                                                        month)
+                         "apply {} % deduction on {} months".format(rec.penalty_days,
+                                                                    rec.disciplinary_rule_id.percentage,
+                                                                    rec.disciplinary_rule_id.applied_on_months)
             rec.disciplinary_rule_action = action
 
     @api.depends('penalty_days')
@@ -196,7 +191,7 @@ class DisciplinaryAction(models.Model):
             if rec.action_type == 'warring' and not rec.action:
                 raise ValidationError(_('You have to select an Action !!'))
 
-            if rec.action_type == 'deduction' and not rec.penalty_days or not rec.date_range_id:
+            if rec.action_type == 'deduction' and not rec.penalty_days or not rec.date_range_ids:
                 raise ValidationError(_('You have to Enter Penalty Days!!'))
 
             rec.check_deduction_percentage()

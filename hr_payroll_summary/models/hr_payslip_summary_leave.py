@@ -9,7 +9,7 @@ class HrPayslipsummaryLeave(models.Model):
     name = fields.Char(compute='_compute_name')
     summary_line_id = fields.Many2one('hr.payslip.summary.line')
     holiday_status_id = fields.Many2one('hr.leave.type', 'Leave Type', required=True)
-    number_of_days = fields.Float(default='0')
+    number_of_days = fields.Integer(default='0')
 
     @api.depends('holiday_status_id', 'number_of_days')
     def _compute_name(self):

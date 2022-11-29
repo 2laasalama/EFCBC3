@@ -13,7 +13,7 @@
                                 <field name="sequence" widget='handle'/>
                                 <field name="days"/>
                                 <field name="percentage"/>
-                                <field name="applied_on"/>
+                                <field name="applied_on_months"/>
                             </tree>
                         </field>
                     </sheet>

@@ -81,6 +81,7 @@
         <field name="name">Lateness Penalty Report</field>
         <field name="res_model">hr.lateness.penalty.report</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('rule_id','!=',False)]</field>
         <field name="context">{'search_default_group_by_employee_id': 1,'search_default_group_by_rule_id': 1}
         </field>
     </record>

@@ -36,7 +36,7 @@ class HrContract(models.Model):
     variable_salary = fields.Float(string="Raises Not Added",
                                    digits=dp.get_precision('Payroll'))
 
-    allowances = fields.Float(string="Allowances",
+    allowances = fields.Float(string="Allowances", compute='_compute_allowances',
                               digits=dp.get_precision('Payroll'))
 
     other_alw_ids = fields.One2many(comodel_name="hr.alw.line",
@@ -48,6 +48,11 @@ class HrContract(models.Model):
     efforts = fields.Float('الجهود')
     sabbatical_allowance = fields.Float('بدل التفرغ')
     transportation_allowance = fields.Float('بدل التنقل')
+
+    @api.depends('other_alw_ids')
+    def _compute_allowances(self):
+        for rec in self:
+            rec.allowances = sum(line.amount for line in rec.other_alw_ids)
 
     def get_alw(self, alw_code):
         alw_id = self.other_alw_ids.filtered(lambda x: x.code == alw_code)
