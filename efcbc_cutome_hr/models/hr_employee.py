@@ -21,6 +21,7 @@ class Employee(models.Model):
                                        groups="hr.group_hr_user", )
     education_lines = fields.One2many('employee.education.line', 'employee_id',
                                       groups="hr.group_hr_user", )
+    code = fields.Char()
 
     _sql_constraints = [
         ('identification_id_uniq', 'unique (identification_id)',
@@ -28,6 +29,8 @@ class Employee(models.Model):
 
         ('social_insurance_no', 'unique (social_insurance_no)',
          "The Social Insurance No must be unique, this one is already assigned to another employee."),
+        ('code_unique', 'unique (code)',
+         "The Employee code must be unique."),
     ]
 
     @api.onchange('identification_id')

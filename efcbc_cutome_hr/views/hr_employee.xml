@@ -37,6 +37,9 @@
                         </field>
                     </group>
                 </xpath>
+                <xpath expr="//field[@name='department_id']" position="before">
+                    <field name="code"/>
+                </xpath>
             </field>
         </record>
 

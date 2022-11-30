@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="committee_report" model="ir.actions.report">
+        <field name="name">Committee Report</field>
+        <field name="model">hr.committee</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">hr_committee.committee_report_template</field>
+        <field name="report_file">hr_committee.committee_report_template</field>
+        <field name="print_report_name">'Committee - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="hr_committee.model_hr_committee"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="hr_committee.paperformat_hrsummary"/>
+    </record>
+
+    <template id="committee_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="hr_committee.internal_layout">
+                    <div class="page" style="direction: rtl;">
+
+                        <div class="row text-right" style="text-align: right;">
+                            <div class="col-4"></div>
+                            <div class="col-4 text-center">
+                                <div>
+                                    <t t-esc="o.name"/>
+                                </div>
+                                <div style="padding-left: 50px;padding-right: 50px;">
+                                    <hr style="margin-bottom: -9px;"></hr>
+                                    <hr></hr>
+                                </div>
+                                <div>
+                                    <span>
+                                        عن شهر :
+                                    </span>
+                                    <t t-esc="o.month_ar"/>
+                                    <span>
+                                        سنة :
+                                    </span>
+                                    <t t-esc="o.type_id.name"/>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div>
+                                    <span>
+                                        التاريخ :
+                                    </span>
+                                    <t t-esc="o.date"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-condensed table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th width="5%">الرقم</th>
+                                    <th width="25%">الاسم</th>
+                                    <th width="7%">عدد اللجان</th>
+                                    <th width="7%">فئة اللجنة</th>
+                                    <th width="7%">قيمة بدل اللجان</th>
+                                    <th width="7%">أيام انتقال</th>
+                                    <th width="7%">فئة الانتقال</th>
+                                    <th width="7%">قيمة بدل الانتقال</th>
+                                    <th width="7%">اجمالى الاستحقاق</th>
+                                    <th width="7%">الضرائب</th>
+                                    <th width="7%">الصافى</th>
+                                    <th width="7%">التوقيع</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td>
+                                        <span t-field="line.employee_code"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.employee_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.committees_count"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.committees_category"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.allowance_amount"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.transportation_days"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.transportation_Category"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.transportation_amount"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.total_earnings"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.taxes"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.net_pay"/>
+                                    </td>
+                                    <td>
+
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        الاجمالى
+                                    </td>
+                                    <td>
+                                        <span t-field="o.total_earnings"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.total_taxes"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.total_net_pay"/>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class="row" style="text-align: right;margin-bottom: 8px;margin-top: 8px;">
+                            <div class="col-4 text-center">
+                                <div>
+                                    نائب رئيس الأمانة التنفيذية
+                                    للموارد البشرية والشئون الإدارية
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.vice_hr_manager_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.vice_hr_manager" t-esc="o.vice_hr_manager.name"/>
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div>
+                                    مستشار (أ) للموارد البشرية والشئون الإدارية
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.hr_consultant_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.hr_consultant" t-esc="o.hr_consultant.name"/>
+                                </div>
+                            </div>
+
+
+                            <div class="col-4 text-center">
+                                <div>
+                                    رئيس الأمانة التنفيذية
+                                    للموارد البشرية والشئون الإدارية
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.hr_manager_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.hr_manager" t-esc="o.hr_manager.name"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="text-align: right;margin-bottom: 8px;margin-top: 8px;">
+                            <div class="col-4 text-right">
+                                المراجعة المالية:
+                            </div>
+
+                            <div class="col-4 text-center"></div>
+                            <div style="font-size: 20px;font-weight: 700;" class="col-4 text-center">
+                                <div>
+                                    يعتمد ,,
+                                </div>
+                                <div>
+                                    الامين العام
+                                </div>
+                                <div class="text-right" style="margin-right: 50px;">
+                                    <t t-esc="o.general_secretary_title"/>
+                                    <span>
+                                        /
+                                    </span>
+                                </div>
+                                <div>
+                                    <t t-if="o.general_secretary" t-esc="o.general_secretary.name"/>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
