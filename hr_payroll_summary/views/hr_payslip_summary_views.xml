@@ -72,7 +72,7 @@
                         <field name="sequence"/>
                         <field name="employee_id"/>
                         <field name="category_ids" widget="many2many_tags"/>
-                        <field name="leave_ids" widget="many2many_tags" style="width:150px"/>
+                        <field name="leave_ids" invisible="1" widget="many2many_tags" style="width:150px"/>
                         <field name="attendant_absence"/>
                         <field name="fingerprint_absence" invisible="1"/>
                         <field name="total_lateness"/>

@@ -7,14 +7,17 @@
     "sequence": 11,
     "summary": "Manage your employee payroll records",
     "author": "Mahmoud Abdelaziz",
-    "depends": ['date_range', 'efcbc_cutome_hr', 'rm_hr_attendance_sheet'],
+    "depends": ['date_range', 'efcbc_cutome_hr', 'rm_hr_attendance_sheet', 'hr_work_entry_contract_enterprise'],
     "data": [
         "security/ir.model.access.csv",
         "wizard/hr_payslips_summary_employees.xml",
         "views/hr_payslip_summary_views.xml",
         "views/hr_lateness_penalty_report.xml",
         "views/res_config_settings_views.xml",
+        "views/hr_employee_performance_views.xml",
+        "report/report.xml",
         "report/payslip_summary_report.xml",
+        "report/employee_performance_report.xml",
     ],
     "application": True,
 }

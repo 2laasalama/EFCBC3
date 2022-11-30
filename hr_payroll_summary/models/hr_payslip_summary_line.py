@@ -7,7 +7,7 @@ class HrPayslipsummaryLine(models.Model):
     _name = "hr.payslip.summary.line"
 
     summary_id = fields.Many2one('hr.payslip.summary')
-    date_range_id = fields.Many2one("date.range", required=True, string="Period", related='summary_id.date_range_id')
+    date_range_id = fields.Many2one("date.range", required=True, string="Period")
     date_from = fields.Date(string="Date From", required=True, related='date_range_id.date_start')
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')
     att_policy_id = fields.Many2one('hr.attendance.policy', string="Attendance Policy", compute='compute_required_data')
@@ -71,7 +71,8 @@ class HrPayslipsummaryLine(models.Model):
         for rec in self:
             contracts = rec.employee_id._get_contracts(rec.date_from, rec.date_to)
             if not contracts:
-                raise ValidationError(_('There is no valid contract for employee %s' % rec.employee_id.name))
+                raise ValidationError(_('There is no valid contract for employee %s in period %s-%s' % (
+                    rec.employee_id.name, rec.date_from, rec.date_to)))
             if not contracts[0].att_policy_id:
                 raise ValidationError(_("Employee %s does not have attendance policy" % rec.employee_id.name))
 
@@ -81,20 +82,20 @@ class HrPayslipsummaryLine(models.Model):
              ('date', '<=', date_to)]).mapped('date')
         return len(attendances)
 
-    def get_leave_summary(self, employee, date_from, date_to):
-        vals = []
-        all_leaves = self.env['hr.leave'].search([('employee_id', '=', employee.id), ('date_from', '>=', date_from),
-                                                  ('date_from', '<=', date_to)])
+    def get_leave_summary(self):
+        for rec in self:
+            vals = []
 
-        for leave_type in self.env['hr.leave.type'].search([('payroll_summary', '=', True)]):
-            number_of_days = sum(
-                all_leaves.filtered(lambda l: l.holiday_status_id == leave_type).mapped('number_of_days'))
-            vals.append({
-                'number_of_days': number_of_days,
-                'holiday_status_id': leave_type.id
-            })
+            for leave_type in self.env['hr.leave.type'].search([('payroll_summary', '=', True)]):
+                domain = [('holiday_status_id', '=', leave_type.id)]
 
-        return vals
+                leaves_count = self.employee_id.get_leaves_summary(rec.date_from, rec.date_to, domain)
+
+                vals.append({
+                    'number_of_days': leaves_count,
+                })
+
+            return vals
 
     def get_attendance_sheet_data(self):
         attendance_obj = self.env['attendance.sheet']
@@ -135,8 +136,7 @@ class HrPayslipsummaryLine(models.Model):
     def get_direct_motivation_effort(self):
         actions = self.env['disciplinary.action'].search([('employee_name', '=', self.employee_id.id),
                                                           ('state', '=', 'action'),
-                                                          '|', ('date_range_id', '=', self.date_range_id.id),
-                                                          ('date_range_id2', '=', self.date_range_id.id)])
+                                                          ('date_range_ids', 'in', self.date_range_id.id)])
         actions_deduction = sum(action.deduction_percentage for action in actions)
         return actions_deduction
 
@@ -163,8 +163,8 @@ class HrPayslipsummaryLine(models.Model):
     def compute_sheet(self):
         for rec in self:
             # get number of leaves
-            leave_summary_vals = rec.get_leave_summary(rec.employee_id, rec.date_from, rec.date_to)
-            leave_ids = self.env['hr.payslip.summary.leave'].create(leave_summary_vals)
+            # leave_summary_vals = rec.get_leave_summary(rec.employee_id, rec.date_from, rec.date_to)
+            # leave_ids = self.env['hr.payslip.summary.leave'].create(leave_summary_vals)
             rec.leave_ids.unlink()
             # get number of absences
             fingerprint_absence = rec.get_fingerprint_absence(rec.employee_id, rec.date_from, rec.date_to)
@@ -173,18 +173,18 @@ class HrPayslipsummaryLine(models.Model):
             lateness_penalty = rec.get_lateness_penalty_report(rec.total_lateness / 60)
             excessive_leave_id = rec.get_excessive_leave_report()
             motivation_effort_days = rec.get_motivation_effort_days()
-            direct_motivation_effort = self.get_direct_motivation_effort()
+            direct_motivation_effort = rec.get_direct_motivation_effort()
             excessive_leave_deduction = excessive_leave_id.deduction
             rec.update(
                 {
-                    'leave_ids': [(6, 0, leave_ids.ids)],
+                    # 'leave_ids': [(6, 0, leave_ids.ids)],
                     'fingerprint_absence': fingerprint_absence,
                     'penalty_absence': lateness_penalty.absence_days,
                     'penalty_value': lateness_penalty.penalty_value,
                     'motivation_effort_days': motivation_effort_days,
                     'written_warning': lateness_penalty.written_warning,
                     'excessive_leave_deduction': excessive_leave_deduction,
-                    'direct_motivation_effort': self.get_direct_motivation_effort(),
+                    'direct_motivation_effort': direct_motivation_effort,
                     'penalty_days': rec.get_penalty_days(motivation_effort_days),
                     'motivation_ratio': rec.get_motivation_ratio(direct_motivation_effort, excessive_leave_deduction,
                                                                  motivation_effort_days),

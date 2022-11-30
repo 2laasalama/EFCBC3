@@ -17,3 +17,5 @@ class HRLeaveType(models.Model):
                                           ' calculation.'
                                       ), )
     payroll_summary = fields.Boolean('Show in Payroll Summary', default=True)
+    leave_category = fields.Selection(
+        [('annual', 'Annual Leaves'), ('other', 'Other Leaves'), ('permission', 'Permission'), ('mission', 'Mission')])

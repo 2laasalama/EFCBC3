@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hr_employee_performance_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.performance.tree</field>
+        <field name="model">hr.employee.performance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="year_id"/>
+                <field name="employee_id" decoration-bf="1"/>
+                <field
+                        name="state"
+                        decoration-success="state == 'close'"
+                        decoration-info="state == 'draft'"
+                        widget="badge"
+                        optional="show"
+                />
+                <field
+                        name="company_id"
+                        groups="base.group_multi_company"
+                        optional="show"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_employee_performance_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.performance.form</field>
+        <field name="model">hr.employee.performance</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                            name="close_employee_performance" type="object" string="Close" states="draft"
+                            class="oe_highlight"/>
+                    <button icon="fa-cogs" string="Compute Sheet" name="compute_sheet" type="object"/>
+                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
+                    <button string="Set to Draft" name="draft_employee_performance" type="object" states="close"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group>
+                    <group name="period_group">
+                        <field name="employee_id"/>
+                        <field name="year_id"/>
+                        <field invisible="1" name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                <field name="line_ids" readonly="1">
+                    <tree editable="top" create="0" delete="0">
+                        <field name="sequence"/>
+                        <field name="month_ar"/>
+                        <field name="date_range_id" invisible="1"/>
+                        <field name="employee_id"/>
+                        <field name="public_holidays"/>
+                        <field name="attendant_absence"/>
+                        <field name="total_lateness"/>
+                        <field name="total_permissions"/>
+                        <field name="total_missions"/>
+                        <field name="penalty_days" readonly="1"/>
+                        <field name="motivation_effort_days" readonly="1"/>
+                        <field name="excessive_leave_deduction" readonly="1"/>
+                        <field name="direct_motivation_effort" readonly="1"/>
+                        <field name="written_warning" readonly="1"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="hr_employee_performance_action" model="ir.actions.act_window">
+        <field name="name">Employee Performance</field>
+        <field name="res_model">hr.employee.performance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            action="hr_employee_performance_action"
+            id="hr_employee_performance_menu"
+            parent="hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root"
+            sequence="99"
+            groups="hr_payroll.group_hr_payroll_user"
+    />
+</odoo>

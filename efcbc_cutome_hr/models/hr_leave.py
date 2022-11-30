@@ -12,6 +12,11 @@ class HrLeave(models.Model):
     exclude_penalty = fields.Boolean(related='holiday_status_id.exclude_penalty', store=True)
     exclude_weekends = fields.Boolean(related='holiday_status_id.exclude_weekends', store=True)
     exclude_holidays = fields.Boolean(related='holiday_status_id.exclude_holidays', store=True)
+    payroll_summary = fields.Boolean(related='holiday_status_id.payroll_summary', store=True)
+    leave_category = fields.Selection(
+        [('annual', 'Annual Leaves'), ('other', 'Other Leaves'), ('permission', 'Permission'), ('mission', 'Mission')],
+        store=True, related='holiday_status_id.leave_category'
+    )
 
     @api.onchange('holiday_status_id', 'exclude_weekends', 'exclude_holidays')
     def recompute_no_days(self):
@@ -28,4 +33,3 @@ class HrLeave(models.Model):
 
         instance = self.with_context(context_data)
         return super(HrLeave, instance)._get_number_of_days(date_from, date_to, employee_id)
-

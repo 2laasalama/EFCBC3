@@ -69,7 +69,6 @@ class HrContract(models.Model):
         annual_salary = (amount * 12)
         if annual_salary > 0:
             annual_salary -= 9000
-        print(amount, annual_salary)
         tax_amounts = []
         total_tax = 0
         levels = []
