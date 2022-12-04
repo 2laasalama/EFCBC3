@@ -85,12 +85,15 @@
                             <group string="Insurance Items">
                                 <field name="basic_salary"/>
                                 <field name="variable_salary"/>
+                                <field name="salary"/>
                             </group>
                             <group string="Motivation and Efforts">
                                 <field name="motivation"/>
                                 <field name="efforts"/>
                                 <field name="sabbatical_allowance"/>
                                 <field name="transportation_allowance"/>
+                                <field name="night_allowance"/>
+                                <field name="living_allowance"/>
                             </group>
 
                             <group string="Allowances">

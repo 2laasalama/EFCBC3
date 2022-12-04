@@ -35,6 +35,7 @@ class HrContract(models.Model):
                                 digits=dp.get_precision('Payroll'))
     variable_salary = fields.Float(string="Raises Not Added",
                                    digits=dp.get_precision('Payroll'))
+    salary = fields.Float(compute='_compute_salary', digits=dp.get_precision('Payroll'))
 
     allowances = fields.Float(string="Allowances", compute='_compute_allowances',
                               digits=dp.get_precision('Payroll'))
@@ -48,6 +49,13 @@ class HrContract(models.Model):
     efforts = fields.Float('الجهود')
     sabbatical_allowance = fields.Float('بدل التفرغ')
     transportation_allowance = fields.Float('بدل التنقل')
+    night_allowance = fields.Float('بدل سهر')
+    living_allowance = fields.Float('بدل إعاشة')
+
+    @api.depends('basic_salary', 'variable_salary')
+    def _compute_salary(self):
+        for rec in self:
+            rec.salary = rec.basic_salary + rec.variable_salary
 
     @api.depends('other_alw_ids')
     def _compute_allowances(self):

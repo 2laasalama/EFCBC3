@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hr_salary_attachment_view_form" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.form</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='monthly_amount']" position="attributes">
+                <attribute name="attrs">{'invisible': [('deduction_type', 'in',
+                    ['rewards','vacation_allowance','night_allowance'])]}
+                </attribute>
+                <attribute name="force_save">1</attribute>
+
+            </xpath>
+
+            <xpath expr="//field[@name='monthly_amount']" position="after">
+                <!--rewards Fields-->
+                <field name="reward_amount"
+                       attrs="{'invisible': [('deduction_type', '!=', 'rewards')], 'required': [('deduction_type', '=', 'rewards')]}"/>
+                <!--vacation_allowance Fields-->
+                <field name="number_of_days"
+                       attrs="{'invisible': [('deduction_type', '!=', 'vacation_allowance')], 'required': [('deduction_type', '=', 'vacation_allowance')]}"/>
+                <field name="overtime_amount_per_day"
+                       attrs="{'invisible': [('deduction_type', '!=', 'vacation_allowance')], 'required': [('deduction_type', '=', 'vacation_allowance')]}"/>
+                <field name="transportation_allowance_per_day"
+                       attrs="{'invisible': [('deduction_type', '!=', 'vacation_allowance')], 'required': [('deduction_type', '=', 'vacation_allowance')]}"/>
+                <!--night_allowance Fields-->
+                <field name="night_allowance"
+                       attrs="{'invisible': [('deduction_type', '!=', 'night_allowance')], 'required': [('deduction_type', '=', 'night_allowance')]}"/>
+                <field name="living_allowance"
+                       attrs="{'invisible': [('deduction_type', '!=', 'night_allowance')], 'required': [('deduction_type', '=', 'night_allowance')]}"/>
+                <field name="total_night_allowance"
+                       attrs="{'invisible': [('deduction_type', '!=', 'night_allowance')], 'required': [('deduction_type', '=', 'night_allowance')]}"/>
+                <field name="total_living_allowance"
+                       attrs="{'invisible': [('deduction_type', '!=', 'night_allowance')], 'required': [('deduction_type', '=', 'night_allowance')]}"/>
+                <field name="total_living_night_allowance" string="Total"
+                       attrs="{'invisible': [('deduction_type', '!=', 'night_allowance')], 'required': [('deduction_type', '=', 'night_allowance')]}"/>
+
+                <!--total Fields-->
+                <field name="taxes" attrs="{'invisible':  [('deduction_type', 'not in',
+                    ['rewards','vacation_allowance','night_allowance'])]}"/>
+                <field name="net" attrs="{'invisible':  [('deduction_type', 'not in',
+                    ['rewards','vacation_allowance','night_allowance'])]}"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

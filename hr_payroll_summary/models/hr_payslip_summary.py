@@ -8,6 +8,12 @@ class HrPayslipsummary(models.Model):
     _description = "Payslip Summary"
     _order = "id desc"
 
+    @api.model
+    def _default_date_range(self):
+        today = fields.Date.context_today(self)
+        range = self.env['date.range'].search([('date_start', '<=', today), ('date_end', '>=', today)], limit=1)
+        return range.id if range else False
+
     name = fields.Char(required=True, default='New', readonly=True, states={"draft": [("readonly", False)]})
     line_ids = fields.One2many("hr.payslip.summary.line", "summary_id", string="Lines", readonly=True,
                                states={"draft": [("readonly", False)]})
@@ -15,7 +21,7 @@ class HrPayslipsummary(models.Model):
                              copy=False, tracking=1, default="draft", )
     company_id = fields.Many2one("res.company", string="Company", required=True, copy=False,
                                  default=lambda self: self.env.company, )
-    date_range_id = fields.Many2one("date.range", required=True, string="الفترة",
+    date_range_id = fields.Many2one("date.range", required=True, string="الفترة", default=_default_date_range,
                                     states={"draft": [("readonly", False)]})
     date_from = fields.Date(string="Date From", required=True,
                             related='date_range_id.date_start')

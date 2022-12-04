@@ -21,9 +21,15 @@ class HrCommittee(models.Model):
     _description = "Committee"
     _order = "id desc"
 
+    @api.model
+    def _default_date_range(self):
+        today = fields.Date.context_today(self)
+        range = self.env['date.range'].search([('date_start', '<=', today), ('date_end', '>=', today)], limit=1)
+        return range.id if range else False
+
     name = fields.Char(required=True, default='New', readonly=True, states={"draft": [("readonly", False)]})
 
-    date_range_id = fields.Many2one("date.range", required=True, string="الفترة",
+    date_range_id = fields.Many2one("date.range", required=True, string="الفترة", default=_default_date_range,
                                     states={"draft": [("readonly", False)]})
     type_id = fields.Many2one("date.range.type", required=True, string="السنة", related='date_range_id.type_id')
     date_from = fields.Date(string="Date From", required=True, related='date_range_id.date_start')
