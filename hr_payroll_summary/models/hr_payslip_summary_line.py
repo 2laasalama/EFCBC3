@@ -7,6 +7,8 @@ class HrPayslipsummaryLine(models.Model):
     _name = "hr.payslip.summary.line"
 
     summary_id = fields.Many2one('hr.payslip.summary')
+    company_id = fields.Many2one("res.company", string="Company", required=True, copy=False,
+                                 default=lambda self: self.env.company, )
     date_range_id = fields.Many2one("date.range", required=True, string="Period")
     date_from = fields.Date(string="Date From", required=True, related='date_range_id.date_start')
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')
@@ -71,7 +73,7 @@ class HrPayslipsummaryLine(models.Model):
         for rec in self:
             contracts = rec.employee_id._get_contracts(rec.date_from, rec.date_to)
             if not contracts:
-                raise ValidationError(_('There is no valid contract for employee %s in period %s-%s' % (
+                raise ValidationError(_('There is no valid contract for employee %s in period %s - %s' % (
                     rec.employee_id.name, rec.date_from, rec.date_to)))
             if not contracts[0].att_policy_id:
                 raise ValidationError(_("Employee %s does not have attendance policy" % rec.employee_id.name))
@@ -145,7 +147,7 @@ class HrPayslipsummaryLine(models.Model):
             motivation_ratio = 0
             motivation_effort = 100 - direct_motivation_effort - excessive_leave_deduction
             if motivation_effort > 0:
-                motivation_ratio = motivation_effort * rec.summary_id.motivation_ratio / 100
+                motivation_ratio = motivation_effort * rec.company_id.motivation_ratio / 100
                 motivation_ratio -= (5 * motivation_effort_days)
                 motivation_ratio = motivation_ratio if motivation_ratio > 0 else 0
             return motivation_ratio
@@ -155,7 +157,7 @@ class HrPayslipsummaryLine(models.Model):
             effort_ratio = 0
             motivation_effort = 100 - direct_motivation_effort - excessive_leave_deduction
             if motivation_effort > 0:
-                effort_ratio = motivation_effort * rec.summary_id.effort_ratio / 100
+                effort_ratio = motivation_effort * rec.company_id.effort_ratio / 100
                 effort_ratio -= (5 * motivation_effort_days)
                 effort_ratio = effort_ratio if effort_ratio > 0 else 0
             return effort_ratio
@@ -175,6 +177,8 @@ class HrPayslipsummaryLine(models.Model):
             motivation_effort_days = rec.get_motivation_effort_days()
             direct_motivation_effort = rec.get_direct_motivation_effort()
             excessive_leave_deduction = excessive_leave_id.deduction
+            motivation_ratio = rec.get_motivation_ratio(direct_motivation_effort, excessive_leave_deduction,
+                                                        motivation_effort_days)
             rec.update(
                 {
                     # 'leave_ids': [(6, 0, leave_ids.ids)],
@@ -186,8 +190,7 @@ class HrPayslipsummaryLine(models.Model):
                     'excessive_leave_deduction': excessive_leave_deduction,
                     'direct_motivation_effort': direct_motivation_effort,
                     'penalty_days': rec.get_penalty_days(motivation_effort_days),
-                    'motivation_ratio': rec.get_motivation_ratio(direct_motivation_effort, excessive_leave_deduction,
-                                                                 motivation_effort_days),
+                    'motivation_ratio': motivation_ratio,
                     'effort_ratio': rec.get_effort_ratio(direct_motivation_effort, excessive_leave_deduction,
                                                          motivation_effort_days),
                 }
