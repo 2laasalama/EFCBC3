@@ -22,6 +22,7 @@ class Employee(models.Model):
     education_lines = fields.One2many('employee.education.line', 'employee_id',
                                       groups="hr.group_hr_user", )
     code = fields.Char()
+    grade_id = fields.Many2one('employee.grade', 'Grade')
 
     _sql_constraints = [
         ('identification_id_uniq', 'unique (identification_id)',
@@ -145,3 +146,10 @@ class EmployeeEducationLine(models.Model):
     ], 'Certificate Level', default='other')
     study_field = fields.Char("Field of Study")
     year = fields.Selection(selection='_get_years')
+
+
+class EmployeeGrade(models.Model):
+    _name = 'employee.grade'
+    _description = 'Employee Grade'
+
+    name = fields.Char(required=True)

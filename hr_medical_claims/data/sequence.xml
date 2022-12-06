@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="seq_medical_claims" model="ir.sequence">
+            <field name="name">Medical Claims</field>
+            <field name="code">hr.medical.claims</field>
+            <field name="prefix">%(year)s/%(month)s/</field>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</odoo>
