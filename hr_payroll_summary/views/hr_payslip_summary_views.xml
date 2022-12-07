@@ -34,18 +34,17 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button
-                            name="close_payslip_summary" type="object" string="Close" states="draft"
-                            class="oe_highlight"/>
                     <button name="%(action_hr_payslip_summary_by_employees)d" type="action" states="draft"
                             string="Generate Sheet"
                             class="oe_highlight"/>
-                    <button icon="fa-cogs" string="Update Sheet" name="compute_sheet" type="object"/>
-                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
-                    <button string="Set to Draft" name="draft_payslip_summary" type="object" states="close"/>
+                    <button name="done_action" type="object" string="Confirm" states="draft" class="oe_highlight"/>
+                    <button icon="fa-cogs" string="Update Sheet" states="draft" name="compute_sheet" type="object"/>
+                    <button icon="fa-print" string="Print" states="draft,done" name="print_report" type="object"/>
+                    <button name="close_action" type="object" string="Close" states="draft"/>
+                    <button string="Set to Draft" name="draft_action" type="object" states="close,done"/>
                     <field name="state" widget="statusbar"/>
                 </header>
-                <label for="name" class="oe_edit_only"/>
+                <label for="name" string="الاسم" class="oe_edit_only"/>
                 <h1>
                     <field name="name"/>
                 </h1>

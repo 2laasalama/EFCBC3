@@ -17,7 +17,8 @@ class HrPayslipsummary(models.Model):
     name = fields.Char(required=True, default='New', readonly=True, states={"draft": [("readonly", False)]})
     line_ids = fields.One2many("hr.payslip.summary.line", "summary_id", string="Lines", readonly=True,
                                states={"draft": [("readonly", False)]})
-    state = fields.Selection([("draft", "Draft"), ("close", "Close")], string="Status", index=True, readonly=True,
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], string="Status", index=True,
+                             readonly=True,
                              copy=False, tracking=1, default="draft", )
     company_id = fields.Many2one("res.company", string="Company", required=True, copy=False,
                                  default=lambda self: self.env.company, )
@@ -51,11 +52,14 @@ class HrPayslipsummary(models.Model):
         )
     ]
 
-    def draft_payslip_summary(self):
+    def draft_action(self):
         return self.write({"state": "draft"})
 
-    def close_payslip_summary(self):
+    def close_action(self):
         return self.write({"state": "close"})
+
+    def done_action(self):
+        return self.write({"state": "done"})
 
     def compute_sheet(self):
         for rec in self:

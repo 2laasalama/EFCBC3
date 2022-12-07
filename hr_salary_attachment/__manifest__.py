@@ -8,6 +8,7 @@
     "author": "Mahmoud Abdelaziz",
     "depends": ['hr_payroll_summary', 'rm_eg_hr_payroll'],
     "data": [
+        "data/hr_payroll_data.xml",
         "security/ir.model.access.csv",
         "wizard/salary_attachment_report_wizard.xml",
         "views/hr_salary_attachment.xml",

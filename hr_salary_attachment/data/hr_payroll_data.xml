@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="input_rewards" model="hr.payslip.input.type">
+            <field name="name">Rewards Attachment</field>
+            <field name="code">ATTACH_REWARDS</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="input_vacation_allowance" model="hr.payslip.input.type">
+            <field name="name">Vacation Allowance</field>
+            <field name="code">VACATION_ALLOW</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="input_night_allowance" model="hr.payslip.input.type">
+            <field name="name">Night Allowance</field>
+            <field name="code">NIGHT_ALLOW</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+
+    </data>
+</odoo>

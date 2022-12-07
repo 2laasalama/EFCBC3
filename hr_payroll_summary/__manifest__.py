@@ -9,6 +9,7 @@
     "author": "Mahmoud Abdelaziz",
     "depends": ['date_range', 'efcbc_cutome_hr', 'rm_hr_attendance_sheet', 'hr_work_entry_contract_enterprise'],
     "data": [
+        "data/hr_payroll_data.xml",
         "security/ir.model.access.csv",
         "wizard/hr_payslips_summary_employees.xml",
         "views/hr_payslip_summary_views.xml",

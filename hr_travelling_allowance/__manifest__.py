@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "HR Medical Claims",
+    "name": "HR Travelling Allowance",
     "version": "15.0.0.0.0",
     "category": "Payroll",
     "sequence": 11,

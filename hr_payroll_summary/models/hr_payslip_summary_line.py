@@ -7,6 +7,7 @@ class HrPayslipsummaryLine(models.Model):
     _name = "hr.payslip.summary.line"
 
     summary_id = fields.Many2one('hr.payslip.summary')
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], related='summary_id.state')
     company_id = fields.Many2one("res.company", string="Company", required=True, copy=False,
                                  default=lambda self: self.env.company, )
     date_range_id = fields.Many2one("date.range", required=True, string="Period")
