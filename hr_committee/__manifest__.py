@@ -8,6 +8,7 @@
     "author": "Mahmoud Abdelaziz",
     "depends": ['date_range', 'efcbc_cutome_hr', 'efcbc_report_layout'],
     "data": [
+        "data/hr_payroll_data.xml",
         "security/ir.model.access.csv",
         "views/hr_committee.xml",
         "report/report.xml",

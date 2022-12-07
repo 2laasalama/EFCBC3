@@ -20,7 +20,8 @@ class HrTravellingAllowance(models.Model):
                                    states={"draft": [("readonly", False)]})
     other_expenses_ids = fields.One2many("hr.other.expenses", "allowance_id", string="Other Expenses", readonly=True,
                                          states={"draft": [("readonly", False)]})
-    state = fields.Selection([("draft", "Draft"), ("close", "Close")], string="Status", index=True, readonly=True,
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], string="Status", index=True,
+                             readonly=True,
                              copy=False, tracking=1, default="draft", )
     vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية')
     vice_hr_manager_title = fields.Char(default='أستاذة')
@@ -59,6 +60,9 @@ class HrTravellingAllowance(models.Model):
     def close_action(self):
         return self.write({"state": "close"})
 
+    def done_action(self):
+        return self.write({"state": "done"})
+
 
 class HrTravellingAllowanceLine(models.Model):
     _name = "hr.travelling.allowance.line"
@@ -67,7 +71,7 @@ class HrTravellingAllowanceLine(models.Model):
     date_from = fields.Date(required=True)
     date_to = fields.Date(required=True)
     status = fields.Char()
-    number_of_days = fields.Integer(required=True)
+    number_of_days = fields.Integer(compute='_compute_number_of_days', required=True)
     amount_of_day = fields.Float(required=True)
     total_amount = fields.Float(compute='_compute_total_amount')
 
@@ -75,6 +79,11 @@ class HrTravellingAllowanceLine(models.Model):
     def _compute_total_amount(self):
         for rec in self:
             rec.total_amount = rec.number_of_days * rec.amount_of_day
+
+    @api.depends('date_from', 'date_to')
+    def _compute_number_of_days(self):
+        for rec in self:
+            rec.number_of_days = (rec.date_to - rec.date_from).days
 
 
 class HrTravellingExpenses(models.Model):

@@ -9,6 +9,7 @@
     "depends": ['efcbc_cutome_hr'],
     "data": [
         "data/sequence.xml",
+        "data/hr_payroll_data.xml",
         "security/ir.model.access.csv",
         "views/res_partner.xml",
         "views/hr_medical_claims.xml",

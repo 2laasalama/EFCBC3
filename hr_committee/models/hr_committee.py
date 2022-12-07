@@ -36,12 +36,10 @@ class HrCommittee(models.Model):
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')
     date = fields.Date(default=fields.Date.context_today)
     month_ar = fields.Char(compute='_compute_month_ar', string='الشهر')
-
     line_ids = fields.One2many("hr.committee.line", "committee_id", string="Lines", readonly=True,
                                states={"draft": [("readonly", False)]})
-    state = fields.Selection([("draft", "Draft"), ("close", "Close")], string="Status", index=True, readonly=True,
-                             copy=False, tracking=1, default="draft", )
-
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], string="Status", index=True,
+                             readonly=True, copy=False, tracking=1, default="draft", )
     vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية')
     vice_hr_manager_title = fields.Char(default='أستاذة')
 
@@ -89,6 +87,9 @@ class HrCommittee(models.Model):
 
     def close_committee(self):
         return self.write({"state": "close"})
+
+    def done_committee(self):
+        return self.write({"state": "done"})
 
     def compute_sheet(self):
         for rec in self:

@@ -25,9 +25,9 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="close_committee" type="object" string="Close" states="draft"
-                            class="oe_highlight"/>
-                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
+                    <button name="done_committee" type="object" string="Done" states="draft" class="oe_highlight"/>
+                    <button name="close_committee" type="object" string="Close" states="draft"/>
+                    <button icon="fa-print" string="Print" name="print_report" states="draft,done" type="object"/>
                     <button string="Set to Draft" name="draft_committee" type="object" states="close"/>
                     <field name="state" widget="statusbar"/>
                 </header>

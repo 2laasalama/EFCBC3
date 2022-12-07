@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class HrMedicalClaims(models.Model):
@@ -22,7 +23,8 @@ class HrMedicalClaims(models.Model):
 
     line_ids = fields.One2many("hr.medical.claims.line", "claim_id", string="Lines", readonly=True,
                                states={"draft": [("readonly", False)]})
-    state = fields.Selection([("draft", "Draft"), ("close", "Close")], string="Status", index=True, readonly=True,
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], string="Status", index=True,
+                             readonly=True,
                              copy=False, tracking=1, default="draft", )
 
     vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية')
@@ -36,6 +38,13 @@ class HrMedicalClaims(models.Model):
 
     general_secretary = fields.Many2one('hr.employee', string='الامين العام')
     general_secretary_title = fields.Char(default='محاسب')
+
+    @api.constrains('provider_category', 'line_ids')
+    def check_rejected_line_ids(self):
+        for rec in self:
+            if rec.provider_category == 'other':
+                if len(rec.line_ids) > 1:
+                    raise ValidationError("Other claim accept only line.")
 
     @api.model
     def create(self, vals):
@@ -52,11 +61,22 @@ class HrMedicalClaims(models.Model):
     def close_action(self):
         return self.write({"state": "close"})
 
+    def done_action(self):
+        return self.write({"state": "done"})
+
 
 class HrMedicalClaimsLine(models.Model):
     _name = "hr.medical.claims.line"
 
     claim_id = fields.Many2one('hr.medical.claims')
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], related='claim_id.state')
+    provider_category = fields.Selection(
+        [('hospital', 'Hospital'),
+         ('clinic', 'Clinic'),
+         ('laboratory', 'Laboratory'),
+         ('radiology', 'Radiology'),
+         ('pharmacy', 'Pharmacy'),
+         ('other', 'Other')], related='claim_id.provider_category')
     date = fields.Date(default=fields.Date.context_today)
     contract_id = fields.Many2one('hr.contract', string='Contract', compute='compute_required_data')
     sequence = fields.Integer(readonly=True, string='م')

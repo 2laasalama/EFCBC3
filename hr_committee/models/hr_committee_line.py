@@ -7,6 +7,7 @@ class HrCommitteeLine(models.Model):
     _name = "hr.committee.line"
 
     committee_id = fields.Many2one('hr.committee')
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], related='committee_id.state')
     date_range_id = fields.Many2one("date.range", related='committee_id.date_range_id', required=True, string="Period")
     date_from = fields.Date(string="Date From", required=True, related='date_range_id.date_start')
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')

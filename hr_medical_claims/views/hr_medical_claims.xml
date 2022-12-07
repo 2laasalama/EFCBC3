@@ -25,10 +25,10 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="close_action" type="object" string="Close" states="draft"
-                            class="oe_highlight"/>
-                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
-                    <button string="Set to Draft" name="draft_action" type="object" states="close"/>
+                    <button name="done_action" type="object" string="Done" states="draft" class="oe_highlight"/>
+                    <button icon="fa-print" string="Print" name="print_report" states="draft,done" type="object"/>
+                    <button name="close_action" type="object" string="Close" states="draft"/>
+                    <button string="Set to Draft" name="draft_action" type="object" states="close,done"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="input_medical_claims" model="hr.payslip.input.type">
+            <field name="name">Medical Claims</field>
+            <field name="code">MEDICAL_CLAIMS</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

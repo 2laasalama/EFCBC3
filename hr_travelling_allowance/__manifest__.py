@@ -8,6 +8,7 @@
     "author": "Mahmoud Abdelaziz",
     "depends": ['efcbc_cutome_hr'],
     "data": [
+        "data/hr_payroll_data.xml",
         "data/sequence.xml",
         "security/ir.model.access.csv",
         "views/hr_travelling_allowance.xml",
