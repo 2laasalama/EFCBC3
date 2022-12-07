@@ -44,7 +44,8 @@ class QuarterIncentive(models.Model):
     third_month = fields.Char(compute='_compute_third_month')
 
     line_ids = fields.One2many("hr.quarter.incentive.line", "allowance_id", readonly=False)
-    state = fields.Selection([("draft", "Draft"), ("close", "Close")], string="Status", index=True, readonly=True,
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], string="Status", index=True,
+                             readonly=True,
                              copy=False, tracking=1, default="draft", )
 
     vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية')
@@ -88,6 +89,9 @@ class QuarterIncentive(models.Model):
     def close_action(self):
         return self.write({"state": "close"})
 
+    def done_action(self):
+        return self.write({"state": "done"})
+
     def compute_sheet(self):
         for rec in self:
             rec.line_ids.unlink()
@@ -109,6 +113,8 @@ class QuarterIncentiveLine(models.Model):
     _name = "hr.quarter.incentive.line"
 
     allowance_id = fields.Many2one('hr.quarter.incentive')
+    state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], related='allowance_id.state')
+
     date_range_id = fields.Many2one("date.range", related='allowance_id.date_range_id', required=True,
                                     string="Period")
     date_from = fields.Date(string="Date From", required=True, related='date_range_id.date_start')

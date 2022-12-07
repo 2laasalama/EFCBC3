@@ -20,6 +20,18 @@
             <field name="country_id" eval="False"/>
         </record>
 
+        <record id="input_transportation_allowance" model="hr.payslip.input.type">
+            <field name="name">Transportation Allowance</field>
+            <field name="code">TRANS_ALLOW</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="input_quarter_incentive" model="hr.payslip.input.type">
+            <field name="name">Quarter Incentive</field>
+            <field name="code">QUARTER_INCENTIVE</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
 
     </data>
 </odoo>

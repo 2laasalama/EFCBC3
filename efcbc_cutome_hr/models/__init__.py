@@ -9,3 +9,4 @@ from . import resource_calendar
 from . import resource_mixin
 from . import hr_attendance
 from . import res_config_settings
+from . import hr_payroll

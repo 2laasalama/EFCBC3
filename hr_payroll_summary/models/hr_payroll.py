@@ -18,19 +18,15 @@ class HrPayslip(models.Model):
         })
         return res
 
-    @api.onchange('employee_id', 'date_from', 'date_to')
-    def onchange_employee(self):
-        self.input_line_ids = self.get_inputs(self.date_from, self.date_to)
+    def get_input_lines(self, date_from, date_to):
+        res = super(HrPayslip, self).get_input_lines(date_from, date_to)
 
-    def get_inputs(self, date_from, date_to):
-        res = []
-
-        summary_line = self.env['hr.payslip.summary.line'].search(
+        summary_lines = self.env['hr.payslip.summary.line'].search(
             [('employee_id', '=', self.employee_id.id),
              ('state', '=', 'done'),
              ('date_from', '>=', date_from),
              ('date_from', '<=', date_to)])
-        if summary_line and self.contract_id:
+        for summary_line in summary_lines:
             # Motivation
             amount = summary_line.motivation_ratio * self.contract_id.motivation / self.company_id.motivation_ratio
             vals = {

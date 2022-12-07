@@ -27,13 +27,12 @@
                 <header>
 
                     <button icon="fa-cogs" string="Compute Sheet" name="compute_sheet" class="oe_highlight"
-                            type="object"/>
-                    <button icon="fa-cogs" string="Update Sheet" name="update_sheet" class="oe_highlight"
-                            type="object"/>
-                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
-                    <button name="close_action" type="object" string="Close" states="draft"
-                    />
-                    <button string="Set to Draft" name="draft_action" type="object" states="close"/>
+                            states="draft" type="object"/>
+                    <button name="done_action" class="oe_highlight" type="object" string="Done" states="draft"/>
+                    <button icon="fa-cogs" string="Update Sheet" name="update_sheet" states="draft" type="object"/>
+                    <button icon="fa-print" string="Print" states="draft,done" name="print_report" type="object"/>
+                    <button name="close_action" type="object" string="Close" states="draft"/>
+                    <button string="Set to Draft" name="draft_action" type="object" states="close,done"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
