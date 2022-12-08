@@ -2,6 +2,7 @@ import functools
 import hashlib
 import os
 import logging
+from datetime import datetime
 
 try:
     import simplejson as json
@@ -25,26 +26,20 @@ def check_valid_token(func):
             _logger.error(info)
             return invalid_response(400, error, info)
 
-        access_token_data = request.env['oauth.access_token'].sudo().search(
-            [('token', '=', access_token)], order='id DESC', limit=1)
+        user = request.env['res.users'].sudo().search(
+            [('token', '=', access_token)], limit=1)
 
-        access_token_obj = access_token_data._get_access_token(user_id=access_token_data.user_id.id)
+        if not user:
+            return invalid_response(401, 'invalid_token', "Token is invalid!")
 
-        if not access_token_obj or access_token_obj.token != access_token:
-            return invalid_token()
+        if datetime.now() >= user.expire_date:
+            return invalid_response(401, 'invalid_token', "Token is expired!")
 
-        request.session.uid = access_token_data.user_id.id
-        request.uid = access_token_data.user_id.id
+        request.session.uid = user.id
+        request.uid = user.id
         return func(self, *args, **kwargs)
 
     return wrap
-
-
-def generate_token(length=40):
-    random_data = os.urandom(100)
-    hash_gen = hashlib.new('sha512')
-    hash_gen.update(random_data)
-    return hash_gen.hexdigest()[:length]
 
 
 # Read OAuth2 constants and setup token store:
@@ -63,25 +58,6 @@ if not db_name:
 # HTTP controller of REST resources:
 
 class ControllerREST(http.Controller):
-
-    # # Login in odoo database and get access tokens:
-    # @http.route('/api/add/customer', methods=['POST'], type='json',
-    #             auth='none', csrf=False)
-    # @check_valid_token
-    # def add_customer(self, **kw):
-    #     # Convert http data into json:
-    #     request_data = json.loads(request.httprequest.data)
-    #     if 'uuid' not in request_data or 'name' not in request_data:
-    #         info = "Empty value of 'uuid' or 'name' "
-    #         error = 'invalid_data'
-    #         _logger.error(info)
-    #         return invalid_response(400, error, info)
-    #
-    #     request.env['res.partner'].create({'name': request_data['name']})
-    #
-    #     return valid_response(
-    #         {"desc": 'Customer Added Successfully'}
-    #     )
 
     # Login in odoo database and get access tokens:
     @http.route('/api/auth/get_tokens', methods=['POST'], type='json',
@@ -124,15 +100,16 @@ class ControllerREST(http.Controller):
             return invalid_response(401, error, info)
 
         # Generate tokens
-        access_token = request.env['oauth.access_token'].sudo()._get_access_token(user_id=uid, create=True)
-
+        # access_token = request.env['oauth.access_token'].sudo()._get_access_token(user_id=uid, create=True)
+        user = request.env['res.users'].browse(uid)
+        user.generate_token()
         # Save all tokens in store
         _logger.info("Save OAuth2 tokens of user in store...")
 
         return valid_response(data={
             'uid': uid,
-            'access_token': access_token.token,
-            'expires_in': access_token.expires,
+            'access_token': user.token,
+            'expires_in': user.expire_date,
         })
 
     # Delete access tokens from token store:

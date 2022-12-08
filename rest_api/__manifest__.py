@@ -17,7 +17,6 @@ For detailed example of REST API refer *readme.md*
     ],
     'data': [
         'data/ir_configparameter_data.xml',
-        'views/ir_model_view.xml',
         'views/res_user_view.xml',
         'security/ir.model.access.csv',
     ],

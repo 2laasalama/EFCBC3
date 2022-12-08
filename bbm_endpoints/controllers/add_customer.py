@@ -7,7 +7,7 @@ except ImportError:
     import json
 from odoo import http, _
 from odoo.http import request
-from odoo.addons.rest_api.rest_exception import invalid_response, valid_response, invalid_token
+from odoo.addons.rest_api.rest_exception import invalid_response, valid_response
 from odoo.addons.rest_api.controllers.main import check_valid_token
 
 _logger = logging.getLogger(__name__)
