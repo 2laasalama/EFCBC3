@@ -83,7 +83,9 @@ class HrTravellingAllowanceLine(models.Model):
     @api.depends('date_from', 'date_to')
     def _compute_number_of_days(self):
         for rec in self:
-            rec.number_of_days = (rec.date_to - rec.date_from).days
+            rec.number_of_days = 0
+            if rec.date_to and rec.date_from:
+                rec.number_of_days = (rec.date_to - rec.date_from).days
 
 
 class HrTravellingExpenses(models.Model):
