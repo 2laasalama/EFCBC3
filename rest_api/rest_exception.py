@@ -19,9 +19,11 @@ class JSONEncoder(json.JSONEncoder):
 def check_data_validation(request_data, mandatory_data, optional_data):
     all_data = mandatory_data + optional_data
 
-    mandatory_fields = list(zip(*mandatory_data))[0]
+    mandatory_fields = list(zip(*mandatory_data))[0] if mandatory_data else ()
 
-    all_fields = mandatory_fields + list(zip(*optional_data))[0]
+    optional_data = list(zip(*optional_data))[0] if optional_data else ()
+
+    all_fields = mandatory_fields + optional_data
 
     missing = [item for item in mandatory_fields if item not in request_data.keys()]
     unknown = [item for item in request_data.keys() if item not in all_fields]
@@ -42,7 +44,7 @@ def check_data_validation(request_data, mandatory_data, optional_data):
             error = 'ValidationError'
             return error, info
 
-    return False,False
+    return False, False
 
 
 def valid_response(data):
@@ -68,8 +70,6 @@ def invalid_object_id():
 def invalid_token():
     _logger.error("Token is expired or invalid!")
     return invalid_response(401, 'invalid_token', "Token is expired or invalid!")
-
-
 
 
 def modal_not_found(modal_name):

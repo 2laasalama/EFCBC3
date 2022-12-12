@@ -4,6 +4,7 @@
     'category': 'API',
     'depends': ['rest_api', 'base', 'account'],
     'data': [
+        'data/ir_configparameter_data.xml',
         'views/res_partner_views.xml',
         'views/account_payment_views.xml',
     ],

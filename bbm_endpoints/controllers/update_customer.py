@@ -18,41 +18,16 @@ def valid_request_data(func):
     def wrap(self, *args, **kwargs):
         request_data = json.loads(request.httprequest.data)
 
-        mandatory_data = [('name', 'str'), ('uuid', 'str')]
+        mandatory_data = []
 
-        optional_data = [('mobile', 'str'), ('email', 'str'), ('id_number', 'str'),
-                         ('address', 'str'),
-                         ('company_type', 'str'), ('bank_account', 'str')]
+        optional_data = [('name', 'str'), ('uuid', 'str'), ('mobile', 'str'), ('email', 'str'), ('id_number', 'str'),
+                         ('address', 'str'), ('identification_type', 'str'), ('company_type', 'str'),
+                         ('bank_account', 'str'), ('nationality_code', 'str')]
 
         error, info = check_data_validation(request_data, mandatory_data, optional_data)
 
         if error:
             return invalid_response(400, error, info)
-
-        # # all_data = mandatory_data + optional_data
-        # #
-        # # mandatory_fields = list(zip(*mandatory_data))[0]
-        # #
-        # # all_fields = mandatory_fields + list(zip(*optional_data))[0]
-        # #
-        # # missing = [item for item in mandatory_fields if item not in request_data.keys()]
-        # # unknown = [item for item in request_data.keys() if item not in all_fields]
-        # #
-        # # if unknown:
-        # #     info = "Three is unknown fields {}".format(unknown)
-        # #     error = 'unknownError'
-        # #     return invalid_response(400, error, info)
-        # #
-        # # if missing:
-        # #     info = "you missing required fields {}".format(missing)
-        # #     error = 'MissingError'
-        # #     return invalid_response(400, error, info)
-        #
-        # for item in all_data:
-        #     if item[0] in request_data and not type(request_data[item[0]]) is eval(item[1]):
-        #         info = ("{} field Must be in type {}").format(item[0], item[1])
-        #         error = 'ValidationError'
-        #         return invalid_response(400, error, info)
 
         if 'company_type' in request_data:
             if request_data['company_type'] not in ['person', 'company']:
@@ -83,22 +58,23 @@ class ControllerREST(http.Controller):
             info = "customer id is not exists in database!"
             error = 'invalid_data'
             return invalid_response(400, error, info)
-        print(partner)
-        vals = {
-            'customer_rank': 1,
-            'name': request_data['name'] or False,
-            'uuid': request_data['uuid'] or False,
-            'mobile': request_data.get('mobile') or False,
-            'email': request_data.get('email') or False,
-            'id_number': request_data.get('id_number') or False,
-            'street': request_data.get('address') or False,
-            'company_type': request_data.get('company_type') or False,
-            'bank_ids': [
-                (0, 0, {'acc_number': request_data.get(
-                    'bank_account')})] if 'bank_account' in request_data else False,
-        }
 
-        print(vals)
+        if 'uuid' in request_data and request.env['res.partner'].sudo().search([('uuid', '=', request_data['uuid'])]):
+            info = "Customer uuid already exists! uuid must be unique"
+            error = 'invalid_data'
+            return invalid_response(400, error, info)
+
+        country = False
+        if 'nationality_code' in request_data:
+            country = request.env['res.country'].sudo().search(
+                [('currency_id.name', '=', request_data['nationality_code'])])
+            if not country:
+                info = "Nationality Code is not exists in database!"
+                error = 'invalid_data'
+                return invalid_response(400, error, info)
+
+        vals = self.reformat_data(request_data)
+        vals['country_id'] = country.id if country else False
         try:
             with request.env.cr.savepoint():
                 partner.sudo().update(vals)
@@ -107,3 +83,22 @@ class ControllerREST(http.Controller):
             info = ("{}").format(e)
             error = 'ValidationError'
             return invalid_response(400, error, info)
+
+    def reformat_data(self, request_data):
+
+        vals = {
+            'name': request_data.get('name', False),
+            'uuid': request_data.get('uuid', False),
+            'mobile': request_data.get('mobile', False),
+            'email': request_data.get('email', False),
+            'id_number': request_data.get('id_number', False),
+            'street': request_data.get('address', False),
+            'company_type': request_data.get('company_type', False),
+            'identification_type': request_data.get('identification_type', False),
+            'bank_ids': [
+                (0, 0, {'acc_number': request_data.get(
+                    'bank_account')})] if 'bank_account' in request_data else False,
+        }
+        vals = {key: val for key, val in vals.items() if val != False}
+
+        return vals
