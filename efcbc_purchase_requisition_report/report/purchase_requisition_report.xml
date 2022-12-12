@@ -123,19 +123,17 @@
                             </tbody>
                         </table>
 
-                        <div t-if="o.require_committee_approval">
-                            <span>علي انت تكون لجنه المفاضله بين العروض الاتية :</span>
-                            <ol style="margin-right: 10px;" t-foreach="o.purchase_ids" t-as="purchase_id">
-                                <li>
-                                    <t t-esc="purchase_id.partner_id.name"/>
-                                </li>
-                            </ol>
-                            <span>وكذا لجنه الاستلام :</span>
-                            <ol style="margin-right: 10px;" t-foreach="o.purchase_committee_member_ids" t-as="member">
-                                <li>
-                                    <t t-esc="member.name"/>
-                                </li>
-                            </ol>
+                        <div class="text-right">
+                            <div t-if="o.require_rfq_unpacking">
+                                <span>علي انت تكون لجنه المفاضله بين العروض :</span>
+                                <span t-out="', '.join(map(lambda x: x.name, o.committee_member_ids))"/>
+
+                            </div>
+                            <div t-if="o.require_committee_approval">
+                                <span t-if="o.require_rfq_unpacking">وكذا</span>
+                                <span>لجنه الاستلام :</span>
+                                <span t-out="', '.join(map(lambda x: x.name, o.purchase_committee_member_ids))"/>
+                            </div>
                         </div>
 
 
