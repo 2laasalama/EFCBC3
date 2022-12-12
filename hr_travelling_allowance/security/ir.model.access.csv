@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_travelling_allowance,access_hr_travelling_allowance,model_hr_travelling_allowance,,1,1,1,1
+access_hr_travelling_allowance_line,access_hr_travelling_allowance_line,model_hr_travelling_allowance_line,,1,1,1,1
+access_hr_mission_type,access_hr_mission_type,model_hr_mission_type,,1,1,1,1
+access_hr_travelling_expenses,access_hr_travelling_expenses,model_hr_travelling_expenses,,1,1,1,1
+access_hr_travelling_route,access_hr_travelling_route,model_hr_travelling_route,,1,1,1,1
+access_hr_travelling_location,access_hr_travelling_location,model_hr_travelling_location,,1,1,1,1
+access_hr_other_expenses,access_hr_other_expenses,model_hr_other_expenses,,1,1,1,1
+

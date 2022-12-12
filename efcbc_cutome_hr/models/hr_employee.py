@@ -1,7 +1,17 @@
 # -*- coding: utf-8 -*-
 
+# -*- coding: utf-8 -*-
+import calendar
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from datetime import date, datetime
+
+class EmployeePublic(models.Model):
+    _inherit = 'hr.employee.public'
+
+    code = fields.Char()
+    grade_id = fields.Many2one('employee.grade', 'Grade')
+
 
 
 class Employee(models.Model):
@@ -18,6 +28,8 @@ class Employee(models.Model):
                                        groups="hr.group_hr_user", )
     education_lines = fields.One2many('employee.education.line', 'employee_id',
                                       groups="hr.group_hr_user", )
+    code = fields.Char()
+    grade_id = fields.Many2one('employee.grade', 'Grade')
 
     _sql_constraints = [
         ('identification_id_uniq', 'unique (identification_id)',
@@ -25,6 +37,8 @@ class Employee(models.Model):
 
         ('social_insurance_no', 'unique (social_insurance_no)',
          "The Social Insurance No must be unique, this one is already assigned to another employee."),
+        ('code_unique', 'unique (code)',
+         "The Employee code must be unique."),
     ]
 
     @api.onchange('identification_id')
@@ -44,6 +58,60 @@ class Employee(models.Model):
             if rec.social_insurance_no:
                 if len(str(rec.social_insurance_no)) < 5:
                     raise ValidationError(_('Invalid Social Insurance No, Length Must be at least 5 Digit.'))
+
+    def get_leaves_summary(self, date_from, date_to, domain):
+
+        domain = domain + [
+            ('employee_id', '=', self.id), ('state', '=', 'validate'),
+            ('date_from', '<=', date_to),
+            ('date_to', '>=', date_from)
+        ]
+
+        holidays = self.env['hr.leave'].search(domain)
+        count = 0
+        for holiday in holidays:
+            if holiday.date_from.date() < date_from:
+                start_dt = datetime.combine(date_from, datetime.min.time())
+                end_dt = holiday.date_to
+                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
+                    'days']
+            elif holiday.date_to.date() > date_to:
+                start_dt = holiday.date_from
+                end_dt = datetime.combine(date_to, datetime.min.time())
+                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
+                    'days']
+            else:
+                count += holiday.number_of_days
+        return count
+
+    def get_public_leaves_summary(self, date_from, date_to):
+
+        domain = [
+            ('calendar_id', 'in', [False, self.resource_calendar_id.id]),
+            ('resource_id', '=', False),
+            ('date_from', '<=', date_to),
+            ('date_to', '>=', date_from),
+        ]
+
+        holidays = self.env['resource.calendar.leaves'].search(domain)
+        count = 0.0
+        for holiday in holidays:
+            if holiday.date_from.date() < date_from:
+                start_dt = datetime.combine(date_from, datetime.min.time())
+                end_dt = holiday.date_to
+                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
+                    'days']
+            elif holiday.date_to.date() > date_to:
+                start_dt = holiday.date_from
+                end_dt = datetime.combine(date_to, datetime.min.time())
+                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
+                    'days']
+            else:
+                start_dt = holiday.date_from
+                end_dt = holiday.date_to
+                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
+                    'days']
+        return count
 
 
 class HajjGrantedLine(models.Model):
@@ -85,3 +153,10 @@ class EmployeeEducationLine(models.Model):
     ], 'Certificate Level', default='other')
     study_field = fields.Char("Field of Study")
     year = fields.Selection(selection='_get_years')
+
+
+class EmployeeGrade(models.Model):
+    _name = 'employee.grade'
+    _description = 'Employee Grade'
+
+    name = fields.Char(required=True)

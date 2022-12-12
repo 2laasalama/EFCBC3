@@ -15,6 +15,7 @@ class PurchaseOrder(models.Model):
     start_workflow = fields.Boolean(compute='_compute_start_workflow', copy=False)
     backorder_approval_id = fields.Many2one('backorder.committee.approval', copy=False)
     require_backorder_committee = fields.Boolean(copy=False)
+    receiving_committee_date = fields.Date(default=fields.Date.context_today)
 
     def print_check_receipt_report(self):
         return self.env.ref('purchase_committee_approval.check_receipt_report').report_action(self.id)

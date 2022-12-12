@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hr_committee_view_tree" model="ir.ui.view">
+        <field name="name">hr.committee.tree</field>
+        <field name="model">hr.committee</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_range_id" decoration-bf="1"/>
+                <field
+                        name="state"
+                        decoration-success="state == 'close'"
+                        decoration-info="state == 'draft'"
+                        widget="badge"
+                        optional="show"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_committee_view_form" model="ir.ui.view">
+        <field name="name">hr.committee.form</field>
+        <field name="model">hr.committee</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="done_committee" type="object" string="Done" states="draft" class="oe_highlight"/>
+                    <button name="close_committee" type="object" string="Close" states="draft"/>
+                    <button icon="fa-print" string="Print" name="print_report" states="draft,done" type="object"/>
+                    <button string="Set to Draft" name="draft_committee" type="object" states="close"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group name="period_group">
+                            <field name="date_range_id"/>
+                            <label for="date_from" string=""/>
+                            <div>
+                                <field name="date_from" widget="daterange" class="oe_inline"
+                                       options="{'related_end_date': 'date_to'}"/>
+                                -
+                                <field name="date_to" widget="daterange" class="oe_inline"
+                                       options="{'related_start_date': 'date_from'}"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="employee_code" invisible="1"/>
+                            <field name="employee_id"/>
+                            <field name="committees_count"/>
+                            <field name="committees_category"/>
+                            <field name="allowance_amount"/>
+                            <field name="transportation_days"/>
+                            <field name="transportation_Category"/>
+                            <field name="transportation_amount"/>
+                            <field name="total_earnings"/>
+                            <field name="taxes"/>
+                            <field name="net_pay"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <group>
+                            <label for="vice_hr_manager"/>
+                            <div>
+                                <field name="vice_hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="vice_hr_manager" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="hr_consultant"/>
+                            <div>
+                                <field name="hr_consultant_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="hr_consultant" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="hr_manager"/>
+                            <div>
+                                <field name="hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="hr_manager" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="general_secretary"/>
+                            <div>
+                                <field name="general_secretary_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="general_secretary" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hr_committee_action" model="ir.actions.act_window">
+        <field name="name">Committees</field>
+        <field name="res_model">hr.committee</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            action="hr_committee_action"
+            id="hr_committee_menu"
+            parent="hr_payroll.menu_hr_payroll_payslips"
+            sequence="99"
+    />
+</odoo>

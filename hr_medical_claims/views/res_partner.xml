@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.inherit.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="is_medical_provider" invisible="1"/>
+                <field name="provider_category"
+                       attrs="{'invisible': [('is_medical_provider', '=', False)],'required': [('is_medical_provider', '=', True)]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="medical_provider_action" model="ir.actions.act_window">
+        <field name="name">Medical Provider</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_medical_provider','=',True)]</field>
+        <field name="context">{'default_is_medical_provider': True}</field>
+    </record>
+
+    <menuitem
+            id="base_medical_claims_menu"
+            name="Medical Claims"
+            parent="hr.menu_hr_root"
+            sequence="24"
+    />
+
+    <menuitem
+            action="medical_provider_action"
+            id="medical_provider_menu"
+            parent="base_medical_claims_menu"
+            sequence="2"
+    />
+</odoo>

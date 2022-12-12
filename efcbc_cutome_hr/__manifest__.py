@@ -8,7 +8,7 @@
     'category': 'HR',
     'version': '0.1',
     'depends': ['hr_skills', 'hr_payroll',
-                'hr_holidays', ],
+                'hr_holidays', 'date_range'],
     'data': [
         'data/excessive_leave_policy.xml',
         'security/ir.model.access.csv',
@@ -16,6 +16,7 @@
         'views/hr_leave_type.xml',
         'views/excessive_leave_policy.xml',
         'views/excessive_leave.xml',
+        'views/res_config_settings_views.xml',
     ],
     'assets': {
         'web.assets_qweb': [

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hr_quarter_incentive_view_tree" model="ir.ui.view">
+        <field name="name">hr.quarter.incentive.tree</field>
+        <field name="model">hr.quarter.incentive</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" invisible="1"/>
+                <field name="date_range_id" decoration-bf="1"/>
+                <field
+                        name="state"
+                        decoration-success="state == 'close'"
+                        decoration-info="state == 'draft'"
+                        widget="badge"
+                        optional="show"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_quarter_incentive_view_form" model="ir.ui.view">
+        <field name="name">hr.quarter.incentive.form</field>
+        <field name="model">hr.quarter.incentive</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+
+                    <button icon="fa-cogs" string="Compute Sheet" name="compute_sheet" class="oe_highlight"
+                            states="draft" type="object"/>
+                    <button name="done_action" class="oe_highlight" type="object" string="Done" states="draft"/>
+                    <button icon="fa-cogs" string="Update Sheet" name="update_sheet" states="draft" type="object"/>
+                    <button icon="fa-print" string="Print" states="draft,done" name="print_report" type="object"/>
+                    <button name="close_action" type="object" string="Close" states="draft"/>
+                    <button string="Set to Draft" name="draft_action" type="object" states="close,done"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group name="period_group">
+                            <field name="date_range_id"/>
+                            <label for="date_from" string=""/>
+                            <div>
+                                <field name="date_from" widget="daterange" class="oe_inline"
+                                       options="{'related_end_date': 'date_to'}"/>
+                                -
+                                <field name="date_to" widget="daterange" class="oe_inline"
+                                       options="{'related_start_date': 'date_from'}"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom" create="0" delete="0">
+                            <field name="sequence" widget="handle"/>
+                            <field name="employee_code" invisible="1"/>
+                            <field name="print" widget="boolean_toggle"/>
+                            <field name="employee_id"/>
+                            <field name="first_month"/>
+                            <field name="second_month"/>
+                            <field name="third_month"/>
+                            <field name="total_months"/>
+                            <field name="taxes"/>
+                            <field name="net"/>
+                            <button icon="fa-cogs" string="Update" name="compute_months_amount"
+                                    class="oe_highlight"
+                                    type="object"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <group>
+                            <label for="vice_hr_manager"/>
+                            <div>
+                                <field name="vice_hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="vice_hr_manager" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="hr_consultant"/>
+                            <div>
+                                <field name="hr_consultant_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="hr_consultant" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="hr_manager"/>
+                            <div>
+                                <field name="hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="hr_manager" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="general_secretary"/>
+                            <div>
+                                <field name="general_secretary_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="general_secretary" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_quarter_incentive_action" model="ir.actions.act_window">
+        <field name="name">Quarter Incentive</field>
+        <field name="res_model">hr.quarter.incentive</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            action="hr_quarter_incentive_action"
+            id="hr_quarter_incentive_menu"
+            parent="menu_salary_report"
+            sequence="4"
+    />
+
+</odoo>

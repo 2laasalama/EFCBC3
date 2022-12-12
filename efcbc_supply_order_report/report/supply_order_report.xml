@@ -28,7 +28,7 @@
                             </div>
                             <div>
                                 <span>بالإشارة إلى العرض المقدم منكم بتاريخ</span>
-                                <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
+                                <t t-esc="o.last_update_date"/>
                             </div>
                             <div>
                                 <span>برجاء التوجيه باللازم بتوريد الأصناف الأتية طبقاََ للعروض وللشروط المقدمة وهى

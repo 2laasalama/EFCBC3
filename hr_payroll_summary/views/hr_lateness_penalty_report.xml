@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+    <record id="hr_lateness_penalty_report_form" model="ir.ui.view">
+        <field name="name">hr.lateness.penalty.report.form</field>
+        <field name="model">hr.lateness.penalty.report</field>
+        <field name="arch" type="xml">
+            <form create="0" delete="0" edit="0">
+                <sheet>
+                    <field name="hs_penalty" invisible="1"/>
+                    <widget name="web_ribbon" title="No Penalty"
+                            attrs="{'invisible':[('hs_penalty','=',True)]}"/>
+                    <widget name="web_ribbon" title="Penalty" bg_color="bg-danger"
+                            attrs="{'invisible':[('hs_penalty','=',False)]}"/>
+                    <label for="employee_id" class="oe_edit_only"/>
+                    <h1>
+                        <field name="employee_id"/>
+                    </h1>
+                    <group>
+                        <group name="period_group">
+                            <field name="date_range_id"/>
+                            <div>
+                                <field name="date_from" widget="daterange" class="oe_inline"
+                                       options="{'related_end_date': 'date_to'}"/>
+                                -
+                                <field name="date_to" widget="daterange" class="oe_inline"
+                                       options="{'related_start_date': 'date_from'}"/>
+                            </div>
+                            <field name="att_policy_id"/>
+                            <field name="total_lateness" widget="float_time"/>
+                        </group>
+                        <group>
+                            <field name="allowed_lateness" widget="float_time"/>
+                            <field name="absence_days"/>
+                            <field name="rule_id"/>
+                            <field name="written_warning"/>
+                            <field name="sequence"/>
+                            <field name="penalty_value"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_lateness_penalty_report_tree" model="ir.ui.view">
+        <field name="name">hr.lateness.penalty.report.tree</field>
+        <field name="model">hr.lateness.penalty.report</field>
+        <field name="arch" type="xml">
+            <tree create="0" delete="0" edit="0">
+                <field name="employee_id"/>
+                <field name="date_range_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="att_policy_id"/>
+                <field name="total_lateness" widget="float_time"/>
+                <field name="absence_days"/>
+                <field name="rule_id"/>
+                <field name="written_warning"/>
+                <field name="sequence"/>
+                <field name="penalty_value"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_lateness_penalty_report_search" model="ir.ui.view">
+        <field name="name">hr.lateness.penalty.report.search</field>
+        <field name="model">hr.lateness.penalty.report</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="employee_id"/>
+                <filter string="Employee" name="group_by_employee_id" context="{'group_by':'employee_id'}"/>
+                <filter string="Rule" name="group_by_rule_id" context="{'group_by':'rule_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_lateness_penalty_report_action" model="ir.actions.act_window">
+        <field name="name">Lateness Penalty Report</field>
+        <field name="res_model">hr.lateness.penalty.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('rule_id','!=',False)]</field>
+        <field name="context">{'search_default_group_by_employee_id': 1,'search_default_group_by_rule_id': 1}
+        </field>
+    </record>
+    <menuitem
+            action="hr_lateness_penalty_report_action"
+            id="hr_lateness_penalty_report_menu"
+            parent="rm_hr_attendance_sheet.attendance_sheet_menu"
+            sequence="99"
+            groups="hr_payroll.group_hr_payroll_user"
+    />
+</odoo>

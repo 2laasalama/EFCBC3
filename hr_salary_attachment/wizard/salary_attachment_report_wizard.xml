@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_salary_attachment_report_wizard" model="ir.ui.view">
+        <field name="name">salary.attachment.report.wizard.form</field>
+        <field name="model">salary.attachment.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="period_group">
+                    <field name="type" invisible="1"/>
+                    <field name="date_range_id"/>
+                    <label for="date_from" string=""/>
+                    <div>
+                        <field name="date_from" widget="daterange" class="oe_inline"
+                               options="{'related_end_date': 'date_to'}"/>
+                        -
+                        <field name="date_to" widget="daterange" class="oe_inline"
+                               options="{'related_start_date': 'date_from'}"/>
+                    </div>
+                </group>
+                <footer>
+                    <button icon="fa-print" string="Print" name="print_report" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="rewards_report_action" model="ir.actions.act_window">
+        <field name="name">Rewards</field>
+        <field name="res_model">salary.attachment.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'default_type': 'rewards'}</field>
+        <field name="view_id" ref="view_salary_attachment_report_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="vacation_allowance_report_action" model="ir.actions.act_window">
+        <field name="name">Vacation Allowance</field>
+        <field name="res_model">salary.attachment.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'default_type': 'vacation_allowance'}</field>
+        <field name="view_id" ref="view_salary_attachment_report_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="night_allowance_report_action" model="ir.actions.act_window">
+        <field name="name">Night Shift Allowance</field>
+        <field name="res_model">salary.attachment.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'default_type': 'night_allowance'}</field>
+        <field name="view_id" ref="view_salary_attachment_report_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_salary_report"
+            name="Salary Reports"
+            parent="hr_payroll.menu_hr_payroll_report"
+            sequence="99"/>
+
+    <menuitem
+            id="menu_rewards_report"
+            action="rewards_report_action"
+            parent="menu_salary_report"
+            sequence="1"/>
+
+    <menuitem
+            id="menu_vacation_allowance_report"
+            action="vacation_allowance_report_action"
+            parent="menu_salary_report"
+            sequence="2"/>
+
+    <menuitem
+            id="menu_night_allowance_report"
+            action="night_allowance_report_action"
+            parent="menu_salary_report"
+            sequence="3"/>
+
+</odoo>

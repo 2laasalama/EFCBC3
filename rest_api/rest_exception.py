@@ -16,6 +16,37 @@ class JSONEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
+def check_data_validation(request_data, mandatory_data, optional_data):
+    all_data = mandatory_data + optional_data
+
+    mandatory_fields = list(zip(*mandatory_data))[0] if mandatory_data else ()
+
+    optional_data = list(zip(*optional_data))[0] if optional_data else ()
+
+    all_fields = mandatory_fields + optional_data
+
+    missing = [item for item in mandatory_fields if item not in request_data.keys()]
+    unknown = [item for item in request_data.keys() if item not in all_fields]
+
+    if unknown:
+        info = "Three is unknown fields {}".format(unknown)
+        error = 'unknownError'
+        return error, info
+
+    if missing:
+        info = "you missing required fields {}".format(missing)
+        error = 'MissingError'
+        return error, info
+
+    for item in all_data:
+        if item[0] in request_data and not type(request_data[item[0]]) is eval(item[1]):
+            info = ("{} field Must be in type {}").format(item[0], item[1])
+            error = 'ValidationError'
+            return error, info
+
+    return False, False
+
+
 def valid_response(data):
     data.update({'rest_api_code': 200,
                  'isSuccess': True})

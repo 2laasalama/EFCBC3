@@ -27,7 +27,6 @@ class AccountPayment(models.Model):
             elif pay.partner_type == 'supplier':
                 # Send money to pay a bill or receive money to refund it.
                 if pay.partner_id and pay.is_loan:
-                    print("Im Loan")
                     pay.destination_account_id = pay.loan_type_id.default_account
                 elif pay.partner_id and not pay.is_loan:
                     pay.destination_account_id = pay.partner_id.with_company(pay.company_id).property_account_payable_id

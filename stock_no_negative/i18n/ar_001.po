@@ -27,7 +27,7 @@ msgstr " lote '%s'"
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr "Permitir Stock Negativo"
+msgstr " السماح للمخزون بالسالب"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
@@ -36,9 +36,9 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
-"Permitir niveles de stock negativos para los productos en stock adjuntos a "
-"esta categoría. Las opciones no se aplican a los productos adjuntos a "
-"subcategorías de esta categoría."
+"Allow negative stock levels for the stockable products attached to this "
+"category. The options doesn't apply to products attached to sub-categories "
+"of this category."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
@@ -46,8 +46,8 @@ msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
 msgstr ""
-"Permitir niveles de stock negativos para los productos en stock ubicados en "
-"esta ubicación."
+"Allow negative stock levels for the stockable products attached to this "
+"location."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
@@ -58,10 +58,10 @@ msgid ""
 "related stock moves will be blocked if the stock level becomes negative with"
 " the stock move."
 msgstr ""
-"Si esta opción no está activa en este producto ni en su categoría de "
-"producto y este producto es un producto almacenable, entonces la validación "
-"de los movimientos de stock relacionados se bloqueará si el nivel de stock "
-"se vuelve negativo con el movimiento de stock."
+"If this option is not active on this product nor on its product category and"
+" that this product is a stockable product, then the validation of the "
+"related stock moves will be blocked if the stock level becomes negative with"
+" the stock move."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location

@@ -5,4 +5,5 @@ excessive_leave_policy_access,excessive_leave_policy_access,model_excessive_leav
 excessive_leave_policy_line_access,excessive_leave_policy_line_access,model_excessive_leave_policy_line,,1,1,1,1
 excessive_leave_access,excessive_leave_access,model_excessive_leave,,1,1,1,1
 excessive_leave_line_access,excessive_leave_line_access,model_excessive_leave_line,,1,1,1,1
+access_employee_grade,access_employee_grade,model_employee_grade,,1,1,1,1
 

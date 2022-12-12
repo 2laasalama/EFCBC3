@@ -80,15 +80,24 @@
                             </group>
                         </group>
                     </page>
-                   <page name="salary_items" string="Salary Items" groups="hr.group_hr_manager">
+                    <page name="salary_items" string="Salary Items" groups="hr.group_hr_manager">
                         <group>
                             <group string="Insurance Items">
                                 <field name="basic_salary"/>
                                 <field name="variable_salary"/>
+                                <field name="salary"/>
                             </group>
+                            <group string="Motivation and Efforts">
+                                <field name="motivation"/>
+                                <field name="efforts"/>
+                                <field name="sabbatical_allowance"/>
+                                <field name="transportation_allowance"/>
+                                <field name="night_allowance"/>
+                                <field name="living_allowance"/>
+                            </group>
+
                             <group string="Allowances">
                                 <field name="allowances"/>
-
                             </group>
 
                         </group>

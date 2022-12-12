@@ -9,10 +9,12 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='allocation_validation_type']"
                        position="after">
-                    <h2>Excluding Options</h2>
+                    <h2>Other Options</h2>
                     <field name="exclude_penalty"/>
                     <field name="exclude_weekends"/>
                     <field name="exclude_holidays"/>
+                    <field name="payroll_summary"/>
+                    <field name="leave_category"/>
                 </xpath>
             </field>
         </record>

@@ -27,17 +27,17 @@
                         <div style="text-align: right;line-height: 32px;">
                             <div>
                                 <span>التاريخ :</span>
-                                <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
+                                <t t-esc="o.receiving_committee_date"/>
                             </div>
                             <div>
                                 <span>
-                                    اسم المورد/
+                                    اسم المورد:
                                 </span>
                                 <t t-esc="o.partner_id.name"/>
                             </div>
                             <div>
                                 <span>
-                                    رقم طلب الشراء/
+                                    رقم طلب الشراء:
                                 </span>
                                 <t t-esc="o.name"/>
                             </div>
@@ -105,7 +105,7 @@
 
                         <div style="text-align: right;line-height: 32px;">
                             <div>
-                                <span>بعد الفحص والمعاينه الفعلية والاستلام نري الاستلام بما جاء قبوله بالجدول </span>
+                                <span>بعد الفحص والمعاينه الفعلية والاستلام نري الاستلام بما جاء قبوله بالجدول</span>
                             </div>
                             <div t-if="len(o.picking_ids.filtered(lambda picking: picking.state != 'cancel'))==1">
                                 <span>
@@ -113,11 +113,7 @@
                                 </span>
                                 <t t-esc="o.picking_ids.filtered(lambda picking: picking.state != 'cancel').name"/>
                                 <span>
-                                    ) بتاريخ
-                                </span>
-                                <t t-esc="context_timestamp(o.picking_ids.filtered(lambda picking: picking.state != 'cancel').scheduled_date).strftime('%Y-%m-%d')"/>
-                                <span>
-                                    واضيفت بعهتدى
+                                    ) واضيفت بعهتدى
                                 </span>
                             </div>
                             <div t-if="len(o.picking_ids.filtered(lambda picking: picking.state != 'cancel'))>1">

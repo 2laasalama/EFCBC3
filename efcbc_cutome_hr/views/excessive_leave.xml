@@ -9,15 +9,24 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <group col="8" colspan="4">
-                            <label for="date_from" string="Period"/>
-                            <div>
-                                <field name="date_from" class="oe_inline"/>
-                                -
-                                <field name="date_to" class="oe_inline"/>
-                            </div>
-                            <button name="action_apply" type="object" string="Apply" class="btn-primary"/>
+                        <group name="period_group">
+                            <group name="period_group">
+                                <field name="date_range_id"/>
+                                <label for="date_from" string=""/>
+                                <div>
+                                    <field name="date_from" widget="daterange" class="oe_inline"
+                                           options="{'related_end_date': 'date_to'}"/>
+                                    -
+                                    <field name="date_to" widget="daterange" class="oe_inline"
+                                           options="{'related_start_date': 'date_from'}"/>
+                                </div>
+
+                            </group>
+                            <group>
+                                <button name="action_apply" type="object" string="Apply" class="btn-primary"/>
+                            </group>
                         </group>
+
                         <field name="excessive_lines" readonly="1" nolabel="1">
                             <tree>
                                 <field name="employee_id"/>
@@ -54,6 +63,35 @@
                   parent="hr_holidays.menu_hr_holidays_approvals"
                   action="excessive_leave_action"
                   sequence="3"/>
+
+        <record id="excessive_leave_line_view_tree" model="ir.ui.view">
+            <field name="name">excessive_leave_view_line_tree</field>
+            <field name="model">excessive.leave.line</field>
+            <field name="arch" type="xml">
+                <tree create="0" delete="1" edit="0">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="employee_id"/>
+                    <field name="number_of_days"/>
+                    <field name="deduction_name"/>
+                    <field name="deduction"/>
+                    <button icon="fa-cogs" string="Update" name="action_update" type="object" class="oe_highlight"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="excessive_leave_line_action" model="ir.actions.act_window">
+            <field name="name">Excessive Time-Off Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">excessive.leave.line</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="excessive_leave_line_menuitem"
+                  parent="hr_holidays.menu_hr_holidays_approvals"
+                  action="excessive_leave_line_action"
+                  sequence="4"/>
 
     </odoo>
 </openerp>

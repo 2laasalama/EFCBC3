@@ -3,6 +3,8 @@ view_disciplinary_action,view.disciplinary.action,model_disciplinary_action,hr.g
 view_disciplinary_action_user,view.disciplinary.action.user,model_disciplinary_action,hr.group_hr_user,1,1,0,0
 view_disciplinary_action_line_user,view.disciplinary.action.line.user,model_disciplinary_action_line,base.group_user,1,1,1,1
 view_discipline_category,view.discipline.category,model_discipline_category,hr.group_hr_manager,1,1,1,1
+disciplinary_rule_access,disciplinary_rule_access,model_disciplinary_rule,hr.group_hr_manager,1,1,1,1
+disciplinary_rule_line_access,disciplinary_rule_line_access,model_disciplinary_rule_line,hr.group_hr_manager,1,1,1,1
 
 
 

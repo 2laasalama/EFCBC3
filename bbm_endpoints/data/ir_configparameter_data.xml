@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="bpm_url_parameter" model="ir.config_parameter">
+            <field name="key">bpm_url</field>
+            <field name="value">http://38.242.255.160:8080</field>
+        </record>
+    </data>
+</odoo>

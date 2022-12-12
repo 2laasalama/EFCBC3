@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="input_committee_allowance" model="hr.payslip.input.type">
+            <field name="name">Committee Allowance</field>
+            <field name="code">COMMITTEE_ALLOW</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

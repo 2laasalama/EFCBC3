@@ -12,11 +12,12 @@
             <xpath expr="//field[@name='vat']" position="after">
                 <field name="uuid"/>
                 <field name="id_number"/>
+                <field name="identification_type"/>
+                <field name="country_id"/>
             </xpath>
 
         </field>
     </record>
-
 
 
 </odoo>

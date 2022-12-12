@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="employee_performance_report" model="ir.actions.report">
+        <field name="name">Employee Performance Report</field>
+        <field name="model">hr.employee.performance</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">hr_payroll_summary.employee_performance_report_template</field>
+        <field name="report_file">hr_payroll_summary.employee_performance_report_template</field>
+        <field name="print_report_name">'Employee Performance - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="hr_payroll_summary.model_hr_employee_performance"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="hr_payroll_summary.paperformat_hrsummary"/>
+    </record>
+
+    <template id="employee_performance_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="hr_payroll_summary.internal_layout">
+                    <div class="page" style="direction: rtl;">
+
+
+                        <div class="row" style="text-align: right;margin-bottom: 8px;margin-top: 8px;">
+                            <div class="col-4 text-center">
+                                <div>
+                                    الأمانة التنفيذية
+                                </div>
+                                <div>
+                                    للموارد البشرية والشئون الإدارية
+                                </div>
+                            </div>
+                            <div class="col-7">
+
+                            </div>
+                            <div class="col-1">
+                                <div>
+                                    <br></br>
+                                </div>
+                                <div class="table-bordered">
+                                    <span>
+                                        عام
+                                    </span>
+                                    <t t-esc="o.year_id.name"/>
+                                    <span>
+                                        م
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <table class="table table-condensed table-bordered">
+                            <thead class="text-center">
+                                <t t-set="name_span"
+                                   t-value="len(o.get_annual_leaves())+len(o.get_other_leaves())+8"/>
+                                <tr>
+                                    <td t-att-colspan="name_span">بطاقة متابعة الأجازات والأذون والتاخيرات والمأموريات
+                                        خلال عام
+                                        <t t-esc="o.year_id.name"/>
+                                        <span>
+                                            م
+                                        </span>
+                                    </td>
+                                    <td colspan="5">
+                                        <span>
+                                            إجمالى الأجازات السنوية:
+                                        </span>
+                                        <t t-esc="o.total_public_holidays"/>
+                                        <span>
+                                            يوم
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td t-att-colspan="name_span">
+                                        <div class="row text-right">
+                                            <div class="col-6">
+                                                <span>
+                                                    الأســـــــــم:
+                                                </span>
+                                                <t t-esc="o.employee_id.name"/>
+                                            </div>
+                                            <div class="col-6">
+                                                <span>
+                                                    الإدارة / الفرع:
+                                                </span>
+                                                <t t-esc="o.employee_id.department_id.name"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <th colspan="5">خصم وفقا لائحة الجزاءات</th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" width="3%">م</th>
+                                    <th rowspan="2">الشهور</th>
+                                    <th t-att-colspan="len(o.get_annual_leaves())+1">اجازات سنوية</th>
+                                    <th t-att-colspan="len(o.get_other_leaves())+2">اجازات أخري</th>
+                                    <th rowspan="2" width="10%">تاخيرات بالدقيقة</th>
+                                    <th rowspan="2">اجمالى الاذون</th>
+                                    <th rowspan="2">اجمالى الماموريات</th>
+                                    <th rowspan="2">ايام من الاجر اليومي</th>
+                                    <th rowspan="2">ايام من الحافز والجهود والبدل</th>
+                                    <th rowspan="2" style="font-size: 11px;">نسبة من الحافز والجهود والبدل قرار
+                                        (2013/96)
+                                    </th>
+                                    <th rowspan="2">من الحافز والجهود مباشر</th>
+                                    <th rowspan="2">انذار كتابي</th>
+                                </tr>
+                                <tr>
+                                    <t t-foreach="o.get_annual_leaves()" t-as="leave">
+                                        <th>
+                                            <t t-esc="leave.name"/>
+                                        </th>
+                                    </t>
+                                    <th>أجمالى الاجازات</th>
+                                    <t t-foreach="o.get_other_leaves()" t-as="leave">
+                                        <th>
+                                            <t t-esc="leave.name"/>
+                                        </th>
+                                    </t>
+                                    <th>جماعية</th>
+                                    <th>غياب</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="text-center">
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td>
+                                        <span t-field="line.sequence"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.month_ar"/>
+                                    </td>
+                                    <t t-set="annual_leaves" t-value="0"/>
+                                    <t t-foreach="line.get_annual_leaves()" t-as="leave">
+                                        <t t-set="annual_leaves" t-value="annual_leaves+leave['number_of_days']"/>
+                                        <td>
+                                            <t t-esc="leave['number_of_days']"/>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <t t-esc="annual_leaves"/>
+                                    </td>
+                                    <t t-foreach="line.get_other_leaves()" t-as="leave">
+                                        <td>
+                                            <t t-esc="leave['number_of_days']"/>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <t t-esc="line.public_holidays"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.attendant_absence"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.total_lateness" t-options="{'widget': 'float', 'precision': 2}"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.total_permissions"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.total_missions"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.penalty_days"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.motivation_effort_days"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.excessive_leave_deduction"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line.direct_motivation_effort"/>
+                                    </td>
+                                    <td>
+                                        <span t-if="line.written_warning">
+                                            &#10004;
+                                        </span>
+                                        <span t-if="not line.written_warning">
+                                            x
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -13,8 +13,8 @@ class ExcessiveLeavePolicy(models.Model):
     def check_deduction_rule(self, number_of_days):
         rules = self.env['excessive.leave.policy.line'].search([])
         if not rules:
-            raise ValidationError(_("Three is no Excessive Leave Policy,"
-                                    " You Configure in [Time-off >> Configuration >> Excessive Time-Off Policy]."))
+            raise ValidationError(_("Three is no Excessive Leave Policy,\n You Can Configure it from"
+                                    " [Time-off >> Configuration >> Excessive Time-Off Policy]."))
 
         rule = rules.filtered(lambda l: l.from_day <= number_of_days <= l.to_day)
         if not rule:
@@ -32,7 +32,13 @@ class ExcessiveLeavePolicyLine(models.Model):
     name = fields.Char(required=True, default="Rule #1")
     from_day = fields.Float('Form', required=True)
     to_day = fields.Float('To', required=True)
-    deduction = fields.Float('Deduction (%)', required=True)
+    deduction = fields.Float('Deduction (%)', default=0, required=True)
+
+    @api.constrains('deduction')
+    def validate_deduction(self):
+        for rec in self:
+            if rec.deduction and not 0 <= rec.deduction <= 100:
+                raise ValidationError(_("Deduction value Must Be percentage between [0-100]."))
 
     @api.constrains('from_day', 'to_day')
     def validate_days(self):

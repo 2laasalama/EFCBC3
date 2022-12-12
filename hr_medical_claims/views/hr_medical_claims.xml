@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="hr_medical_claims_view_tree" model="ir.ui.view">
+        <field name="name">hr.medical.claims.tree</field>
+        <field name="model">hr.medical.claims</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field
+                        name="state"
+                        decoration-success="state == 'close'"
+                        decoration-info="state == 'draft'"
+                        widget="badge"
+                        optional="show"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_medical_claims_view_form" model="ir.ui.view">
+        <field name="name">hr.medical.claims.form</field>
+        <field name="model">hr.medical.claims</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="done_action" type="object" string="Done" states="draft" class="oe_highlight"/>
+                    <button icon="fa-print" string="Print" name="print_report" states="draft,done" type="object"/>
+                    <button name="close_action" type="object" string="Close" states="draft"/>
+                    <button string="Set to Draft" name="draft_action" type="object" states="close,done"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="partner_id" context="{'default_is_medical_provider': True}"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="id_number"/>
+                            <field name="provider_category"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="employee_code" invisible="1"/>
+                            <field name="employee_id"/>
+                            <field name="date"/>
+                            <field name="actual_amount"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <group>
+                            <label for="vice_hr_manager"/>
+                            <div>
+                                <field name="vice_hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="vice_hr_manager" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="hr_consultant"/>
+                            <div>
+                                <field name="hr_consultant_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="hr_consultant" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="hr_manager"/>
+                            <div>
+                                <field name="hr_manager_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="hr_manager" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <label for="general_secretary"/>
+                            <div>
+                                <field name="general_secretary_title" placeholder="محاسب" class="oe_inline"/>
+                                <span>/</span>
+                                <field name="general_secretary" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="hr_medical_claims_action" model="ir.actions.act_window">
+        <field name="name">Medical Claims</field>
+        <field name="res_model">hr.medical.claims</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+            action="hr_medical_claims_action"
+            id="hr_medical_claims_menu"
+            parent="base_medical_claims_menu"
+            sequence="1"
+    />
+</odoo>

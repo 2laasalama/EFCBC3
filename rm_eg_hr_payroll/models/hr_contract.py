@@ -33,14 +33,34 @@ class HrContract(models.Model):
                              digits=dp.get_precision('Payroll'))
     basic_salary = fields.Float(string="Basic Salary",
                                 digits=dp.get_precision('Payroll'))
-    variable_salary = fields.Float(string="Variable Salary",
+    variable_salary = fields.Float(string="Raises Not Added",
                                    digits=dp.get_precision('Payroll'))
-    allowances = fields.Float(string="Allowances",
+    salary = fields.Float(compute='_compute_salary', digits=dp.get_precision('Payroll'))
+
+    allowances = fields.Float(string="Allowances", compute='_compute_allowances',
                               digits=dp.get_precision('Payroll'))
 
     other_alw_ids = fields.One2many(comodel_name="hr.alw.line",
                                     inverse_name="contract_id",
                                     string="Other Allowances")
+    # allowances = fields.Float(string="Other Allowances",
+    #                           digits=dp.get_precision('Payroll'))
+    motivation = fields.Float('الحافز')
+    efforts = fields.Float('الجهود')
+    sabbatical_allowance = fields.Float('بدل التفرغ')
+    transportation_allowance = fields.Float('بدل التنقل')
+    night_allowance = fields.Float('بدل سهر')
+    living_allowance = fields.Float('بدل إعاشة')
+
+    @api.depends('basic_salary', 'variable_salary')
+    def _compute_salary(self):
+        for rec in self:
+            rec.salary = rec.basic_salary + rec.variable_salary
+
+    @api.depends('other_alw_ids')
+    def _compute_allowances(self):
+        for rec in self:
+            rec.allowances = sum(line.amount for line in rec.other_alw_ids)
 
     def get_alw(self, alw_code):
         alw_id = self.other_alw_ids.filtered(lambda x: x.code == alw_code)
@@ -57,7 +77,6 @@ class HrContract(models.Model):
         annual_salary = (amount * 12)
         if annual_salary > 0:
             annual_salary -= 9000
-        print(amount, annual_salary)
         tax_amounts = []
         total_tax = 0
         levels = []
@@ -78,7 +97,6 @@ class HrContract(models.Model):
         elif annual_salary > 1000000:
             levels = [TAX_lEVELS[5]]
             levels[0][0] = 0
-
 
         for level in levels:
             if annual_salary < level[0]:
@@ -104,7 +122,7 @@ class HrAlwLine(models.Model):
     _name = "hr.alw.line"
 
     allowance_id = fields.Many2one(comodel_name="hr.alw", string="name",
-                             required=True)
+                                   required=True)
     name = fields.Char(related='allowance_id.name', store=True)
     code = fields.Char(string="Code", required=True)
     amount = fields.Float(string="Amount", required=True)
@@ -133,11 +151,11 @@ class HrAlow(models.Model):
         amount_exp = 'result = contract.get_alw("%s").amount' % values['code']
         structure_id = self.env.ref('rm_eg_hr_payroll.hr_salary_structure_eg')
         if not structure_id:
-            structure_id = self.env['hr.salary.structure'].search([],limit=1)
+            structure_id = self.env['hr.salary.structure'].search([], limit=1)
         vals = {
             'name': values['name'],
             'category_id': cat_id.id,
-            'struct_id':structure_id.id,
+            'struct_id': structure_id.id,
             'code': values['code'],
             'condition_select': 'python',
             'condition_python': condition_exp,

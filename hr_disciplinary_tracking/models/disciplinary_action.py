@@ -72,10 +72,73 @@ class DisciplinaryAction(models.Model):
     note = fields.Text(string="Internal Note")
     joined_date = fields.Date(string="Joined Date", help="Employee joining date")
     monetary_penalty = fields.Boolean(required=False)
+    penalty_days = fields.Float()
+    date_range_id = fields.Many2one("date.range", string="Applied On")
+    date_range_id2 = fields.Many2one("date.range", string="Applied On")
+    date_range_ids = fields.Many2many("date.range", string="Applied On")
     penalty_mode = fields.Selection(selection=[('days', 'Days'), ('amount', 'Amount')],
-                                    default='hours')
+                                    default='days')
+    action_type = fields.Selection(selection=[('warring', 'Warring Action'), ('deduction', 'Deduction From Salary')])
     action_lines = fields.One2many('disciplinary.action.line', 'disciplinary_id',
                                    string='Action Lines')
+    disciplinary_rule_id = fields.Many2one('disciplinary.rule.line', compute="_compute_disciplinary_rule",
+                                           string='Rule')
+
+    disciplinary_rule_action = fields.Char(compute="_compute_disciplinary_rule_action", readonly=1)
+    applied_on = fields.Selection([('one', 'One Month'), ('two', 'Two Months')],
+                                  related='disciplinary_rule_id.applied_on')
+    deduction_percentage = fields.Float(related='disciplinary_rule_id.percentage', store=True)
+    applied_on_months = fields.Integer(related='disciplinary_rule_id.applied_on_months', store=True)
+
+    def check_deduction_percentage(self):
+        if self.action_type == 'deduction':
+            for date_range_id in self.date_range_ids:
+                actions = self.search([('employee_name', '=', self.employee_name.id), ('state', '=', 'action'),
+                                       ('date_range_ids', 'in', date_range_id.id)])
+                actions_deduction = sum(action.deduction_percentage for action in actions)
+                if actions_deduction + self.deduction_percentage > 100:
+                    raise ValidationError(
+                        _("Sorry, You can not apply deduction on month ({}) because it fully deducted.".format(
+                            date_range_id.name)))
+
+    @api.onchange('date_range_ids')
+    @api.constrains('date_range_ids')
+    def _check_date_range_ids(self):
+        for rec in self:
+            today = fields.Date.context_today(self)
+            for date_range_id in rec.date_range_ids:
+                if date_range_id and date_range_id.date_end < today:
+                    raise ValidationError(_("You can not select month before the current date."))
+
+    @api.constrains('applied_on_months', 'date_range_ids')
+    def _check_applied_on_months(self):
+        for rec in self:
+            if rec.applied_on_months:
+                if len(rec.date_range_ids) != rec.applied_on_months:
+                    raise ValidationError(_("Deduction must applied on {} month.".format(rec.applied_on_months)))
+
+    @api.depends('disciplinary_rule_id', 'penalty_days')
+    def _compute_disciplinary_rule_action(self):
+        for rec in self:
+            action = ""
+            if rec.disciplinary_rule_id:
+                action = "TIP: {} days of penalty require to " \
+                         "apply {} % deduction on {} months".format(rec.penalty_days,
+                                                                    rec.disciplinary_rule_id.percentage,
+                                                                    rec.disciplinary_rule_id.applied_on_months)
+            rec.disciplinary_rule_action = action
+
+    @api.depends('penalty_days')
+    def _compute_disciplinary_rule(self):
+        for rec in self:
+            rule = False
+            if rec.penalty_days > 0:
+                for line in self.env['disciplinary.rule.line'].search([], order='days'):
+                    rule = line
+                    if rec.penalty_days <= line.days:
+                        break
+
+            rec.disciplinary_rule_id = rule
 
     # assigning the sequence for the record
     @api.model
@@ -123,12 +186,15 @@ class DisciplinaryAction(models.Model):
 
     def action_function(self):
         for rec in self:
-            if not rec.action:
+            if not rec.action_type:
+                raise ValidationError(_('You have to select Action Type !!'))
+            if rec.action_type == 'warring' and not rec.action:
                 raise ValidationError(_('You have to select an Action !!'))
 
-            if not rec.action_details or rec.action_details == '<p><br></p>':
-                raise ValidationError(
-                    _('You have to fill up the Action Details in Action Information !!'))
+            if rec.action_type == 'deduction' and not rec.penalty_days or not rec.date_range_ids:
+                raise ValidationError(_('You have to Enter Penalty Days!!'))
+
+            rec.check_deduction_percentage()
             rec.state = 'action'
 
     def explanation_function(self):

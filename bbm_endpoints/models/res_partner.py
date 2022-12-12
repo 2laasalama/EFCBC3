@@ -9,6 +9,8 @@ class ResPartner(models.Model):
 
     uuid = fields.Char(readonly=True)
     id_number = fields.Char("ID Number")
+    identification_type = fields.Char()
+    country_id = fields.Many2one('res.country', string='Nationality')
 
     @api.constrains('uuid')
     def _check_uuid_constraint(self):

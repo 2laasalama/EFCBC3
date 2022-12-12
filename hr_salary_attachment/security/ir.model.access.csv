@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salary_attachment_report_wizard,access_salary_attachment_report_wizard,model_salary_attachment_report_wizard,,1,1,1,1
+access_hr_transportation_allowance,access_hr_transportation_allowance,model_hr_transportation_allowance,,1,1,1,1
+access_hr_transportation_allowance_line,access_hr_transportation_allowance_line,model_hr_transportation_allowance_line,,1,1,1,1
+access_hr_quarter_incentive,access_hr_quarter_incentive,model_hr_quarter_incentive,,1,1,1,1
+access_hr_quarter_incentive_line,access_hr_quarter_incentive_line,model_hr_quarter_incentive_line,,1,1,1,1

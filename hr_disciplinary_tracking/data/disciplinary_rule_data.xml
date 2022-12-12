@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="disciplinary_rule_1" model="disciplinary.rule">
+            <field name="name">Disciplinary Rule</field>
+        </record>
+
+
+    </data>
+</odoo>

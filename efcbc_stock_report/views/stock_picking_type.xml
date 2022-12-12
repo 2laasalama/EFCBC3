@@ -24,6 +24,8 @@
                                attrs="{'invisible': [('has_report', '=', False)]}"/>
                         <field name="report_signature" placeholder="حسابات المخازن"
                                attrs="{'invisible': [('has_report', '=', False)]}"/>
+                        <field name="has_storekeeper_signature"
+                               attrs="{'invisible': [('has_report', '=', False)]}"/>
                     </group>
                 </xpath>
             </field>

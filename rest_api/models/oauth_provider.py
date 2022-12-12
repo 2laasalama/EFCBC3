@@ -28,19 +28,20 @@ class OauthAccessToken(models.Model):
     expires = fields.Datetime('Expires', required=True)
     scope = fields.Char('Scope')
 
-    
     def _get_access_token(self, user_id=None, create=False):
         if not user_id:
             user_id = self.env.user.id
 
         access_token = self.env['oauth.access_token'].sudo().search(
             [('user_id', '=', user_id)], order='id DESC', limit=1)
+        print(access_token.token)
         if access_token:
             access_token = access_token[0]
             if access_token.is_expired():
                 access_token = None
         if not access_token and create:
-            expires = datetime.now() + timedelta(seconds=int(self.env.ref('rest_api.oauth2_access_token_expires_in').sudo().value))
+            expires = datetime.now() + timedelta(
+                seconds=int(self.env.ref('rest_api.oauth2_access_token_expires_in').sudo().value))
             vals = {
                 'user_id': user_id,
                 'scope': 'userinfo',
@@ -55,7 +56,6 @@ class OauthAccessToken(models.Model):
             return None
         return access_token
 
-    
     def is_valid(self, scopes=None):
         """
         Checks if the access token is valid.
@@ -65,12 +65,10 @@ class OauthAccessToken(models.Model):
         self.ensure_one()
         return not self.is_expired() and self._allow_scopes(scopes)
 
-    
     def is_expired(self):
         self.ensure_one()
         return datetime.now() > fields.Datetime.from_string(self.expires)
 
-    
     def _allow_scopes(self, scopes):
         self.ensure_one()
         if not scopes:

@@ -30,7 +30,7 @@
 
                             <div>
                                 <span>بالإشارة إلى العرض المقدم منكم بتاريخ</span>
-                                <t t-esc="context_timestamp(o.date_order).strftime('%Y-%m-%d')"/>
+                                <t t-esc="o.last_update_date"/>
                                 <span>وذلك لتنفيذ</span>
                                 <span t-esc="','.join(o.order_line.mapped('product_id.name'))"/>
                             </div>

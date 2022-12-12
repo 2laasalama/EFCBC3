@@ -10,6 +10,7 @@
 from odoo import api, fields, models, _
 
 import logging
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -45,10 +46,17 @@ class CapacityException(models.Model):
     _name = 'capacity.exception'
 
     department_id = fields.Many2one('department.department')
-    date = fields.Date(default=fields.Date.context_today)
+    date = fields.Date()
     capacity = fields.Integer(default=30)
 
     _sql_constraints = [
         ('date_department_uid_unique', 'unique (department_id, date)',
-         ' Sorry, One exception per day'),
+         'Sorry, You Can not define more than one exception per day'),
     ]
+
+    @api.constrains('department_id', 'date')
+    def _check_payment_number_constraint(self):
+        for rec in self.filtered(lambda p: p.date):
+            domain = [('id', '!=', rec.id), ('date', '=', rec.date), ('department_id', '=', rec.department_id.id)]
+            if self.search(domain):
+                raise ValidationError(_("Sorry, You Can not define more than one exception per day"))
