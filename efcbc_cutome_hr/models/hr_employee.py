@@ -6,6 +6,13 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import date, datetime
 
+class EmployeePublic(models.Model):
+    _inherit = 'hr.employee.public'
+
+    code = fields.Char()
+    grade_id = fields.Many2one('employee.grade', 'Grade')
+
+
 
 class Employee(models.Model):
     _inherit = 'hr.employee'

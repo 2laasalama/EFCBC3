@@ -13,6 +13,7 @@ class StockPicking(models.Model):
 
     report_name = fields.Char(related='picking_type_id.report_name')
     report_signature = fields.Char(related='picking_type_id.report_signature')
+    has_storekeeper_signature = fields.Boolean(related='picking_type_id.has_storekeeper_signature')
     has_report = fields.Boolean('ir.actions.report', related='picking_type_id.has_report')
 
     def print_stock_order_report(self):
