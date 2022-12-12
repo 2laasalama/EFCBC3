@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* bi_multiwarehouse_for_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-12 12:13+0000\n"
+"PO-Revision-Date: 2022-12-12 12:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_res_company__allow_purchase_warehouse
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_res_config_settings__allow_purchase_warehouse
+msgid "Allow Warehouse in Purchase Order Line"
+msgstr ""
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model,name:bi_multiwarehouse_for_purchase.model_res_company
+msgid "Companies"
+msgstr "شركات"
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model,name:bi_multiwarehouse_for_purchase.model_res_config_settings
+msgid "Config Settings"
+msgstr "تهيئة الإعدادات "
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_purchase_order_line__is_warehouse
+msgid "Is Warehouse"
+msgstr ""
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model,name:bi_multiwarehouse_for_purchase.model_product_product
+msgid "Product"
+msgstr "الصنف"
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model,name:bi_multiwarehouse_for_purchase.model_product_template
+msgid "Product Template"
+msgstr "قالب الصنف"
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model,name:bi_multiwarehouse_for_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr "أمر شراء"
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model,name:bi_multiwarehouse_for_purchase.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "بند أمر التوريد"
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_product_product__purchase_warehouse_id
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_product_template__purchase_warehouse_id
+msgid "Purchase Warehouse"
+msgstr "المستودعات"
+
+#. module: bi_multiwarehouse_for_purchase
+#: code:addons/bi_multiwarehouse_for_purchase/models/purchase_order_inherit.py:0
+#, python-format
+msgid "You must set a Vendor Location for this partner %s"
+msgstr ""
+
+#. module: bi_multiwarehouse_for_purchase
+#: code:addons/bi_multiwarehouse_for_purchase/models/purchase_order_inherit.py:0
+#, python-format
+msgid "You must set define Receipts operation for this  warehouses %s"
+msgstr ""
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_purchase_order_line__warehouses_id
+msgid "المستودع"
+msgstr ""
+
+#. module: bi_multiwarehouse_for_purchase
+#: model:ir.model.fields,field_description:bi_multiwarehouse_for_purchase.field_purchase_order__is_multiwarehouse
+msgid "مستودعات متعدده"
+msgstr ""

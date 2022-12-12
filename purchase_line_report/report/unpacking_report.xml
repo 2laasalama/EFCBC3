@@ -22,7 +22,7 @@
                             <strong>
                                 <t t-esc="context_timestamp(o.requisition_id.ordering_date).strftime('%Y-%m-%d')"/>
                             </strong>
-                            <span>وذلك لتوريد وتنفيذ الأصناف الأتية :</span>
+                            <span>وذلك لشراء الأصناف الأتية :</span>
 
                         </div>
 

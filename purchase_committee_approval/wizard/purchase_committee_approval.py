@@ -13,6 +13,8 @@ class purchaseCommitteeapproval(models.Model):
     line_ids = fields.One2many('purchase.committee.approval.line', 'approval_id', "Approval Lines")
     quantity_line_ids = fields.One2many('purchase.quantity.approval.line', 'approval_id', "Quantity Lines")
     show_backorder = fields.Boolean(compute='_compute_show_backorder', default=False)
+    receiving_committee_date = fields.Date(string='تاريخ لجنة الاستلام', related='purchase_id.receiving_committee_date',
+                                           readonly=False)
 
     @api.depends('quantity_line_ids', 'quantity_line_ids.qty_received')
     def _compute_show_backorder(self):

@@ -12,29 +12,33 @@
                             attrs="{'invisible':[('committee_decision','!=','approve')]}"/>
                     <widget name="web_ribbon" title="Refused" bg_color="bg-danger"
                             attrs="{'invisible':[('committee_decision','!=','refuse')]}"/>
-                    <grop>
-                        <field name="show_backorder" invisible="1"/>
-                        <field name="purchase_id" invisible="1"/>
-                        <field name="committee_decision" invisible="1"/>
-                        <field name="line_ids" nolabel="1">
-                            <tree editable="top" create="0" delete="0">
-                                <field name="employee_id"/>
-                                <field name="accept" widget="boolean_toggle"
-                                       attrs="{'readonly': ['|',('can_edit', '=', False),('parent.committee_decision','=','approve')]}"/>
-                                <field name="can_edit" invisible="1"/>
-                            </tree>
-                        </field>
-                        <field name="quantity_line_ids" domain="[('accept','=',True)]" nolabel="1">
-                            <tree editable="top" create="0" delete="0">
-                                <field name="product_id"/>
-                                <field name="product_qty"/>
-                                <field name="qty_received"/>
-                                <field name="accept_qty"
-                                       attrs="{'readonly':[('parent.committee_decision','=','approve')]}"/>
-                                <field name="accept" invisible="1"/>
-                            </tree>
-                        </field>
-                    </grop>
+                    <field name="show_backorder" invisible="1"/>
+                    <field name="purchase_id" invisible="1"/>
+                    <field name="committee_decision" invisible="1"/>
+                    <field name="line_ids" nolabel="1">
+                        <tree editable="top" create="0" delete="0">
+                            <field name="employee_id"/>
+                            <field name="accept" widget="boolean_toggle"
+                                   attrs="{'readonly': ['|',('can_edit', '=', False),('parent.committee_decision','=','approve')]}"/>
+                            <field name="can_edit" invisible="1"/>
+                        </tree>
+                    </field>
+                    <field name="quantity_line_ids" domain="[('accept','=',True)]" nolabel="1">
+                        <tree editable="top" create="0" delete="0">
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="qty_received"/>
+                            <field name="accept_qty"
+                                   attrs="{'readonly':[('parent.committee_decision','=','approve')]}"/>
+                            <field name="accept" invisible="1"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <group>
+                            <field name="receiving_committee_date"/>
+
+                        </group>
+                    </group>
                     <footer>
                         <button string="Approve" type="object" name="action_approve"
                                 groups="purchase_committee_approval.purchase_committee_manager_group"

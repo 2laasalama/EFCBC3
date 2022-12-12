@@ -26,8 +26,6 @@
                             </h2>
                         </div>
                         <table class="table table-borderless">
-
-
                             <tbody class="info-titles">
                                 <tr>
                                     <td width="15%" class="fw-bold text-right">
@@ -125,6 +123,21 @@
                             </tbody>
                         </table>
 
+                        <div t-if="o.require_committee_approval">
+                            <span>علي انت تكون لجنه المفاضله بين العروض الاتية :</span>
+                            <ol style="margin-right: 10px;" t-foreach="o.purchase_ids" t-as="purchase_id">
+                                <li>
+                                    <t t-esc="purchase_id.partner_id.name"/>
+                                </li>
+                            </ol>
+                            <span>وكذا لجنه الاستلام :</span>
+                            <ol style="margin-right: 10px;" t-foreach="o.purchase_committee_member_ids" t-as="member">
+                                <li>
+                                    <t t-esc="member.name"/>
+                                </li>
+                            </ol>
+                        </div>
+
 
                         <div style="margin-top: 25px;line-height: 28px;">
                             <div class="row" style="text-align: right;">
@@ -166,7 +179,7 @@
                                 <div class="col-4"></div>
                                 <div style="text-align: center;" class="col-4">
                                     <span style="color:#123885;font-size: 20px">
-                                        <strong> الامين العام للاتحاد</strong>
+                                        <strong>الامين العام للاتحاد</strong>
                                     </span>
                                 </div>
                             </div>
