@@ -29,20 +29,26 @@ class AccountPayment(models.Model):
 
     def action_post(self):
         for rec in self:
-            rec.bpm_payment_action('confirm')
+            try:
+                rec.bpm_payment_action('confirm')
+            except Exception as ex:
+                _logger.warning(ex)
         return super(AccountPayment, self).action_post()
 
     def action_cancel(self):
         for rec in self:
-            rec.bpm_payment_action('cancel')
+            try:
+                rec.bpm_payment_action('cancel')
+            except Exception as ex:
+                _logger.warning(ex)
         return super(AccountPayment, self).action_cancel()
 
     def bpm_payment_action(self, action):
         bpm_url = self.env['ir.config_parameter'].sudo().get_param('bpm_url')
-        url = "{}/bonita/API/bpm/message".format(bpm_url)
-        payload_body = self.format_request_data(action, "notes...")
-        payload = json.dumps(payload_body)
         access = get_bpm_access(bpm_url)
+        url = "{}/bonita/API/bpm/message".format(bpm_url)
+        payload_body = self.format_request_data(action, "notes...", self.id, self.name, self.payment_number)
+        payload = json.dumps(payload_body)
         if access:
             headers = {
                 'X-Bonita-API-Token': access['token'],
@@ -55,18 +61,18 @@ class AccountPayment(models.Model):
             if response.status_code == 204:
                 _logger.debug("Update Payment successfully.")
             else:
-                _logger.warning("Access Fail to BPM Server.")
+                _logger.warning("Update Payment Fail")
 
-    def format_request_data(self, status, notes):
+    def format_request_data(self, status, notes, payment_id, paymentSerialNumber, requestPaymentNumber):
         vals = {
             "messageName": "firstPaymentRequest",
             "targetProcess": "دورة عمل تسجيل مقاول لأول مرة",
             "messageContent": {
                 "paymentOrderNumber": {
-                    "value": "123456"
+                    "value": str(payment_id)
                 },
                 "paymentSerialNumber": {
-                    "value": "12345678"
+                    "value": paymentSerialNumber
                 },
                 "notes": {
                     "value": notes
@@ -80,7 +86,7 @@ class AccountPayment(models.Model):
             },
             "correlations": {
                 "requestPaymentNumber": {
-                    "value": "12345678"
+                    "value": requestPaymentNumber
                 }
             }
         }
