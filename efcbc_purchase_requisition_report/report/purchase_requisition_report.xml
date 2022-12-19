@@ -123,13 +123,13 @@
                             </tbody>
                         </table>
 
-                        <div class="text-right">
-                            <div t-if="o.require_rfq_unpacking">
+                        <div style="text-align: right;">
+                            <div style="text-align: right;" t-if="o.require_rfq_unpacking">
                                 <span>علي انت تكون لجنه المفاضله بين العروض :</span>
                                 <span t-out="', '.join(map(lambda x: x.name, o.committee_member_ids))"/>
 
                             </div>
-                            <div t-if="o.require_committee_approval">
+                            <div style="text-align: right;" t-if="o.require_committee_approval">
                                 <span t-if="o.require_rfq_unpacking">وكذا</span>
                                 <span>لجنه الاستلام :</span>
                                 <span t-out="', '.join(map(lambda x: x.name, o.purchase_committee_member_ids))"/>
