@@ -44,7 +44,7 @@ class StockReportByLocationPrepare(models.TransientModel):
             vals_list.append(
                 {
                     "line_id": move_line.id,
-                    "qty": move_line.qty_done if self.location_ids in move_line.location_id else -move_line.qty_done,
+                    "qty": move_line.qty_done if self.location_ids in move_line.location_dest_id else -move_line.qty_done,
                     "wiz_id": self.id,
                 }
             )
