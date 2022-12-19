@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2019 Eficent Business and IT Consulting Services, S.L.
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="stock_report_by_location_prepare_form_view" model="ir.ui.view">
+        <field name="name">Stock Report By Location Prepare</field>
+        <field name="model">stock.report.by.location.prepare</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="location_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                            name="open"
+                            string="Display"
+                            type="object"
+                            class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_report_by_location_prepare" model="ir.actions.act_window">
+        <field name="name">Stock Report by Location</field>
+        <field name="res_model">stock.report.by.location.prepare</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_report_by_location_prepare_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_quantity_by_location"
+            name="Location Moves"
+            parent="stock.menu_warehouse_report"
+            action="action_stock_report_by_location_prepare"
+            sequence="999"
+            groups="stock.group_stock_manager"/>
+
+</odoo>
