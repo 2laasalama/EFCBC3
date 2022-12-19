@@ -7,7 +7,7 @@
     'license': 'OPL-1',
     'category': 'HR',
     'version': '0.1',
-    'depends': ['hr_skills', 'hr_payroll',
+    'depends': ['hr_skills', 'hr_payroll', 'rm_hr_attendance_sheet',
                 'hr_holidays', 'date_range'],
     'data': [
         'data/excessive_leave_policy.xml',
