@@ -6,13 +6,6 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import date, datetime
 
-class EmployeePublic(models.Model):
-    _inherit = 'hr.employee.public'
-
-    code = fields.Char()
-    grade_id = fields.Many2one('employee.grade', 'Grade')
-
-
 
 class Employee(models.Model):
     _inherit = 'hr.employee'
@@ -112,6 +105,13 @@ class Employee(models.Model):
                 count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
                     'days']
         return count
+
+
+class EmployeePublic(models.Model):
+    _inherit = 'hr.employee.public'
+
+    code = fields.Char()
+    grade_id = fields.Many2one('employee.grade', 'Grade')
 
 
 class HajjGrantedLine(models.Model):
