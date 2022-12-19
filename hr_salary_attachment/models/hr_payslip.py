@@ -11,7 +11,6 @@ class HrPayslip(models.Model):
     def _get_attachment_types(self):
         res = super(HrPayslip, self)._get_attachment_types()
         res.update({
-            'rewards': self.env.ref('hr_salary_attachment.input_rewards'),
             'vacation_allowance': self.env.ref('hr_salary_attachment.input_vacation_allowance'),
             'night_allowance': self.env.ref('hr_salary_attachment.input_night_allowance'),
             'transportation_allowance': self.env.ref('hr_salary_attachment.input_transportation_allowance'),

@@ -9,11 +9,9 @@ class HrSalaryAttachment(models.Model):
 
 
     deduction_type = fields.Selection(
-        selection_add=[('rewards', 'rewards'),
-                       ('vacation_allowance', 'Vacation Allowance'),
+        selection_add=[('vacation_allowance', 'Vacation Allowance'),
                        ('night_allowance', 'Night Allowance')],
         ondelete={
-            'rewards': 'set default',
             'vacation_allowance': 'set default',
             'night_allowance': 'set default',
         }
@@ -53,8 +51,6 @@ class HrSalaryAttachment(models.Model):
         for rec in self:
             rec.taxes = 0
             tax_ratio = float(self.env['ir.config_parameter'].sudo().get_param('efcbc_cutome_hr.tax_ratio')) / 100
-            if rec.deduction_type == 'rewards':
-                rec.taxes = tax_ratio * rec.reward_amount
             if rec.deduction_type == 'vacation_allowance':
                 rec.taxes = tax_ratio * rec.number_of_days * rec.overtime_amount_per_day
             if rec.deduction_type == 'night_allowance':
@@ -64,8 +60,6 @@ class HrSalaryAttachment(models.Model):
     def _compute_net(self):
         for rec in self:
             rec.net = 0
-            if rec.deduction_type == 'rewards':
-                rec.net = rec.reward_amount - rec.taxes
             if rec.deduction_type == 'vacation_allowance':
                 rec.net = (rec.number_of_days * rec.overtime_amount_per_day) - rec.taxes \
                           + rec.transportation_allowance_per_day
@@ -79,8 +73,6 @@ class HrSalaryAttachment(models.Model):
     @api.constrains('deduction_type', 'reward_amount')
     def _check_amount_constraint(self):
         for rec in self:
-            if rec.deduction_type == 'rewards' and rec.reward_amount <= 0:
-                raise ValidationError(_('Reward Amount must be strictly positive.'))
             if rec.deduction_type == 'vacation_allowance' and rec.number_of_days <= 0:
                 raise ValidationError(_('Number Of Days must be strictly positive.'))
             if rec.deduction_type == 'vacation_allowance' and rec.overtime_amount_per_day <= 0:
@@ -91,7 +83,7 @@ class HrSalaryAttachment(models.Model):
     @api.depends('deduction_type', 'date_end')
     def _compute_has_total_amount(self):
         for record in self:
-            if record.deduction_type in ['rewards', 'vacation_allowance', 'night_allowance']:
+            if record.deduction_type in ['vacation_allowance', 'night_allowance']:
                 record.has_total_amount = False
             else:
                 return super(HrSalaryAttachment, self)._compute_has_total_amount()
@@ -108,7 +100,7 @@ class HrSalaryAttachment(models.Model):
     @api.constrains('employee_id', 'date_start', )
     def onchange_employee(self):
         for rec in self:
-            if rec.employee_id and rec.date_start and rec.deduction_type in ['rewards', 'vacation_allowance',
+            if rec.employee_id and rec.date_start and rec.deduction_type in ['vacation_allowance',
                                                                              'night_allowance']:
                 contracts = rec.employee_id._get_contracts(rec.date_start, rec.date_start)
                 if not contracts:

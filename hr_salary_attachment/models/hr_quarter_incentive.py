@@ -164,13 +164,15 @@ class QuarterIncentiveLine(models.Model):
                 "date_range_id": date_range_id.id,
             })
             line.compute_sheet()
-            return line.motivation_ratio / 3
+            motivation_effort_days = (30 - line.motivation_effort_days) / 30
+            motivation_ratio = motivation_effort_days * line.motivation_ratio / self.company_id.motivation_ratio
+            return motivation_ratio / 3
         else:
             return 0
 
     def compute_month_amount(self, date_range_id):
         motivation_ratio = self.get_motivation_ratio(self.employee_id, date_range_id)
-        amount = motivation_ratio * self.contract_id.motivation / self.company_id.motivation_ratio
+        amount = motivation_ratio * self.contract_id.motivation
         return amount
 
     def compute_months_amount(self):

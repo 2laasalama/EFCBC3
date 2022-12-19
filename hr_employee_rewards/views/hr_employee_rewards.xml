@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="hr_medical_claims_view_tree" model="ir.ui.view">
-        <field name="name">hr.medical.claims.tree</field>
-        <field name="model">hr.medical.claims</field>
+    <record id="hr_employee_rewards_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.rewards.tree</field>
+        <field name="model">hr.employee.rewards</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="partner_id"/>
+                <field name="date_range_id"/>
+                <field name="mode"/>
                 <field
                         name="state"
                         decoration-success="state == 'close'"
@@ -19,42 +20,48 @@
         </field>
     </record>
 
-    <record id="hr_medical_claims_view_form" model="ir.ui.view">
-        <field name="name">hr.medical.claims.form</field>
-        <field name="model">hr.medical.claims</field>
+    <record id="hr_employee_rewards_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.rewards.form</field>
+        <field name="model">hr.employee.rewards</field>
         <field name="arch" type="xml">
             <form>
                 <header>
                     <button name="done_action" type="object" string="Done" states="draft" class="oe_highlight"/>
-                    <button icon="fa-print" string="Print" name="print_report" states="draft,done" type="object"/>
                     <button name="close_action" type="object" string="Close" states="draft"/>
+                    <button icon="fa-print" string="Print" states="draft,done" name="print_report" type="object"/>
                     <button string="Set to Draft" name="draft_action" type="object" states="close,done"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
-
-                    <label for="name" class="oe_edit_only"/>
-                    <h1>
-                        <field name="name"/>
-                    </h1>
+                    <div class="oe_title" id="title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
                     <group>
                         <group>
-                            <field name="partner_id" context="{'default_is_medical_provider': True}"/>
-                            <field name="date"/>
+                            <field name="date_range_id"/>
+                            <button name="%(action_hr_employee_rewards_by_employees)d" type="action" states="draft"
+                                    string="Select Employees" class="oe_highlight"/>
                         </group>
                         <group>
-                            <field name="id_number"/>
-                            <field name="provider_category"/>
+                            <field name="mode"/>
+
+                            <field name="amount"
+                                   attrs="{'invisible': [('mode', '!=', 'amount')],
+                                   'required': [('mode', '=', 'amount')]}"/>
+                            <field name="percentage" attrs="{'invisible': [('mode', '!=', 'percentage')],
+                                   'required': [('mode', '=', 'percentage')]}"/>
                         </group>
                     </group>
                     <field name="line_ids">
-                        <tree editable="bottom">
-                            <field name="sequence" widget="handle"/>
-                            <field name="employee_code" invisible="1"/>
+                        <tree editable="bottom" create="0">
                             <field name="employee_id"/>
-                            <field name="service_type"/>
-                            <field name="date"/>
-                            <field name="actual_amount"/>
+                            <field name="free_total_amount"
+                                   attrs="{'column_invisible': [('parent.mode', '!=','different')]}"/>
+                            <field name="total_amount" attrs="{'column_invisible': [('parent.mode', '=','different')]}"
+                                   sum="Total Amount"/>
                         </tree>
                     </field>
                     <group>
@@ -95,15 +102,17 @@
             </form>
         </field>
     </record>
-    <record id="hr_medical_claims_action" model="ir.actions.act_window">
-        <field name="name">Medical Claims</field>
-        <field name="res_model">hr.medical.claims</field>
+
+    <record id="hr_employee_rewards_action" model="ir.actions.act_window">
+        <field name="name">Employee Rewards</field>
+        <field name="res_model">hr.employee.rewards</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <menuitem
-            action="hr_medical_claims_action"
-            id="hr_medical_claims_menu"
-            parent="base_medical_claims_menu"
-            sequence="1"
+            action="hr_employee_rewards_action"
+            id="hr_employee_rewards_menu"
+            parent="hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root"
+            sequence="99"
     />
 </odoo>
