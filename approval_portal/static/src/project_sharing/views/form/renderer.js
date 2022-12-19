@@ -15,7 +15,7 @@ export default FormRenderer.extend({
         const query = new URLSearchParams(window.parent.location.search);
         return {
             token: query.get('access_token') || '',
-            res_model: 'project.task',
+            res_model: 'approval.request',
             pid: '',
             hash: '',
             res_id: this.state.res_id,

@@ -18,7 +18,7 @@ from odoo.addons.web.controllers.main import HomeStaticTemplateHelpers
 
 class ApprovalCustomerPortal(CustomerPortal):
 
-    def _prepare_approval_sharing_session_info(self):
+    def _prepare_approval_sharing_session_info(self, action_name):
         session_info = request.env['ir.http'].session_info()
         user_context = request.session.get_context() if request.session.uid else {}
         mods = conf.server_wide_modules or []
@@ -39,7 +39,7 @@ class ApprovalCustomerPortal(CustomerPortal):
 
         session_info.update(
             cache_hashes=cache_hashes,
-            action_name='approvals.approval_category_action_new_request',
+            action_name=action_name,
             user_companies={
                 'current_company': company.id,
                 'allowed_companies': {
@@ -53,9 +53,17 @@ class ApprovalCustomerPortal(CustomerPortal):
         return session_info
 
     @http.route("/my/approvals", type="http", auth="user", methods=['GET'])
-    def render_approval_backend_view(self):
+    def render_approvals_backend_view(self):
         return request.render(
             'approval_portal.approval_sharing_embed',
-            {'session_info': self._prepare_approval_sharing_session_info()},
+            {'session_info': self._prepare_approval_sharing_session_info(
+                'approvals.approval_category_action_new_request')},
         )
 
+    @http.route("/my/requests", type="http", auth="user", methods=['GET'])
+    def render_requests_backend_view(self):
+        return request.render(
+            'approval_portal.approval_sharing_embed',
+            {'session_info': self._prepare_approval_sharing_session_info(
+                'approvals.approval_request_action')},
+        )

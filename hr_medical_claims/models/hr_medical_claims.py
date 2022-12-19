@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
+from dateutil.relativedelta import relativedelta
 
 
 class HrMedicalClaims(models.Model):
@@ -78,9 +79,82 @@ class HrMedicalClaimsLine(models.Model):
          ('pharmacy', 'Pharmacy'),
          ('other', 'Other')], related='claim_id.provider_category')
     date = fields.Date(default=fields.Date.context_today)
-    contract_id = fields.Many2one('hr.contract', string='Contract', compute='compute_required_data')
+    contract_id = fields.Many2one('hr.contract', string='Contract', compute='_compute_contract_id')
     sequence = fields.Integer(readonly=True, string='م')
     employee_id = fields.Many2one('hr.employee', 'الموظف', required=True)
     employee_code = fields.Char(related='employee_id.code', string="Code")
+    service_type = fields.Selection(
+        [('glasses', 'Optical Glasses'),
+         ('lenses', 'Optical Lenses'),
+         ('teeth', 'Teeth Crowns'),
+         ('other', 'Other')], default='other')
     date = fields.Date(default=fields.Date.context_today, required=True)
     actual_amount = fields.Float(required=True)
+
+    @api.depends('employee_id', 'date')
+    def _compute_contract_id(self):
+        for rec in self:
+            contracts = rec.employee_id._get_contracts(rec.date, rec.date)
+            rec.contract_id = False
+            if contracts:
+                rec.contract_id = contracts[0]
+
+    @api.constrains('employee_id', 'service_type', 'date', 'actual_amount')
+    def check_service_type(self):
+        for rec in self:
+            old_glasses = self.search([('employee_id', '=', rec.employee_id.id),
+                                       ('service_type', '=', 'glasses'),
+                                       ('id', '!=', rec.id)],
+                                      order='date DESC',
+                                      limit=1)
+            if rec.service_type == 'glasses' and old_glasses:
+                next_date = old_glasses.date + relativedelta(years=2)
+                if rec.date < next_date:
+                    raise ValidationError(
+                        "Employee had optical glasses given on ({}), "
+                        "Optical glasses only allowed after 2 years of prior service.".format(old_glasses.date))
+
+            if rec.service_type == 'lenses' and old_glasses:
+                next_date = old_glasses.date + relativedelta(years=1)
+                if rec.date < next_date:
+                    raise ValidationError(
+                        "Employee had optical glasses given on ({}), "
+                        "Optical Lenses only allowed after 1 year of Optical glasses service.".format(
+                            old_glasses.date))
+
+            if rec.service_type == 'lenses' and not old_glasses:
+                raise ValidationError(
+                    "Employee don't have optical glasses, "
+                    "Optical Lenses only allowed after 1 year of Optical glasses service.")
+
+            if rec.service_type == 'teeth' and not rec.contract_id:
+                raise ValidationError(_('There is no valid contract for employee %s in Date %s' % (
+                    rec.employee_id.name, rec.date)))
+
+            if rec.service_type == 'teeth' and rec.contract_id:
+                if rec.contract_id.teeth_crowns_start:
+                    if rec.contract_id.teeth_crowns_start > rec.date:
+                        raise ValidationError(
+                            _('Request Date Must Be After Teeth Crowns Start On Employee Contract ({})'.format(
+                                rec.contract_id.teeth_crowns_start)))
+                    start_date, end_date = self.get_teeth_crowns_period(rec.contract_id.teeth_crowns_start, rec.date)
+                    all_teeth_requests = self.search([('employee_id', '=', rec.employee_id.id),
+                                                      ('service_type', '=', 'teeth'),
+                                                      ('date', '>=', start_date),
+                                                      ('date', '<=', end_date),
+                                                      ])
+                    total_teeth_amount = sum(x.actual_amount for x in all_teeth_requests)
+                    if total_teeth_amount > 2500:
+                        raise ValidationError(
+                            _("Employee already/will be reaching the maximum limit for Teeth Crown Limit,"
+                              " Utilized amount ({}) since ({})".format(total_teeth_amount, start_date)))
+                else:
+                    raise ValidationError(_('You Must define Teeth Crowns Start On Employee Contract.'))
+
+    def get_teeth_crowns_period(self, teeth_crowns_start, request_date):
+        start_date = teeth_crowns_start
+        end_date = start_date + relativedelta(years=5)
+        while end_date < request_date:
+            start_date = end_date
+            end_date = start_date + relativedelta(years=5)
+        return start_date, end_date

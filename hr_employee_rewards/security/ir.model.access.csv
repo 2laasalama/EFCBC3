@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_rewards,access_hr_employee_rewards,model_hr_employee_rewards,,1,1,1,1
+access_hr_employee_rewards_line,access_hr_employee_rewards_line,model_hr_employee_rewards_line,,1,1,1,1
+access_hr_employee_rewards_employees,access_hr_employee_rewards_employees,model_hr_employee_rewards_employees,,1,1,1,1
+
+

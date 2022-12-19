@@ -51,6 +51,7 @@ class HrContract(models.Model):
     transportation_allowance = fields.Float('بدل التنقل')
     night_allowance = fields.Float('بدل سهر')
     living_allowance = fields.Float('بدل إعاشة')
+    teeth_crowns_start = fields.Date(default=fields.Date.context_today, string='Teeth Crowns Start On')
 
     @api.depends('basic_salary', 'variable_salary')
     def _compute_salary(self):
