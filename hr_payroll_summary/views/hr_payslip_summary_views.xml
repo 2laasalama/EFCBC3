@@ -70,7 +70,7 @@
                     <tree editable="top" create="0" delete="0">
                         <field name="sequence"/>
                         <field name="employee_id"/>
-                        <field name="category_ids" widget="many2many_tags"/>
+                        <field name="grade_id"/>
                         <field name="leave_ids" invisible="1" widget="many2many_tags" style="width:150px"/>
                         <field name="attendant_absence"/>
                         <field name="fingerprint_absence" invisible="1"/>

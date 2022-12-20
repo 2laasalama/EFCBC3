@@ -1,7 +1,7 @@
 # Copyright 2019-21 ForgeFlow, S.L.
 {
-    "name": "Stock Report Quantity By Location",
-    "summary": "Stock Report Quantity By Location",
+    "name": "Stock Location Moves Report",
+    "summary": "Stock Location Moves Report",
     "version": "15.0.1.0.0",
     "category": "Warehouse Management",
     "license": "AGPL-3",

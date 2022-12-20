@@ -114,7 +114,7 @@
                                         <span t-field="line.employee_id.name"/>
                                     </td>
                                     <td>
-                                        <span t-esc="', '.join(map(lambda x: (x.name), line.category_ids))"/>
+                                         <span t-field="line.grade_id.name"/>
                                     </td>
                                     <t t-foreach="line.get_leave_summary()" t-as="leave">
                                         <td>
