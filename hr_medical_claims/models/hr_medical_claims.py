@@ -84,7 +84,12 @@ class HrMedicalClaimsLine(models.Model):
     employee_id = fields.Many2one('hr.employee', 'الموظف', required=True)
     employee_code = fields.Char(related='employee_id.code', string="Code")
     service_type = fields.Selection(
-        [('glasses', 'Optical Glasses'),
+        [('medical_examination ', 'Medical Examination '),
+         ('medicine', 'Medicine'),
+         ('lab_tests ', 'Lab Tests '),
+         ('radiology', 'Radiology'),
+         ('physiotherapy', 'Physiotherapy'),
+         ('glasses', 'Optical Glasses'),
          ('lenses', 'Optical Lenses'),
          ('teeth', 'Teeth Crowns'),
          ('other', 'Other')], default='other')
