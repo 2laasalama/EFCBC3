@@ -92,7 +92,7 @@ class HrMedicalClaimsLine(models.Model):
          ('glasses', 'Optical Glasses'),
          ('lenses', 'Optical Lenses'),
          ('teeth', 'Teeth Crowns'),
-         ('other', 'Other')], default='other')
+         ('other', 'Other')], default='other', required=True)
     date = fields.Date(default=fields.Date.context_today, required=True)
     actual_amount = fields.Float(required=True)
 
