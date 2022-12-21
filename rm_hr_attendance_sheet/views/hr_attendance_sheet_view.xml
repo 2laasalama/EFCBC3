@@ -101,6 +101,8 @@
                                            widget="float_time"
                                            sum="Total" optional="hide"/>
                                     <field name="status" optional="show"/>
+                                    <field name="lateness_absence" optional="show"/>
+                                    <field name="leave_type_ids" optional="show" widget="many2many_tags"/>
                                     <field name="note"/>
                                     <button name="%(action_att_data_change)d"
                                             class="oe_stat_button"
@@ -131,6 +133,7 @@
                                     <field name="no_absence"/>
                                     <field name="tot_absence"
                                            widget="float_time"/>
+                                    <field name="lateness_absence"/>
                                 </group>
                                 <group string="Diffrenece Time">
                                     <field name="no_difftime"/>

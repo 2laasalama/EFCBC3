@@ -95,6 +95,7 @@ class AttendanceSheet(models.Model):
 
     allowed_lateness = fields.Float(compute="_compute_sheet_total", readonly=True, store=True)
     recorded_lateness = fields.Float(compute="_compute_sheet_total", readonly=True, store=True)
+    lateness_absence = fields.Integer(compute="_compute_sheet_total", readonly=True, store=True)
 
     def unlink(self):
         if any(self.filtered(
@@ -162,8 +163,12 @@ class AttendanceSheet(models.Model):
             overtime_lines = sheet.line_ids.filtered(lambda l: l.overtime > 0)
             sheet.tot_overtime = sum([l.overtime for l in overtime_lines])
             sheet.no_overtime = len(overtime_lines)
+            lateness_absence = sheet.line_ids.filtered(lambda l: l.lateness_absence)
+            sheet.lateness_absence = len(lateness_absence)
             # Compute Total Late In
-            late_lines = sheet.line_ids.filtered(lambda l: l.late_in > 0 and l.status != "ab")
+
+            late_lines = sheet.line_ids.filtered(
+                lambda l: l.late_in > 0 and l.status == "lateness" and not l.lateness_absence)
             sheet.tot_late = sum([l.late_in for l in late_lines])
             sheet.no_late = len(late_lines)
             sheet.allowed_lateness = sheet.att_policy_id.late_rule_id.allowed_lateness
@@ -226,21 +231,16 @@ class AttendanceSheet(models.Model):
             date_to = leave.date_to
             if start_datetime and date_to < start_datetime:
                 continue
-            leaves.append((date_from, date_to))
+            leaves.append((date_from, date_to, leave.holiday_status_id.id))
         return leaves
 
     def get_public_holiday(self, date, emp):
-        public_holiday = []
-        public_holidays = self.env['hr.public.holiday'].sudo().search(
+        calendar_id = emp.contract_id.resource_calendar_id
+        public_holidays = self.env['resource.calendar.leaves'].sudo().search(
             [('date_from', '<=', date), ('date_to', '>=', date),
-             ('state', '=', 'active')])
-        for ph in public_holidays:
-            # print('ph is', ph.name, [e.name for e in ph.emp_ids])
-            if not ph.emp_ids:
-                return public_holidays
-            if emp.id in ph.emp_ids.ids:
-                public_holiday.append(ph.id)
-        return public_holiday
+             ('calendar_id', 'in', [False, calendar_id.id]), ('resource_id', '=', False)])
+
+        return public_holidays
 
     def get_attendances(self):
         for att_sheet in self:
@@ -278,6 +278,7 @@ class AttendanceSheet(models.Model):
                                                                      day_end,
                                                                      tz)
                 leaves = self._get_emp_leave_intervals(emp, day_start, day_end)
+                leave_type_ids = False
                 public_holiday = self.get_public_holiday(date, emp)
                 reserved_intervals = []
                 overtime_policy = policy_id.get_overtime()
@@ -380,7 +381,7 @@ class AttendanceSheet(models.Model):
                                 work_interval[1]).astimezone(tz)
                             ac_sign_in = 0
                             ac_sign_out = 0
-                            status = ""
+                            status = "attend"
                             note = ""
                             if att_work_intervals:
                                 if len(att_work_intervals) > 1:
@@ -488,6 +489,7 @@ class AttendanceSheet(models.Model):
                                 for diff_in in diff_intervals:
                                     if leaves:
                                         status = "leave"
+                                        leave_type_ids = [leave[2] for leave in leaves]
                                         diff_clean_intervals = calendar_id.att_interval_without_leaves(
                                             diff_in, leaves)
                                         for diff_clean in diff_clean_intervals:
@@ -519,12 +521,9 @@ class AttendanceSheet(models.Model):
                                                      'wd_rate']
                             float_late = late_in.total_seconds() / 3600
                             act_float_late = late_in.total_seconds() / 3600
-                            policy_late, late_cnt = policy_id.get_late(
-                                float_late,
-                                late_cnt)
-                            # check max_late_absence
-                            if policy_late >= 8:
-                                status = 'ab'
+                            policy_late, late_cnt = policy_id.get_late(float_late, late_cnt)
+                            if float_late:
+                                status = 'lateness'
                             float_diff = diff_time.total_seconds() / 3600
                             if status == 'ab':
                                 if not abs_flag:
@@ -537,9 +536,7 @@ class AttendanceSheet(models.Model):
                             else:
                                 act_float_diff = float_diff
                                 float_diff = policy_id.get_diff(float_diff)
-                            # check max_late_absence
-                            if policy_late >= 8:
-                                status = 'ab'
+
                             values = {
                                 'date': date,
                                 'day': day_str,
@@ -547,7 +544,7 @@ class AttendanceSheet(models.Model):
                                 'pl_sign_out': pl_sign_out,
                                 'ac_sign_in': ac_sign_in,
                                 'ac_sign_out': ac_sign_out,
-                                'late_in': policy_late,
+                                'late_in': float_late,
                                 'act_late_in': act_float_late,
                                 'worked_hours': float_worked_hours,
                                 'overtime': float_overtime,
@@ -555,7 +552,9 @@ class AttendanceSheet(models.Model):
                                 'diff_time': float_diff,
                                 'act_diff_time': act_float_diff,
                                 'status': status,
-                                'att_sheet_id': self.id
+                                'leave_type_ids': [(6, 0, leave_type_ids)] if leave_type_ids else False,
+                                'att_sheet_id': self.id,
+                                'lateness_absence': True if policy_late >= 8 else False
                             }
                             att_line.create(values)
                         out_work_intervals = [x for x in attendance_intervals if
@@ -858,9 +857,14 @@ class AttendanceSheetLine(models.Model):
                                  help="Diffrence between the working time and attendance time(s) ",
                                  readonly=True)
     status = fields.Selection(string="Status",
-                              selection=[('ab', 'Absence'),
+                              selection=[('attend', 'Attend'),
+                                         ('ab', 'Absence'),
                                          ('weekend', 'Week End'),
                                          ('ph', 'Public Holiday'),
-                                         ('leave', 'Leave'), ],
+                                         ('leave', 'Leave'),
+                                         ('lateness', 'Lateness')],
                               required=False, readonly=True)
     note = fields.Text("Note", readonly=True)
+    leave_ids = fields.Many2many('hr.leave', string='Leave')
+    leave_type_ids = fields.Many2many('hr.leave.type', string='Leave Type')
+    lateness_absence = fields.Boolean(required=False)
