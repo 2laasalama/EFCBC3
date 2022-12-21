@@ -13,7 +13,7 @@ class StockReportByLocationPrepare(models.TransientModel):
         return active_id
 
     picking_id = fields.Many2one(comodel_name="stock.picking", default=_default_date_range)
-    location_id = fields.Many2one(comodel_name="stock.location", related='picking_id.location_dest_id')
+    location_id = fields.Many2one(comodel_name="stock.location", related='picking_id.location_id')
     line_ids = fields.One2many('stock.report.quantity.by.location', 'wiz_id')
 
     def add_moves(self):
