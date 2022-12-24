@@ -35,13 +35,13 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
         <field name="view_id" ref="stock_report_quantity_by_location_prepare_form_view"/>
         <field name="target">new</field>
     </record>
-    <menuitem
-            id="menu_quantity_by_location"
-            name="Inventory by Location"
-            parent="stock.menu_warehouse_report"
-            action="action_stock_report_quantity_by_location_prepare"
-            groups="stock.group_stock_manager"
-    />
+<!--    <menuitem-->
+<!--            id="menu_quantity_by_location"-->
+<!--            name="Inventory by Location"-->
+<!--            parent="stock.menu_warehouse_report"-->
+<!--            action="action_stock_report_quantity_by_location_prepare"-->
+<!--            groups="stock.group_stock_manager"-->
+<!--    />-->
 
     <record id="stock_report_quantity_by_location_tree_view" model="ir.ui.view">
         <field name="name">Stock Report Quantity By Location Form</field>
