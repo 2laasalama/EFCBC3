@@ -182,12 +182,21 @@
                 parent="menu_warehouse_report"
                 action="stock_report_dashboard_action"/>
 
-          <menuitem
-            action="stock_inter_transfer_acs.action_stock_transfer"
-            id="stock_transfer_menu"
-            parent="menu_stock_warehouse_mgmt"
-            sequence="6"
-            name="التحويل بين المخازن"/>
+        <menuitem
+                action="stock_inter_transfer_acs.action_stock_transfer"
+                id="stock_transfer_menu"
+                parent="menu_stock_warehouse_mgmt"
+                sequence="6"
+                name="التحويل بين المخازن"/>
+
+
+        <menuitem
+                id="menu_quantity_by_location"
+                name="حركات الموقع"
+                parent="menu_warehouse_report"
+                action="stock_report_by_location.action_stock_report_by_location_prepare"
+                sequence="999"
+                groups="stock.group_stock_manager"/>
 
 
     </data>

@@ -1,0 +1,254 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_report_by_location
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20220902\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-24 16:22+0000\n"
+"PO-Revision-Date: 2022-12-24 16:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,help:stock_report_by_location.field_stock_location_move__state
+msgid ""
+"* New: When the stock move is created and not yet confirmed.\n"
+"* Waiting Another Move: This state can be seen when a move is waiting for another one, for example in a chained flow.\n"
+"* Waiting Availability: This state is reached when the procurement resolution is not straight forward. It may need the scheduler to run, a component to be manufactured...\n"
+"* Available: When products are reserved, it is set to 'Available'.\n"
+"* Done: When the shipment is processed, the state is 'Done'."
+msgstr ""
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.stock_report_by_location_prepare_form_view
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__company_id
+msgid "Company"
+msgstr "شرطو"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__create_uid
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__create_uid
+msgid "Created by"
+msgstr "أنشى بواسطة"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__create_date
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__create_date
+msgid "Created on"
+msgstr "أنشى فى"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__date
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Destination Location"
+msgstr "موقع الوجهة "
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.stock_report_by_location_prepare_form_view
+msgid "Display"
+msgstr "عرض"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__display_name
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__display_name
+msgid "Display Name"
+msgstr "الاسم"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__qty_done
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Done"
+msgstr "المنجزة"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__location_id
+msgid "From"
+msgstr "من"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__owner_id
+msgid "From Owner"
+msgstr "من المالك"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Group By"
+msgstr "تجميع بواسطة"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__id
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Last 12 Months"
+msgstr "أخر 12 شهر"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Last 3 Months"
+msgstr "أخر 3 شهور"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Last 30 Days"
+msgstr "أخر 30 يوم"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move____last_update
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare____last_update
+msgid "Last Modified on"
+msgstr "أخر تعديل فى "
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__write_uid
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__write_uid
+msgid "Last Updated by"
+msgstr "أخر تحديث بواسطة"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__write_date
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__write_date
+msgid "Last Updated on"
+msgstr "أخر تعديل فى"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__line_id
+msgid "Line"
+msgstr "سطر"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Location"
+msgstr "الموقع"
+
+#. module: stock_report_by_location
+#: model:ir.ui.menu,name:stock_report_by_location.menu_quantity_by_location
+msgid "Location Moves"
+msgstr "حركات الموقع"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_report_by_location_prepare__location_ids
+msgid "Locations"
+msgstr "المواقع"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__lot_id
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Lot/Serial Number"
+msgstr "الدفعة / الرقم التسلسلي"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__lot_name
+msgid "Lot/Serial Number Name"
+msgstr "اسم الرقم التسلسلي"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Owner"
+msgstr "المالك"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__product_id
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Product"
+msgstr "الصنف"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__qty
+msgid "Qty"
+msgstr "الكمية"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__product_qty
+msgid "Real Reserved Quantity"
+msgstr "الكمية الفعلية المحجوزة"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__reference
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Reference"
+msgstr "المرجع"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__product_uom_qty
+msgid "Reserved"
+msgstr "محجوز"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Source Location"
+msgstr "الموقع المصدرى"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__state
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: stock_report_by_location
+#: code:addons/stock_report_by_location/wizards/stock_report_by_location.py:0
+#: model:ir.model,name:stock_report_by_location.model_stock_location_move
+#, python-format
+msgid "Stock Location Move"
+msgstr "حركات المحزن"
+
+#. module: stock_report_by_location
+#: model:ir.model,name:stock_report_by_location.model_stock_report_by_location_prepare
+msgid "Stock Report Quantity By Location Prepare"
+msgstr "إعداد تقرير المخزون حسب الموقع"
+
+#. module: stock_report_by_location
+#: model:ir.actions.act_window,name:stock_report_by_location.action_stock_report_by_location_prepare
+msgid "Stock Report by Location"
+msgstr "تقرير المخزون حسب الموقع"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__location_dest_id
+msgid "To"
+msgstr "الى"
+
+#. module: stock_report_by_location
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree_search
+msgid "To Do"
+msgstr "الجاهز للانجاز"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__product_uom_id
+#: model_terms:ir.ui.view,arch_db:stock_report_by_location.view_stock_location_move_tree
+msgid "Unit of Measure"
+msgstr "وحدة القياس"
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,help:stock_report_by_location.field_stock_location_move__owner_id
+msgid ""
+"When validating the transfer, the products will be taken from this owner."
+msgstr ""
+
+#. module: stock_report_by_location
+#: model:ir.model.fields,field_description:stock_report_by_location.field_stock_location_move__wiz_id
+msgid "Wiz"
+msgstr "الوحدة"

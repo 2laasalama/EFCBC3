@@ -1,0 +1,182 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_select_items
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20220902\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-12-24 16:16+0000\n"
+"PO-Revision-Date: 2022-12-24 16:16+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_select_items
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_prepare_form_view
+msgid "Cancel"
+msgstr "الغاء"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__create_uid
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__create_date
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__display_name
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__display_name
+msgid "Display Name"
+msgstr "الاسم"
+
+#. module: stock_picking_select_items
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_search_view
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: stock_picking_select_items
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_search_view
+msgid "Group by Location"
+msgstr "تجميع حسب الموقع"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__id
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__default_code
+msgid "Internal Reference"
+msgstr "المرجع الداخلي"
+
+#. module: stock_picking_select_items
+#: model:ir.ui.menu,name:stock_picking_select_items.menu_quantity_by_location
+msgid "Inventory by Location"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location____last_update
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__write_uid
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__write_date
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__line_ids
+msgid "Line"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__location_id
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_search_view
+msgid "Location"
+msgstr "الموقع"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__picking_id
+msgid "Picking"
+msgstr "حركة المخزون"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__product_id
+msgid "Product"
+msgstr "الصنف"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__product_category_id
+msgid "Product Category"
+msgstr "فئة المنتج"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__uom_id
+msgid "Product UoM"
+msgstr "وحدة القياس"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__quantity_on_hand
+msgid "Qty On Hand"
+msgstr "الكمية في اليد"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__quantity_reserved
+msgid "Qty Reserved"
+msgstr "الكمية المحجوزة"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__quantity_unreserved
+msgid "Qty Unreserved"
+msgstr "الكمية غير المحجوزة"
+
+#. module: stock_picking_select_items
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_search_view
+msgid "Quantity On Hand > 0"
+msgstr ""
+
+#. module: stock_picking_select_items
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_search_view
+msgid "Search Stock Report Quantity by Location"
+msgstr "البحث عن كمية تقرير المخزون حسب الموقع"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__select
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_prepare_form_view
+msgid "Select"
+msgstr "تحديد"
+
+#. module: stock_picking_select_items
+#: model:ir.actions.act_window,name:stock_picking_select_items.action_stock_report_quantity_by_location_prepare
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_picking_select_items
+msgid "Select Items"
+msgstr "تحديد العناصر"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location_prepare__location_id
+msgid "Source Location"
+msgstr "الموقع المصدرى"
+
+#. module: stock_picking_select_items
+#: model:ir.model,name:stock_picking_select_items.model_stock_report_quantity_by_location
+msgid "Stock Report By Location"
+msgstr "تقرير المخزون حسب الموقع"
+
+#. module: stock_picking_select_items
+#: model:ir.model,name:stock_picking_select_items.model_stock_report_quantity_by_location_prepare
+msgid "Stock Report Quantity By Location Prepare"
+msgstr "إعداد تقرير المخزون حسب الموقع"
+
+#. module: stock_picking_select_items
+#: model_terms:ir.ui.view,arch_db:stock_picking_select_items.stock_report_quantity_by_location_pivot_view
+msgid "Stock by Location"
+msgstr "المخزون حسب الموقع"
+
+#. module: stock_picking_select_items
+#: model:ir.model.fields,field_description:stock_picking_select_items.field_stock_report_quantity_by_location__wiz_id
+msgid "Wiz"
+msgstr "الوحدة"
+
+#. module: stock_picking_select_items
+#: code:addons/stock_picking_select_items/wizards/stock_report_quantity_by_location.py:0
+#, python-format
+msgid "You must select at least one line to be added to picking."
+msgstr "يجب عليك تحديد سطر واحد على الأقل لإضافته إلى حركات المحازن."
