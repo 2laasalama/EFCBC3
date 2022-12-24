@@ -7,7 +7,6 @@ from odoo.exceptions import ValidationError
 class HrSalaryAttachment(models.Model):
     _inherit = 'hr.salary.attachment'
 
-
     deduction_type = fields.Selection(
         selection_add=[('vacation_allowance', 'Vacation Allowance'),
                        ('night_allowance', 'Night Allowance')],
@@ -18,7 +17,7 @@ class HrSalaryAttachment(models.Model):
     )
     reward_amount = fields.Float()
     number_of_days = fields.Float()
-    overtime_amount_per_day = fields.Float()
+    overtime_amount_per_day = fields.Float(compute='_compute_overtime_amount_per_day')
     transportation_allowance_per_day = fields.Float()
     night_allowance = fields.Float()
     living_allowance = fields.Float()
@@ -31,10 +30,18 @@ class HrSalaryAttachment(models.Model):
     basic_salary = fields.Float(compute='_compute_basic_salary')
     employee_code = fields.Char(related='employee_id.code', string="Code")
 
+    @api.depends('basic_salary')
+    def _compute_overtime_amount_per_day(self):
+        for rec in self:
+            rec.overtime_amount_per_day = (rec.basic_salary / 30) * 2
+
     @api.depends('contract_id')
     def _compute_basic_salary(self):
         for rec in self:
-            rec.basic_salary = rec.contract_id.basic_salary + rec.contract_id.variable_salary
+            if rec.contract_id:
+                rec.basic_salary = rec.contract_id.basic_salary + rec.contract_id.variable_salary
+            else:
+                rec.basic_salary = 0
 
     @api.depends('night_allowance', 'living_allowance', 'contract_id')
     def _total_living_night_allowance(self):
@@ -45,7 +52,7 @@ class HrSalaryAttachment(models.Model):
                 rec.total_living_allowance = rec.living_allowance * rec.contract_id.living_allowance
                 rec.total_living_night_allowance = rec.total_night_allowance + rec.total_living_allowance
 
-    @api.depends('deduction_type', 'reward_amount', 'number_of_days', 'overtime_amount_per_day',
+    @api.depends('deduction_type', 'number_of_days', 'overtime_amount_per_day',
                  'total_living_night_allowance')
     def _compute_taxes(self):
         for rec in self:
@@ -70,7 +77,7 @@ class HrSalaryAttachment(models.Model):
     def onchange_net(self):
         self.monthly_amount = self.total_amount = self.net
 
-    @api.constrains('deduction_type', 'reward_amount')
+    @api.constrains('deduction_type')
     def _check_amount_constraint(self):
         for rec in self:
             if rec.deduction_type == 'vacation_allowance' and rec.number_of_days <= 0:

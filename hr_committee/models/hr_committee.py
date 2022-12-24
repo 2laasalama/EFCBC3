@@ -27,30 +27,30 @@ class HrCommittee(models.Model):
         range = self.env['date.range'].search([('date_start', '<=', today), ('date_end', '>=', today)], limit=1)
         return range.id if range else False
 
-    name = fields.Char(required=True, default='New', readonly=True, states={"draft": [("readonly", False)]})
+    name = fields.Char(required=True, default='New', readonly=True, states={"draft": [("readonly", False)]},copy=True)
 
     date_range_id = fields.Many2one("date.range", required=True, string="الفترة", default=_default_date_range,
-                                    states={"draft": [("readonly", False)]})
-    type_id = fields.Many2one("date.range.type", required=True, string="السنة", related='date_range_id.type_id')
+                                    states={"draft": [("readonly", False)]},copy=True)
+    type_id = fields.Many2one("date.range.type", required=True, string="السنة", related='date_range_id.type_id',copy=True)
     date_from = fields.Date(string="Date From", required=True, related='date_range_id.date_start')
     date_to = fields.Date(string="Date To", required=True, related='date_range_id.date_end')
     date = fields.Date(default=fields.Date.context_today)
     month_ar = fields.Char(compute='_compute_month_ar', string='الشهر')
-    line_ids = fields.One2many("hr.committee.line", "committee_id", string="Lines", readonly=True,
+    line_ids = fields.One2many("hr.committee.line", "committee_id", string="Lines", readonly=True,copy=True,
                                states={"draft": [("readonly", False)]})
     state = fields.Selection([("draft", "Draft"), ("done", "Done"), ("close", "Close")], string="Status", index=True,
                              readonly=True, copy=False, tracking=1, default="draft", )
-    vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية')
-    vice_hr_manager_title = fields.Char(default='أستاذة')
+    vice_hr_manager = fields.Many2one('hr.employee', string='نائب رئيس الأمانة التنفيذية للموارد البشرية',copy=True)
+    vice_hr_manager_title = fields.Char(default='أستاذة',copy=True)
 
-    hr_consultant = fields.Many2one('hr.employee', string='مستشار (أ) للموارد البشرية')
-    hr_consultant_title = fields.Char(default='محاسب')
+    hr_consultant = fields.Many2one('hr.employee', string='مستشار (أ) للموارد البشرية',copy=True)
+    hr_consultant_title = fields.Char(default='محاسب',copy=True)
 
-    hr_manager = fields.Many2one('hr.employee', string='رئيس الأمانة التنفيذية للموارد البشرية')
-    hr_manager_title = fields.Char(default='محاسب')
+    hr_manager = fields.Many2one('hr.employee', string='رئيس الأمانة التنفيذية للموارد البشرية',copy=True)
+    hr_manager_title = fields.Char(default='محاسب',copy=True)
 
-    general_secretary = fields.Many2one('hr.employee', string='الامين العام')
-    general_secretary_title = fields.Char(default='محاسب')
+    general_secretary = fields.Many2one('hr.employee', string='الامين العام',copy=True)
+    general_secretary_title = fields.Char(default='محاسب',copy=True)
 
     total_earnings = fields.Float(compute='_compute_total_earnings')
     total_taxes = fields.Float(compute='_compute_total_taxes')

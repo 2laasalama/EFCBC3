@@ -19,6 +19,8 @@ class HrPayslipsummaryLine(models.Model):
     employee_id = fields.Many2one('hr.employee', 'الموظف', required=True, readonly=True)
     category_ids = fields.Many2many('hr.employee.category', related='employee_id.category_ids', readonly=True
                                     , string='المستوى الوظيفى')
+    grade_id = fields.Many2one('employee.grade', related='employee_id.grade_id', string='المستوى الوظيفى')
+
     leave_ids = fields.One2many("hr.payslip.summary.leave", "summary_line_id", string='أجازات', readonly=True)
     fingerprint_absence = fields.Float(string='غياب بصمة', readonly=True)
     attendant_absence = fields.Float(string='أيام الغياب', readonly=True)

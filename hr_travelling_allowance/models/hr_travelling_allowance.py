@@ -9,11 +9,18 @@ class HrTravellingAllowance(models.Model):
     _description = "Travelling Allowance"
 
     name = fields.Char(required=True, default='New', readonly=True)
-    date = fields.Date(default=fields.Date.context_today, required=True)
-    employee_id = fields.Many2one('hr.employee', 'Employee', required=True)
+    date = fields.Date(default=fields.Date.context_today, required=True, readonly=True,
+                       states={"draft": [("readonly", False)]})
+    employee_id = fields.Many2one('hr.employee', 'Employee', required=True, readonly=True,
+                                  states={"draft": [("readonly", False)]})
     employee_code = fields.Char(related='employee_id.code', string="Employee Code")
     grade_id = fields.Many2one('employee.grade', related='employee_id.grade_id', string='Employee Grade')
     type_id = fields.Many2one('hr.mission.type', 'Mission Type', required=True)
+    type = fields.Selection([('special', 'Special'),
+                             ('full_board', 'Full Board'),
+                             ('residence_food', 'Residence or Food')],
+                            default='special', string='Mission Type', required=True, readonly=True,
+                            states={"draft": [("readonly", False)]})
     line_ids = fields.One2many("hr.travelling.allowance.line", "allowance_id", string="Lines", readonly=True,
                                states={"draft": [("readonly", False)]})
     expenses_ids = fields.One2many("hr.travelling.expenses", "allowance_id", string="Expenses", readonly=True,
@@ -74,11 +81,21 @@ class HrTravellingAllowanceLine(models.Model):
     number_of_days = fields.Integer(compute='_compute_number_of_days', required=True)
     amount_of_day = fields.Float(required=True)
     total_amount = fields.Float(compute='_compute_total_amount')
+    type = fields.Selection([('special', 'Special'),
+                             ('full_board', 'Full Board'),
+                             ('residence_food', 'Residence or Food')], related='allowance_id.type')
 
-    @api.depends('number_of_days', 'amount_of_day')
+    @api.depends('number_of_days', 'amount_of_day', 'type')
     def _compute_total_amount(self):
         for rec in self:
-            rec.total_amount = rec.number_of_days * rec.amount_of_day
+            if rec.type == 'special':
+                rec.total_amount = rec.number_of_days * rec.amount_of_day
+            elif rec.type == 'full_board':
+                rec.total_amount = rec.number_of_days * rec.amount_of_day / 3
+            elif rec.type == 'residence_food':
+                rec.total_amount = rec.number_of_days * rec.amount_of_day * 2 / 3
+            else:
+                rec.total_amount = 0
 
     @api.depends('date_from', 'date_to')
     def _compute_number_of_days(self):

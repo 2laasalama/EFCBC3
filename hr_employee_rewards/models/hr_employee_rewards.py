@@ -89,7 +89,8 @@ class HREmployeeRewardsLine(models.Model):
             if rec.mode == 'amount':
                 rec.total_amount = rec.amount
             elif rec.mode == 'percentage' and rec.contract_id:
-                rec.total_amount = (rec.contract_id.basic_salary + rec.contract_id.variable_salary) * rec.percentage
+                rec.total_amount = (rec.contract_id.basic_salary + rec.contract_id.variable_salary) * \
+                                   rec.percentage / 100
             elif rec.mode == 'different':
                 rec.total_amount = rec.free_total_amount
 

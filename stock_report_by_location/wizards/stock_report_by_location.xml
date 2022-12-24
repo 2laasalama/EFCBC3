@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2019 Eficent Business and IT Consulting Services, S.L.
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="stock_report_by_location_prepare_form_view" model="ir.ui.view">
+        <field name="name">Stock Report By Location Prepare</field>
+        <field name="model">stock.report.by.location.prepare</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="location_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                            name="open"
+                            string="Display"
+                            type="object"
+                            class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_report_by_location_prepare" model="ir.actions.act_window">
+        <field name="name">Stock Report by Location</field>
+        <field name="res_model">stock.report.by.location.prepare</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="stock_report_by_location_prepare_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+            id="menu_quantity_by_location"
+            name="Location Moves"
+            parent="stock.menu_warehouse_report"
+            action="action_stock_report_by_location_prepare"
+            sequence="999"
+            groups="stock.group_stock_manager"/>
+
+    <record id="view_stock_location_move_tree" model="ir.ui.view">
+        <field name="name">stock.location.move.tree</field>
+        <field name="model">stock.location.move</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" default_order="date" delete="0">
+                <field name="date"/>
+                <field name="reference" string="Reference"
+                       invisible="context.get('no_reference', False)"/>
+                <field name="product_id"/>
+                <field name="lot_id" groups="stock.group_production_lot"/>
+                <field name="location_id" groups="stock.group_stock_multi_locations"/>
+                <field name="location_dest_id" groups="stock.group_stock_multi_locations"/>
+                <field name="qty" string="Quantity"/>
+                <field name="product_uom_id" options="{'no_open': True, 'no_create': True}" string="Unit of Measure"
+                       groups="uom.group_uom"/>
+                <field name="company_id" groups="base.group_multi_company" force_save="1"/>
+                <field name="state" widget='badge' decoration-success="state == 'done'"
+                       decoration-info="state not in ('done', 'cancel')"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_stock_location_move_tree_search" model="ir.ui.view">
+        <field name="name">stock.location.move.search</field>
+        <field name="model">stock.location.move</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="reference" string="Reference"/>
+                <field name="product_id"/>
+                <field name="location_id" string="Source Location" groups="stock.group_stock_multi_locations"/>
+                <field name="location_dest_id" string="Destination Location"
+                       groups="stock.group_stock_multi_locations"/>
+                <field name="lot_id" string="Lot/Serial Number" groups="stock.group_production_lot"/>
+                <field name="owner_id" string="Owner" groups="stock.group_tracking_owner"/>
+                <separator/>
+                <filter string="To Do" name="todo" domain="[('state', 'not in', ['done', 'draft', 'cancel'])]"/>
+                <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="date" date="date" default_period="this_month"/>
+                <filter string="Last 30 Days" name="filter_last_30_days"
+                        domain="[('date','&gt;=', (context_today() - relativedelta(days=30)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last 3 Months" name="filter_last_3_months"
+                        domain="[('date','&gt;=', (context_today() - relativedelta(months=3)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="Last 12 Months" name="filter_last_12_months"
+                        domain="[('date','&gt;=', (context_today() - relativedelta(years=1)).strftime('%%Y-%%m-%%d'))]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="groupby_product_id" domain="[]"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter string="Status" name="by_state" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Date" name="by_date" domain="[]" context="{'group_by': 'date'}"/>
+                    <filter string="Location" name="by_location" domain="[]" context="{'group_by': 'location_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
