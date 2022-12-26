@@ -17,6 +17,7 @@
         'views/excessive_leave_policy.xml',
         'views/excessive_leave.xml',
         'views/res_config_settings_views.xml',
+        'views/hr_contract_view.xml',
     ],
     'assets': {
         'web.assets_qweb': [

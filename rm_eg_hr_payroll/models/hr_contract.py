@@ -33,7 +33,7 @@ class HrContract(models.Model):
                              digits=dp.get_precision('Payroll'))
     basic_salary = fields.Float(string="Basic Salary",
                                 digits=dp.get_precision('Payroll'))
-    variable_salary = fields.Float(string="Raises Not Added",
+    variable_salary = fields.Float(string="Raises Added",
                                    digits=dp.get_precision('Payroll'))
     salary = fields.Float(compute='_compute_salary', digits=dp.get_precision('Payroll'))
 

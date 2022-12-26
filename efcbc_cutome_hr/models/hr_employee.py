@@ -14,7 +14,7 @@ class Employee(models.Model):
     country_id = fields.Many2one(default=lambda self: self.env.ref('base.eg', False))
     country_of_birth = fields.Many2one(default=lambda self: self.env.ref('base.eg', False))
     identification_id = fields.Char(required=True)
-    social_insurance_no = fields.Integer(required=True, groups="hr.group_hr_user", )
+    social_insurance_no = fields.Char(required=True, groups="hr.group_hr_user", )
     gender = fields.Selection(required=True)
     birthday = fields.Date(required=True)
     hajj_granted_ids = fields.One2many('hajj.granted.line', 'employee_id',
@@ -49,7 +49,9 @@ class Employee(models.Model):
     def _social_insurance_validation(self):
         for rec in self:
             if rec.social_insurance_no:
-                if len(str(rec.social_insurance_no)) < 5:
+                if not rec.social_insurance_no.isdigit():
+                    raise ValidationError(_('Invalid Social Insurance No, Accept only Numbers.'))
+                if len(rec.social_insurance_no) < 5:
                     raise ValidationError(_('Invalid Social Insurance No, Length Must be at least 5 Digit.'))
 
     def get_leaves_summary(self, date_from, date_to, domain):
