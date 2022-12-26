@@ -158,12 +158,9 @@ class QuarterIncentiveLine(models.Model):
             rec.net = rec.total_months - rec.taxes
 
     def get_motivation_ratio(self, employee_id, date_range_id):
-        if employee_id._get_contracts(date_range_id.date_start, date_range_id.date_end):
-            line = self.env["hr.payslip.summary.line"].new({
-                "employee_id": employee_id.id,
-                "date_range_id": date_range_id.id,
-            })
-            line.compute_sheet()
+        line = self.env["hr.payslip.summary.line"].search(
+            [('employee_id', '=', employee_id.id), ('date_range_id', '=', date_range_id.id)])
+        if line:
             motivation_effort_days = (30 - line.motivation_effort_days) / 30
             motivation_ratio = motivation_effort_days * line.motivation_ratio / self.company_id.motivation_ratio
             return motivation_ratio / 3
