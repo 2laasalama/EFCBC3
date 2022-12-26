@@ -8,7 +8,7 @@
     'maintainer': 'Cybrosys Techno Solutions',
     'category': 'Generic Modules/Human Resources',
     'website': "https://www.openhrms.com",
-    'depends': ['base', 'mail', 'date_range'],
+    'depends': ['base', 'mail', 'date_range','rm_eg_hr_payroll'],
     'data': [
         'data/disciplinary_rule_data.xml',
         'views/disciplinary_action.xml',

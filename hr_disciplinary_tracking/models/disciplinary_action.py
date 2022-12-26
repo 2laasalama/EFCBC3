@@ -70,7 +70,7 @@ class DisciplinaryAction(models.Model):
     attachment_ids = fields.Many2many('ir.attachment', string="Attachments",
                                       help="Employee can submit any documents which supports their explanation")
     note = fields.Text(string="Internal Note")
-    joined_date = fields.Date(string="Joined Date", help="Employee joining date")
+    joined_date = fields.Date(string="Joined Date", related='employee_name.start_date', help="Employee joining date")
     monetary_penalty = fields.Boolean(required=False)
     penalty_days = fields.Float()
     date_range_id = fields.Many2one("date.range", string="Applied On")
@@ -190,10 +190,9 @@ class DisciplinaryAction(models.Model):
                 raise ValidationError(_('You have to select Action Type !!'))
             if rec.action_type == 'warring' and not rec.action:
                 raise ValidationError(_('You have to select an Action !!'))
-
-            if rec.action_type == 'deduction' and not rec.penalty_days or not rec.date_range_ids:
-                raise ValidationError(_('You have to Enter Penalty Days!!'))
-
+            if rec.action_type == 'deduction':
+                if not rec.penalty_days or not rec.date_range_ids:
+                    raise ValidationError(_('You have to Enter Penalty Days!!'))
             rec.check_deduction_percentage()
             rec.state = 'action'
 

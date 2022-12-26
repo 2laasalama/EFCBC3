@@ -9,6 +9,7 @@ class ResumeLine(models.Model):
     _inherit = 'hr.resume.line'
 
     duration = fields.Char(compute='_compute_duration')
+    manual_entry = fields.Boolean()
 
     @api.depends('date_start', 'date_end')
     def _compute_duration(self):

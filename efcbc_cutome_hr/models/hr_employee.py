@@ -104,9 +104,15 @@ class Employee(models.Model):
             else:
                 start_dt = holiday.date_from
                 end_dt = holiday.date_to
-                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id][
-                    'days']
+                count += self._get_work_days_data_batch(start_dt, end_dt, compute_leaves=False)[self.id]['days']
         return count
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(Employee, self).create(vals_list)
+
+        res.resume_line_ids.filtered(lambda l: not l.manual_entry).unlink()
+        return res
 
 
 class EmployeePublic(models.Model):
