@@ -44,10 +44,16 @@ class AccountPayment(models.Model):
         return super(AccountPayment, self).action_cancel()
 
     def bpm_payment_action(self, action):
+        payload_body = self.format_request_data(action, "notes...", self.id, self.name, self.payment_number)
+        route = "bonita/API/bpm/message"
+        request_type = 'post'
+        name = '{} - {}'.format(action, self.name)
+        self.env['bpm.request'].add_bpm_request(self, name, route, request_type, payload_body)
+        return  # stop send requests from payment
+
         bpm_url = self.env['ir.config_parameter'].sudo().get_param('bpm_url')
         access = get_bpm_access(bpm_url)
         url = "{}/bonita/API/bpm/message".format(bpm_url)
-        payload_body = self.format_request_data(action, "notes...", self.id, self.name, self.payment_number)
         payload = json.dumps(payload_body)
         if access:
             headers = {

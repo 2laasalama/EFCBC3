@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="bpm_request_view_tree" model="ir.ui.view">
+            <field name="name">bpm_request_view_tree</field>
+            <field name="model">bpm.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="resource_ref"/>
+                    <field name="state" readonly="1" decoration-info="state == 'draft'"
+                           decoration-success="state == 'done'" decoration-danger="state == 'fail'" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="bpm_request_view_form" model="ir.ui.view">
+            <field name="name">bpm_request_view_form</field>
+            <field name="model">bpm.request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_run" string="Send" class="oe_highlight" states="draft"
+                                type="object"/>
+                        <button name="action_run" string="Retry" class="oe_highlight" states="fail"
+                                type="object"/>
+                        <button name="action_cancel" string="Cancel" states="draft,fail"
+                                type="object"/>
+                        <button name="action_draft" string="Set to Draft" states="cancel"
+                                type="object"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,fail"/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="server_url"/>
+                                <field name="route"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="resource_ref"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Body">
+                                <field name="body"/>
+                            </page>
+                            <page string="Response">
+                                <field name="response"/>
+                            </page>
+                            <page string="Failure Reason">
+                                <field name="failure_code"/>
+                                <field name="failure_reason"/>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="bpm_request_action" model="ir.actions.act_window">
+            <field name="name">BPM Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bpm.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="bpm_request_menuitem" parent="base.menu_administration" action="bpm_request_action" sequence="1"/>
+
+    </data>
+</odoo>

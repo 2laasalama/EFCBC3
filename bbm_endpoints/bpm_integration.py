@@ -6,12 +6,25 @@ _logger = logging.getLogger(__name__)
 
 
 def get_bpm_access(bpm_url):
+    print("get_bpm_access")
     url = "{}/bonita/loginservice".format(bpm_url)
     payload = 'username=walter.bates&password=bpm'
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
     }
-    response = requests.request("POST", url, headers=headers, data=payload)
+    try:
+        response = requests.request("POST", url, headers=headers, data=payload)
+    except (
+    ValueError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema, requests.exceptions.Timeout,
+    requests.exceptions.HTTPError) as ex:
+        print(ex)
+        return {
+            'error': str(ex),
+            'blocking_level': 'warning'
+        }
+    print('.....................')
+    print(response.status_code)
+
     if response.status_code == 204:
         token = response.cookies.get("X-Bonita-API-Token")
         tenant = response.cookies.get("bonita.tenant")
