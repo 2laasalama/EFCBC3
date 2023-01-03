@@ -58,8 +58,10 @@
                                 <field name="response"/>
                             </page>
                             <page string="Failure Reason">
-                                <field name="failure_code"/>
-                                <field name="failure_reason"/>
+                                <group>
+                                    <field name="failure_code"/>
+                                    <field name="failure_reason"/>
+                                </group>
                             </page>
                         </notebook>
 

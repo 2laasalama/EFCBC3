@@ -39,11 +39,10 @@ class AccountPayment(models.Model):
 
     def bpm_payment_action(self, action):
         payload_body = self.format_request_data(action, "notes...", self.id, self.name, self.payment_number)
-        route = "bonita/API/bpm/message"
+        route = "/bonita/API/bpm/message"
         request_type = 'post'
         name = '{} - {}'.format(action, self.name)
-        request = self.env['bpm.request'].add_bpm_request(self, name, route, request_type, payload_body)
-        request.action_run()
+        self.env['bpm.request'].add_bpm_request(self, name, route, request_type, payload_body)
 
     def format_request_data(self, status, notes, payment_id, paymentSerialNumber, requestPaymentNumber):
         vals = {

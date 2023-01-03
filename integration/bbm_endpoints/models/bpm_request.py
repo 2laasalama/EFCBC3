@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 import threading
 
 from odoo import api, fields, models, modules, _
@@ -17,7 +18,8 @@ class BPMRequest(models.Model):
                                'type': type,
                                'body': body,
                                'resource_ref': '%s,%s' % (record._name, record.id)})
-        return request
+
+        request.action_run()
 
     @api.model
     def _selection_target_model(self):
@@ -29,7 +31,7 @@ class BPMRequest(models.Model):
 
     name = fields.Char()
     server_url = fields.Char(string='Server URL', readonly=1, default=lambda self: self._get_default_server_url())
-    route = fields.Char(readonly=1)
+    route = fields.Char(readonly=0)
     full_url = fields.Char(string='URL')
     state = fields.Selection([('draft', 'Draft'), ('done', 'Done'), ('fail', 'Fail'), ('cancel', 'Cancel')],
                              default='draft')
@@ -47,6 +49,7 @@ class BPMRequest(models.Model):
             threaded_calculation.start()
 
     def send_request(self, rec):
+        time.sleep(5)
         with self.pool.cursor() as new_cr:
             _logger.info("BMP Request start")
             self = self.with_env(self.env(cr=new_cr))
@@ -70,21 +73,22 @@ class BPMRequest(models.Model):
 
                     try:
                         response = requests.request("POST", url, headers=headers, data=payload)
+                        if response.status_code == 204:
+                            _logger.info("[[BMP]] update payment success")
+                            rec.state = 'done'
+                        else:
+                            _logger.info("[[BMP]] Update payment fail")
+                            rec.state = 'fail'
+                            rec.failure_reason = "Update Payment Fail"
+                            rec.failure_code = response.status_code
                     except (
                             ValueError, requests.exceptions.ConnectionError, requests.exceptions.MissingSchema,
                             requests.exceptions.Timeout,
                             requests.exceptions.HTTPError) as ex:
+                        _logger.info("[[BMP]] update payment fail")
                         rec.state = 'fail'
                         rec.failure_reason = ex
-                        response = False
 
-                    if response and response.status_code == 204:
-                        rec.state = 'done'
-                    else:
-                        rec.state = 'fail'
-                        rec.failure_code = response.status_code
-                        rec.failure_reason = "Update Payment Fail"
-            _logger.info("BMP Request Finshed")
             self._cr.savepoint()
         return {}
 
