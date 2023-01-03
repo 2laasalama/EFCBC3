@@ -31,7 +31,7 @@ class BPMRequest(models.Model):
 
     name = fields.Char()
     server_url = fields.Char(string='Server URL', readonly=1, default=lambda self: self._get_default_server_url())
-    route = fields.Char(readonly=0)
+    route = fields.Char(readonly=1)
     full_url = fields.Char(string='URL')
     state = fields.Selection([('draft', 'Draft'), ('done', 'Done'), ('fail', 'Fail'), ('cancel', 'Cancel')],
                              default='draft')
