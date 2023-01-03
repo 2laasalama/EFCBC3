@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 class BPMRequest(models.Model):
     _name = 'bpm.request'
+    _order = "id desc"
 
     @api.model
     def add_bpm_request(self, record, name, route, type, body):
@@ -63,7 +64,10 @@ class BPMRequest(models.Model):
                 rec.failure_reason = access['error']
             else:
                 url = "{}{}".format(bpm_url, rec.route)
-                payload = json.dumps(rec.body)
+                body = rec.body.replace("'", '"')
+                payload = json.loads(body)
+
+                print(payload)
                 if access:
                     headers = {
                         'X-Bonita-API-Token': access['token'],
