@@ -64,10 +64,8 @@ class BPMRequest(models.Model):
                 rec.failure_reason = access['error']
             else:
                 url = "{}{}".format(bpm_url, rec.route)
-                body = rec.body.replace("'", '"')
-                payload = json.loads(body)
-
-                print(payload)
+                body = eval(rec.body)
+                payload = json.dumps(body)
                 if access:
                     headers = {
                         'X-Bonita-API-Token': access['token'],
