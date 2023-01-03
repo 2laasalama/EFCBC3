@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_norm_payment_filter_check" model="ir.ui.view">
+            <field name="name">view.norm.payment.filter</field>
+            <field name="model">normal.payments</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Search Payments">
+                    <field name="partner_id" string="Partner"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="normal_payments_check_form_view" model="ir.ui.view">
+            <field name="name">realestate.noraml.payments.form</field>
+            <field name="model">normal.payments</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="action_confirm" string="Confirm" class="oe_highlight oe_read_only" states="draft"
+                                type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="button_journal_entries"
+                                    string="Journal Items" type="object"
+                                    attrs="{'invisible':[('state','=','draft')]}" icon="fa-bars"/>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" string="Title"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="payment_method" widget="selection"
+                                   domain="[('payment_subtype','=',payment_subtype)]"
+                                   options='{"no_open": True, "no_create": True}'
+                                   attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <label for="amount"/>
+                            <div name="amount_div" class="o_row">
+                                <field name="amount1" widget='monetary' options="{'currency_field': 'currency_id'}"
+                                       attrs="{'invisible' : [('payment_subtype', '=', 'check')],'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"
+                                       attrs="{'invisible' : [('payment_subtype', '!=', 'check')]}"/>
+                            </div>
+                            <field name="account_id" attrs="{'readonly': [('state', '!=', 'draft')],'required':True}"/>
+                            <field name="payment_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="analytic_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="send_rec_money" widget="radio" readonly="1"/>
+                            <field name="analytic_tag_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="receipt_number"
+                                   attrs="{'readonly': [('state', '!=', 'draft')],'required':True}"/>
+                            <field name="currency_id"
+                                   attrs="{'readonly': ['|',('state', '!=', 'draft'),('request_id', '!=', False)],'required':True}"/>
+                            <field name="guaranty_check"
+                                   attrs="{'readonly': ['|',('state', '!=', 'draft'),('request_id', '!=', False)],'invisible' : [('payment_subtype', '!=', 'check')],}"/>
+                            <field name="request_id" attrs="{'invisible': [('request_id', '=', False)]}"
+                                   options='{"no_open": True, "no_create": True}'/>
+                            <field name="user_id" invisible="1"/>
+                            <field name="payment_subtype" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Checks" attrs="{'invisible': [('payment_subtype', '!=', 'check')]}">
+                                <field name="pay_check_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="check_number"
+                                               attrs="{'readonly': [('parent.send_rec_money', '=', 'send')],'required': [('parent.send_rec_money', '!=', 'send')]}"/>
+                                        <field name="book_id"
+                                               attrs="{'invisible': [('parent.send_rec_money', '!=', 'send')],'required': [('parent.send_rec_money', '=', 'send')]}"
+                                               domain="[('bank_id', '=', bank),('state', '=', 'active')]"
+                                               options='{"no_open": True, "no_create": True, "no_create_edit": True}'/>
+                                        <field name="check_date"/>
+                                        <field name="amount"/>
+                                        <field name="bank"/>
+                                        <field name="dep_bank"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="normal_payments_check_tree_view" model="ir.ui.view">
+            <field name="name">noraml.payments.tree</field>
+            <field name="model">normal.payments</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="payment_date"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="payment_method"/>
+                    <field name="currency_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cash_action_norm_pay_action" model="ir.actions.act_window">
+            <field name="name">Payments Cash Pay</field>
+            <field name="res_model">normal.payments</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('payment_subtype', '!=', 'check'),('send_rec_money', '=', 'send')]</field>
+            <field name="context">{'default_payment_subtype':'','default_send_rec_money':'send'}</field>
+
+
+        </record>
+
+        <record id="cash_action_norm_rec_action" model="ir.actions.act_window">
+            <field name="name">Payments Cash Rec</field>
+            <field name="res_model">normal.payments</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('payment_subtype', '!=', 'check'),('send_rec_money', '=', 'rece')]</field>
+            <field name="context">{'default_payment_subtype':'','default_send_rec_money':'rece'}</field>
+
+        </record>
+
+        <record id="check_action_norm_pay_action" model="ir.actions.act_window">
+            <field name="name">Payments Check Pay</field>
+            <field name="res_model">normal.payments</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('payment_subtype', '=', 'check'),('send_rec_money', '=', 'send')]</field>
+            <field name="context">{'default_payment_subtype':'check','default_send_rec_money':'send'}</field>
+
+        </record>
+        <record id="check_action_norm_rec_action" model="ir.actions.act_window">
+            <field name="name">Payments Check Rec</field>
+            <field name="res_model">normal.payments</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('payment_subtype', '=', 'check'),('send_rec_money', '=', 'rece')]</field>
+            <field name="context">{'default_payment_subtype':'check','default_send_rec_money':'rece'}</field>
+
+
+        </record>
+
+
+        <record id="check_payment_request_form_view" model="ir.ui.view">
+            <field name="name">check.payment.request.view.form</field>
+            <field name="model">check.payment.request</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <header>
+                        <button name="submit_action" string="Submit" class="oe_highlight" states="draft"
+                                type="object" groups="kamah_tech_cheque_management.group_check_request_user"/>
+                        <button name="validate_action" string="Validate" class="oe_highlight" states="submit"
+                                type="object" groups="kamah_tech_cheque_management.group_check_request_accountant"/>
+                        <button name="approve_action" string="Approve" class="oe_highlight" states="validate"
+                                type="object" groups="kamah_tech_cheque_management.group_check_request_advisor"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Title"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <field name="partner_id" attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                   options='{"no_open": True, "no_create": True, "no_create_edit": True}'/>
+                            <field name="check_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="amount" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="currency_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="check_payment_request_tree_view" model="ir.ui.view">
+            <field name="name">check.payment.request.view.tree</field>
+            <field name="model">check.payment.request</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="check_date"/>
+                    <field name="amount"/>
+                    <field name="currency_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="check_payment_request_action" model="ir.actions.act_window">
+            <field name="name">Check Payment Request</field>
+            <field name="res_model">check.payment.request</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+    </data>
+</odoo>

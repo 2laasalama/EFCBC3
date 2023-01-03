@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_create_moves,access.create.moves,model_create_moves,account.group_account_user,1,1,1,0
+access_accountant_payment,access.accountant.payment.cycle,model_normal_payments,account.group_account_user,1,1,1,0
+access_check_payment_request,access.check.payment.request,model_check_payment_request,group_check_request_user,1,1,1,0
+access_check_book,access.check.book,model_check_book,account.group_account_user,1,1,1,0
+access_accountant_check,access.accountant.check.cycle,model_check_management,account.group_account_user,1,1,1,0
+access_accountant_check_accounts,access.accountant.check.cycle.accounts,model_check_cycle_accounts_default,account.group_account_user,1,1,1,1
+access_accountant_check_appove,access.accountant.check.cycle.appove,model_appove_check_lines,account.group_account_user,1,1,1,1
+access_accountant_check_split_merge,access.accountant.check.cycle.split.merge.check,model_split_merge_check,account.group_account_manager,1,1,1,1
+access_accountant_native_payments_check_create,access.accountant.native.payments.check.create,model_native_payments_check_create,account.group_account_user,1,1,1,1
+
+
+
