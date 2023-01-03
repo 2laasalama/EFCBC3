@@ -12,11 +12,12 @@ class BPMRequest(models.Model):
 
     @api.model
     def add_bpm_request(self, record, name, route, type, body):
-        self.create({'name': name,
-                     'route': route,
-                     'type': type,
-                     'body': body,
-                     'resource_ref': '%s,%s' % (record._name, record.id)})
+        request = self.create({'name': name,
+                               'route': route,
+                               'type': type,
+                               'body': body,
+                               'resource_ref': '%s,%s' % (record._name, record.id)})
+        return request
 
     @api.model
     def _selection_target_model(self):
@@ -47,7 +48,7 @@ class BPMRequest(models.Model):
 
     def send_request(self, rec):
         with self.pool.cursor() as new_cr:
-            print("start .................")
+            _logger.info("BMP Request start")
             self = self.with_env(self.env(cr=new_cr))
             rec = self.env['bpm.request'].search([('id', 'in', rec)])
             bpm_url = self.env['ir.config_parameter'].sudo().get_param('bpm_url')
@@ -83,7 +84,7 @@ class BPMRequest(models.Model):
                         rec.state = 'fail'
                         rec.failure_code = response.status_code
                         rec.failure_reason = "Update Payment Fail"
-            print("end .................")
+            _logger.info("BMP Request Finshed")
             self._cr.savepoint()
         return {}
 

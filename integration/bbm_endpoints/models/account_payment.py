@@ -29,18 +29,12 @@ class AccountPayment(models.Model):
 
     def action_post(self):
         for rec in self:
-            try:
-                rec.bpm_payment_action('confirm')
-            except Exception as ex:
-                _logger.warning(ex)
+            rec.bpm_payment_action('confirm')
         return super(AccountPayment, self).action_post()
 
     def action_cancel(self):
         for rec in self:
-            try:
-                rec.bpm_payment_action('cancel')
-            except Exception as ex:
-                _logger.warning(ex)
+            rec.bpm_payment_action('cancel')
         return super(AccountPayment, self).action_cancel()
 
     def bpm_payment_action(self, action):
@@ -48,26 +42,8 @@ class AccountPayment(models.Model):
         route = "bonita/API/bpm/message"
         request_type = 'post'
         name = '{} - {}'.format(action, self.name)
-        self.env['bpm.request'].add_bpm_request(self, name, route, request_type, payload_body)
-        return  # stop send requests from payment
-
-        bpm_url = self.env['ir.config_parameter'].sudo().get_param('bpm_url')
-        access = get_bpm_access(bpm_url)
-        url = "{}/bonita/API/bpm/message".format(bpm_url)
-        payload = json.dumps(payload_body)
-        if access:
-            headers = {
-                'X-Bonita-API-Token': access['token'],
-                'Content-Type': 'application/json',
-                'Cookie': access['cookies']
-            }
-
-            response = requests.request("POST", url, headers=headers, data=payload)
-
-            if response.status_code == 204:
-                _logger.debug("Update Payment successfully.")
-            else:
-                _logger.warning("Update Payment Fail")
+        request = self.env['bpm.request'].add_bpm_request(self, name, route, request_type, payload_body)
+        request.action_run()
 
     def format_request_data(self, status, notes, payment_id, paymentSerialNumber, requestPaymentNumber):
         vals = {
