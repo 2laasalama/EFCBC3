@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <odoo>
+
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit.efcbc</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='km_home_work']" position="replace"></xpath>
+                <xpath expr="//div[@name='div_km_home_work']" position="replace"></xpath>
+                <xpath expr="//field[@name='passport_id']" position="after">
+                    <field name="social_insurance_no"/>
+                </xpath>
+                <xpath expr="//group[@name='has_work_permit']" position="replace"></xpath>
+                <xpath expr="//group[@name='managers']" position="after">
+                    <group string="Allowance">
+                        <field name="hajj_granted_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="type"/>
+                                <field name="name" force_save="1"
+                                       attrs="{'readonly': [('type', '!=', 'other')]}"/>
+                                <field name="date"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='certificate']/.." position="replace">
+                    <group string="Education">
+                        <field name="education_lines" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="certificate"/>
+                                <field name="study_field"/>
+                                <field name="year"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="before">
+                    <field name="code"/>
+                    <field name="grade_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="resume_line_view_form" model="ir.ui.view">
+            <field name="name">hr.resume.line.inherit.efcbc</field>
+            <field name="model">hr.resume.line</field>
+            <field name="inherit_id" ref="hr_skills.resume_line_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="duration"/>
+                    <field name="manual_entry" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_employee_view_form" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit.efcbc</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_skills.hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='resume_line_ids']//tree//field[@name='date_end']"
+                       position="after">
+                    <field name="duration"/>
+                </xpath>
+                <xpath expr="//field[@name='resume_line_ids']" position="attributes">
+                    <attribute name="context">{"default_manual_entry": 1}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="employee_grade_view_form" model="ir.ui.view">
+            <field name="name">employee.grade.form</field>
+            <field name="model">employee.grade</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_grade_view_tree" model="ir.ui.view">
+            <field name="name">employee.grade.tree</field>
+            <field name="model">employee.grade</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="employee_grade_action" model="ir.actions.act_window">
+            <field name="name">Employee Grades</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.grade</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="employee_grade_menu"
+                  action="employee_grade_action"
+                  parent="hr.menu_human_resources_configuration"
+                  sequence="100"
+                  groups="hr.group_hr_manager"/>
+
+
+    </odoo>
+</openerp>
