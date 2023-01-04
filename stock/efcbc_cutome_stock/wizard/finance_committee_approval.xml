@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="finance_committee_approval_view_form" model="ir.ui.view">
+            <field name="name">finance.committee.approval.view.form</field>
+            <field name="model">finance.committee.approval</field>
+            <field name="arch" type="xml">
+                <form>
+                    <widget name="web_ribbon" title="تمت الموافقة"
+                            attrs="{'invisible':[('committee_decision','!=','approve')]}"/>
+                    <widget name="web_ribbon" title="مرفوض" bg_color="bg-danger"
+                            attrs="{'invisible':[('committee_decision','!=','refuse')]}"/>
+                    <grop>
+                        <field name="picking_id" invisible="1"/>
+                        <field name="committee_decision" invisible="1"/>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="top" create="0" delete="0">
+                                <field name="employee_id"/>
+                                <field name="accept" widget="boolean_toggle"
+                                       attrs="{'readonly': [('can_edit', '=', False)]}"/>
+                                <field name="can_edit" invisible="1"/>
+                            </tree>
+                        </field>
+                    </grop>
+                    <footer>
+                        <button string="حفظ" special="save" class="btn btn-primary" close="1"/>
+                        <button string="غلق" special="cancel" class="btn-secondary" close="1"/>
+                        <button string="موافقة" type="object" name="action_approve"
+                                groups="stock.group_stock_manager"
+                                class="btn btn-primary"/>
+                        <button string="رفض" type="object" name="action_refuse"
+                                groups="stock.group_stock_manager"
+                                class="btn btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

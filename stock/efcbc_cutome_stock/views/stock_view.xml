@@ -42,8 +42,10 @@
                     <field name="maintenance_company_id" attrs="{'invisible':[('is_maintenance','=',False)]}"/>
                     <field name="return_operation" invisible="1"/>
                     <field name="show_validate" invisible="1"/>
-                    <field name="scrap_committee_approval" invisible="1"/>
-                    <field name="scrap_committee_approved" invisible="1"/>
+                    <field name="scrap_committee_approval" invisible="0"/>
+                    <field name="scrap_committee_approved" invisible="0"/>
+                    <field name="finance_committee_approval" invisible="0"/>
+                    <field name="finance_committee_approved" invisible="0"/>
                 </field>
 
 
@@ -52,6 +54,10 @@
                             class="oe_highlight"
                             attrs="{'invisible':['|',('scrap_committee_approval','=',False),('state','!=','assigned')]}"
                             type="object" string="لحنة الكهنه"/>
+                    <button name="open_finance_approval"
+                            class="oe_highlight"
+                            attrs="{'invisible':['|',('finance_committee_approval','=',False),('finance_committee_approval','=',False),('state','!=','assigned')]}"
+                            type="object" string="اللجنة المالية"/>
                 </button>
 
             </field>

@@ -17,6 +17,7 @@
         'views/stock_location.xml',
         'views/stock_warehouse.xml',
         'wizard/scrap_committee_approval.xml',
+        'wizard/finance_committee_approval.xml',
     ],
 
 }

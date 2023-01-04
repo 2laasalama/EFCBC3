@@ -8,7 +8,7 @@ from odoo.exceptions import ValidationError
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    is_maintenance = fields.Boolean(related='picking_type_id.is_maintenance',)
+    is_maintenance = fields.Boolean(related='picking_type_id.is_maintenance', )
     maintenance_company_id = fields.Many2one('res.partner', string='شركة الصيانة')
     fixed_assets = fields.Boolean(related='picking_type_id.fixed_assets', readonly=True)
     return_operation = fields.Boolean(related='picking_type_id.return_operation', readonly=True)
@@ -16,9 +16,13 @@ class StockPicking(models.Model):
     scrap_committee_approval = fields.Boolean(related='location_dest_id.scrap_committee_approval', copy=False)
     scrap_approval_id = fields.Many2one('scrap.committee.approval', copy=False)
 
+    finance_committee_approved = fields.Boolean(copy=False)
+    finance_committee_approval = fields.Boolean(related='location_dest_id.finance_committee_approval', copy=False)
+    finance_approval_id = fields.Many2one('finance.committee.approval', copy=False)
+
     def _compute_show_validate(self):
         for rec in self:
-            if rec.scrap_committee_approval and not rec.scrap_committee_approved:
+            if rec.finance_committee_approval and not rec.finance_committee_approved:
                 rec.show_validate = False
             else:
                 return super(StockPicking, self)._compute_show_validate()
@@ -41,4 +45,27 @@ class StockPicking(models.Model):
             'res_model': 'scrap.committee.approval',
             'res_id': approval.id,
             'view_id': self.env.ref('efcbc_cutome_stock.scrap_committee_approval_view_form').id,
+        }
+
+    def open_finance_approval(self):
+        self.ensure_one()
+        if not self.scrap_committee_approved:
+            raise ValidationError(
+                _("Sorry, You cant not start finance committee approval before finish scrap committee approval"))
+        approval = self.finance_approval_id
+        if not approval:
+            approval = self.env['finance.committee.approval'].create({
+                'picking_id': self.id
+            })
+            self.finance_approval_id = approval.id
+        approval.check_committee_users()
+        return {
+            'name': _("موافقة  اللجنة المالية %s", self.display_name),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            "context": {"create": False},
+            'target': 'new',
+            'res_model': 'finance.committee.approval',
+            'res_id': approval.id,
+            'view_id': self.env.ref('efcbc_cutome_stock.finance_committee_approval_view_form').id,
         }
