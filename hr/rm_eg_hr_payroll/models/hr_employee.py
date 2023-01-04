@@ -125,3 +125,12 @@ class HrEmployeePublic(models.Model):
     experience_m = fields.Integer(
         string="Experience months", )
     experience_d = fields.Integer(string="Experience days", )
+    unpaid_y = fields.Integer("Unpaid Leaves")
+    unpaid_m = fields.Integer()
+    unpaid_d = fields.Integer()
+    part_time_y = fields.Integer("Part Time")
+    part_time_m = fields.Integer()
+    part_time_d = fields.Integer()
+    net_experience_y = fields.Integer("Net Experience")
+    net_experience_m = fields.Integer()
+    net_experience_d = fields.Integer()
