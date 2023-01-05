@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_treasury_account_journal" model="ir.ui.view">
+        <field name="name">view.treasury.account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_activity_type_id']/.." position="after">
+                <group string="Options" name="options">
+                    <field name="is_expense_treasury"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

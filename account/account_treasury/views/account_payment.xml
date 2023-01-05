@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_treasury_promotion_account_payment" model="ir.ui.view">
+        <field name="name">view.treasury.promotion.account.payment.form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_bank_id']" position="after">
+                <field name="is_treasury_promotion" invisible="1"/>
+                <field name="treasury_code"/>
+                <field name="type"/>
+            </xpath>
+
+            <xpath expr="//field[@name='journal_id']" position="attributes">
+                <attribute name="domain">[('type', 'in', ('bank', 'cash')),('is_expense_treasury', '=', 1)]</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='ref']" position="attributes">
+                <attribute name="string">Promotion Description</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_method_line_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="action_treasury_promotion" model="ir.actions.act_window">
+        <field name="name">Treasury Promotion</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree'}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_treasury_promotion_account_payment')})]"/>
+        <field name="domain">[('is_treasury_promotion','=', True)]</field>
+        <field name="context">{
+            'default_is_treasury_promotion': 1,
+            }
+        </field>
+    </record>
+
+    <menuitem id="account_treasury_root_menu" name="Treasury" sequence="60"
+              web_icon="account_treasury,static/description/menu.png"
+              groups="efcbc_custom_account.group_treasury_user"/>
+
+    <menuitem id="treasury_root_menu" parent="account_treasury_root_menu" name="Treasury" sequence="1"/>
+
+    <menuitem id="treasury_promotion_menu" name="Treasury Promotion" parent="treasury_root_menu"
+              action="action_treasury_promotion"
+              sequence="1"/>
+</odoo>
