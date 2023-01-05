@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_hr_expense_sheet_form" model="ir.ui.view">
+        <field name="name">view.hr.expense.sheet.form</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+        <field name="mode">primary</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="payment_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='expense_line_ids']" position="attributes">
+                <attribute name="widget">one2many</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='expense_line_ids']//tree//field[@name='name']" position="after">
+                <field name="account_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='expense_line_ids']//tree//field[@name='unit_amount']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_sheet_move_create']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_submit_sheet']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+    <!--    <record id="action_payment_order" model="ir.actions.act_window">-->
+    <!--        <field name="name">Payment Order</field>-->
+    <!--        <field name="res_model">hr.expense.sheet</field>-->
+    <!--        <field name="view_mode">tree,kanban,form,graph</field>-->
+    <!--        <field name="view_ids" eval="[-->
+    <!--            (5, 0, 0),-->
+    <!--            (0, 0, {'view_mode': 'tree','view_id': ref('view_payment_order_tree')}),-->
+    <!--            (0, 0, {'view_mode': 'form', 'view_id': ref('view_payment_order_form')})]"/>-->
+    <!--        <field name="domain">[('is_payment_order','=', True)]</field>-->
+    <!--        <field name="context">{ 'default_is_payment_order': 1}</field>-->
+    <!--    </record>-->
+
+
+</odoo>

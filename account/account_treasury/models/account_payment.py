@@ -1,4 +1,5 @@
-from odoo import models, api, fields
+from odoo import models, api, fields, _
+from odoo.exceptions import ValidationError
 
 
 class AccountPayment(models.Model):
@@ -17,5 +18,5 @@ class AccountPayment(models.Model):
     is_treasury_promotion = fields.Boolean()
     journal_id = fields.Many2one('account.journal', default=_get_default_journal)
     treasury_code = fields.Char(related='journal_id.code')
-    branch_id = fields.Many2one('res.branch')
-    type = fields.Selection([('cash', 'Cash'), ('check', 'Check')], default='cash')
+
+

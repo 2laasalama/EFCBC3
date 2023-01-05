@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_payment_order_form" model="ir.ui.view">
+        <field name="name">view.payment.order.form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//field[@name='is_internal_transfer']" position="after">
+                <field name="payment_order_num"/>
+                <field name="payment_order_state" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='button_open_journal_entry']" position="attributes">
+                <attribute name="attrs">{'invisible': [('payment_order_state', '!=', 'posted')]}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_bank_id']" position="after">
+                <field name="is_payment_order" invisible="1"/>
+                <field name="type"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Vendor</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_bank_id']" position="attributes">
+                <attribute name="string">Vendor Bank Account</attribute>
+            </xpath>
+
+            <xpath expr="//header" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='destination_journal_id']" position="after">
+                <label for="has_expense" string="Has Expense"/>
+                <div>
+                    <field name="has_expense" class="oe_inline" widget="boolean_toggle"/>
+                    <button class="oe_inline" icon="fa-arrow-right" attrs="{'invisible':[('has_expense','=',False)]}"
+                            name="open_expense_sheet"
+                            type="object" string="Open Expenses"/>
+                </div>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="view_payment_order_tree" model="ir.ui.view">
+        <field name="name">view.payment.order.tree</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="payment_order_num"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_payment_order" model="ir.actions.act_window">
+        <field name="name">Payment Order</field>
+        <field name="res_model">account.payment</field>
+        <field name="view_mode">tree,kanban,form,graph</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'tree','view_id': ref('view_payment_order_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_payment_order_form')})]"/>
+        <field name="domain">[('is_payment_order','=', True)]</field>
+        <field name="context">{ 'default_is_payment_order': 1}</field>
+    </record>
+
+    <menuitem id="account_audit_root_menu" name="Audit" sequence="60"
+              web_icon="account_audit,static/description/menu.png"
+              groups="efcbc_custom_account.group_audit_user"/>
+
+
+    <menuitem id="payment_order_menu" name="Payment Order" parent="account_audit_root_menu"
+              action="action_payment_order"
+              sequence="1"/>
+</odoo>
