@@ -40,6 +40,7 @@
         <field name="domain">[('is_treasury_promotion','=', True)]</field>
         <field name="context">{
             'default_is_treasury_promotion': 1,
+            'default_is_internal_transfer': 1,
             }
         </field>
     </record>
