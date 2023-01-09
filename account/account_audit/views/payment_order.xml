@@ -72,7 +72,9 @@
             (0, 0, {'view_mode': 'tree','view_id': ref('view_payment_order_tree')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('view_payment_order_form')})]"/>
         <field name="domain">[('is_payment_order','=', True)]</field>
-        <field name="context">{ 'default_is_payment_order': 1}</field>
+        <field name="context">{ 'default_is_payment_order': 1,
+            'default_move_journal_types': ('bank', 'cash')}
+        </field>
     </record>
 
     <menuitem id="account_audit_root_menu" name="Audit" sequence="60"

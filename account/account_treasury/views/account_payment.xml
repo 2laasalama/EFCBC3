@@ -41,6 +41,7 @@
         <field name="context">{
             'default_is_treasury_promotion': 1,
             'default_is_internal_transfer': 1,
+            'default_move_journal_types': ('cash', 'bank')
             }
         </field>
     </record>
