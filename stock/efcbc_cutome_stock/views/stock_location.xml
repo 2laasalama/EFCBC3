@@ -9,13 +9,12 @@
         <field name="groups_id" eval="[(4, ref('stock.group_stock_multi_locations'))]"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='removal_strategy_id']/.." position="after">
-                <group string="لجنة الكهنة">
+                <group>
+                    <h4>لجنة الكهنة</h4>
                     <field name="scrap_committee_approval"/>
                     <field name="scrap_committee_member_ids" widget="many2many_tags"
                            attrs="{'invisible': [('scrap_committee_approval', '=', False)],'required': [('scrap_committee_approval', '=', True)]}"/>
-
-                </group>
-                 <group string="اللجنة المالية">
+                    <h4>اللجنة المالية</h4>
                     <field name="finance_committee_approval"/>
                     <field name="finance_committee_member_ids" widget="many2many_tags"
                            attrs="{'invisible': [('finance_committee_approval', '=', False)],'required': [('finance_committee_approval', '=', True)]}"/>
