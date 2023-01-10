@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_treasury_report_wizard_form" model="ir.ui.view">
+        <field name="name">account.treasury.report.wizard.form</field>
+        <field name="model">account.treasury.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <group>
+                    <group>
+                        <field name="date"/>
+                        <field name="type"/>
+                        <field name="payment_state" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="all_journal"/>
+                        <field name="journal_id"
+                               options="{'no_create_edit': True}"
+                               domain="[('type', 'in', ('bank', 'cash'))]"
+                               attrs="{'invisible' :[('all_journal', '=', True)],'required' :[('all_journal', '=', False)]}"/>
+                    </group>
+                </group>
+
+                <footer>
+                    <button
+                            name="print_report"
+                            type="object"
+                            string="Print"
+                            class="oe_highlight"
+                    />
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="account_treasury_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Draft Payment Permission Report</field>
+        <field name="res_model">account.treasury.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_payment_state': 'draft',}
+        </field>
+    </record>
+
+    <record id="account_posted_treasury_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Posted Payment Permission Report</field>
+        <field name="res_model">account.treasury.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_payment_state': 'posted',}
+        </field>
+    </record>
+
+    <menuitem id="treasury_report_menu" name="Reporting"
+              parent="account_treasury.account_treasury_root_menu"
+              sequence="3"/>
+
+    <menuitem id="draft_payment_permission_report_menu" name="Draft Payment Permission"
+              parent="treasury_report_menu"
+              action="account_treasury_report_wizard_action"
+              sequence="1"/>
+
+
+    <menuitem id="posted_payment_permission_report_menu" name="Posted Payment Permission"
+              parent="treasury_report_menu"
+              action="account_posted_treasury_report_wizard_action"
+              sequence="2"/>
+
+
+</odoo>

@@ -40,10 +40,22 @@
                          src="/efcbc_report_layout/static/src/img/header.jpg"/>
                 </div>
             </div>
+
             <div class="article" style="font-family:efcbc_arial" t-att-data-oe-model="o and o._name"
                  t-att-data-oe-id="o and o.id"
                  t-att-data-oe-lang="o and o.env.context.get('lang')">
                 <t t-out="0"/>
+            </div>
+
+            <div t-attf-class="footer">
+                <div class="text-center">
+                    <div t-if="report_type == 'pdf'" class="text-muted">
+                        Page:
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </div>
+                </div>
             </div>
         </template>
 

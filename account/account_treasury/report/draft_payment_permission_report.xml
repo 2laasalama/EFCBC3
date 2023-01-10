@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="draft_payment_permission_report" model="ir.actions.report">
+        <field name="name">Draft Payment Permission Report</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_treasury.draft_payment_template</field>
+        <field name="report_file">account_treasury.draft_payment_template</field>
+        <field name="print_report_name">'Draft Payment Permission Report'</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="draft_payment_template">
+        <t t-call="web.html_container">
+            <!--            <t t-foreach="docs" t-as="o">-->
+            <t t-call="efcbc_report_layout.internal_layout">
+                <div class="page" style="direction: rtl;">
+                    <div class="row" style="text-align: right;">
+                        <div class="col-4"></div>
+                        <div class="col-4" style="text-align: center;">
+                            <h4>
+                                <span>ما لم يصرف من الخزينة (</span>
+                                <t t-if="data['type']=='cash'">نقدى</t>
+                                <t t-if="data['type']=='check'">شيكات</t>
+                                <span>)</span>
+                            </h4>
+                        </div>
+                        <div class="col-4" style="margin-top: 10px;text-align: left;">
+                            <div>
+                                <span>التاريخ:</span>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y/%m/%d')"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="row" style="text-align: right;">
+                        <div class="col-6">
+                            <strong>خزينه:</strong>
+                            <t t-esc="data['journal_name']"/>
+
+                        </div>
+                        <div class="col-6">
+                            <strong>عن يوم:</strong>
+                            <t t-esc="data['date']"/>
+                        </div>
+                    </div>
+
+                    <br/>
+
+
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;width: 5%;">
+                                    <strong>م</strong>
+                                </th>
+                                <th style="text-align: center;width: 10%;">
+                                    <strong>القيمة</strong>
+                                </th>
+                                <th style="text-align: center;width: 25">
+                                    <strong>منصرف الى</strong>
+                                </th>
+                                <th style="text-align: center;width: 15">
+                                    <strong>رقم المستند</strong>
+                                </th>
+                                <th style="text-align: center; width: 35%;">
+                                    <strong>البيان</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total" t-value="0"/>
+                            <t t-set="sequence" t-value="0"/>
+                            <tr t-foreach="docs" t-as="payment">
+                                <t t-set="sequence" t-value="sequence+1"/>
+                                <t t-set="total" t-value="total+payment.amount"/>
+                                <td style="text-align: center;">
+                                    <span t-esc="sequence"/>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span t-esc="payment.amount"/>
+                                </td>
+                                <td style="text-align: center;">
+                                    <span t-esc="payment.partner_id.name"/>
+                                </td>
+                                 <td style="text-align: center;">
+                                    <span t-esc="payment.payment_permission_num"/>
+                                </td>
+                                 <td style="text-align: center;">
+                                    <span t-esc="payment.ref"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td class="text-right">
+                                    <span t-esc="total"/>
+                                </td>
+                                <td class="text-right" colspan="3">
+                                    <span> الاجمالى</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </t>
+        </t>
+        <!--        </t>-->
+    </template>
+</odoo>
